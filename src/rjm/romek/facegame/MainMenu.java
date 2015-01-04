@@ -30,7 +30,8 @@ public class MainMenu extends Activity implements OnClickListener{
 	public void onClick(View view) {
 		switch(view.getId()) {
 			case R.id.new_game_button:
-				
+				Intent gameIntent = new Intent(this, Game.class);
+				startActivity(gameIntent);
 				break;
 				
 			case R.id.records_button:
@@ -42,10 +43,10 @@ public class MainMenu extends Activity implements OnClickListener{
 				break;
 				
 			case R.id.quit_button:
-				Intent intent = new Intent(this, MainMenu.class);
-			    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			    intent.putExtra(QUIT_FLAG, true);
-			    startActivity(intent);
+				Intent quitIntent = new Intent(this, MainMenu.class);
+			    quitIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			    quitIntent.putExtra(QUIT_FLAG, true);
+			    startActivity(quitIntent);
 			    finish();
 				break;
 		}
