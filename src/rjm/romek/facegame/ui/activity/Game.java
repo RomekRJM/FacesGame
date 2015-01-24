@@ -1,4 +1,4 @@
-package rjm.romek.facegame.activity;
+package rjm.romek.facegame.ui.activity;
 
 import rjm.romek.facegame.R;
 import android.app.Activity;

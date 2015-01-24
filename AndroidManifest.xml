@@ -15,14 +15,17 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         
-        <activity android:name=".activity.MainMenu">
+        <activity android:name="rjm.romek.facegame.ui.activity.LoadingScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         
-        <activity android:name=".activity.Game">
+        <activity android:name="rjm.romek.facegame.ui.activity.Game">
+        </activity>
+        
+        <activity android:name="rjm.romek.facegame.ui.activity.MainMenu">
         </activity>
         
     </application>
