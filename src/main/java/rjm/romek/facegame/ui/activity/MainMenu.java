@@ -13,7 +13,6 @@ public class MainMenu extends Activity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		closeAppIfRequired();
 		
 		setContentView(R.layout.main_menu);
 		findViewById(R.id.new_game_button).setOnClickListener(this);
@@ -42,10 +41,8 @@ public class MainMenu extends Activity implements OnClickListener {
 		
 	}
 	
-	public void closeAppIfRequired() {
-		if( getIntent() instanceof QuitIntent){
-			finish();
-			return;
-		}
+	@Override
+	public void onBackPressed() {
+		startActivity(new QuitIntent(this));
 	}
 }

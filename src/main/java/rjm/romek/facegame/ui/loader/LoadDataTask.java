@@ -25,12 +25,6 @@ public class LoadDataTask extends AsyncTask<Void, Void, LoadDataTaskResult> {
 		LoadDataTaskResult result = null;
 		
 		try {
-			try {
-				Thread.sleep(6000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			result = new LoadDataTaskResultCorrect(deserializer.deserialize(
 					context.getAssets().open(parameters.getCountryListFile())));
 		} catch (IOException e) {
@@ -47,6 +41,10 @@ public class LoadDataTask extends AsyncTask<Void, Void, LoadDataTaskResult> {
 		} else if (result instanceof LoadDataTaskResultException) {
 			fireLoadingFailed((LoadDataTaskResultException)result);
 		}
+	}
+	
+	public void setListener(LoadDataTaskListener listener) {
+		this.listener = listener;
 	}
 	
 	private void fireLoadingComplete(LoadDataTaskResultCorrect result) {

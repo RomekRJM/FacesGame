@@ -21,11 +21,19 @@ public class LoadingScreen extends Activity implements LoadDataTaskListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		if(isCloseAppIntent()) {
+			finish();
+			return;
+		}
+		
 		_this = this;
 		setContentView(R.layout.loading_screen);
 		progressBar = (ProgressBar) findViewById(R.id.progressBar1);
 		
-		new LoadDataTask(_this).execute();
+		LoadDataTask loadDataTask = new LoadDataTask(_this);
+		loadDataTask.setListener(_this);
+		loadDataTask.execute();
 	}
 
 	@Override
@@ -43,5 +51,9 @@ public class LoadingScreen extends Activity implements LoadDataTaskListener {
 					}
 				});
 
+	}
+	
+	public boolean isCloseAppIntent() {
+		return getIntent().getBooleanExtra(QuitIntent.QUIT, false);
 	}
 }
