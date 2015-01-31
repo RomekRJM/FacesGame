@@ -1,14 +1,13 @@
-package rjm.romek.facegame.data;
+package rjm.romek.facegame.service;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 
 import junit.framework.TestCase;
+import rjm.romek.facegame.service.TranslatorService;
+import rjm.romek.facegame.service.TranslatorServiceImpl;
 
-import com.google.gson.stream.JsonReader;
 
 public class TranslatorServiceImplTest extends TestCase {
 	

@@ -1,4 +1,4 @@
-package rjm.romek.facegame.data;
+package rjm.romek.facegame.service;
 
 import java.io.IOException;
 import java.io.InputStream;

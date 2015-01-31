@@ -39,7 +39,12 @@
 			<artifactId>commons-io</artifactId>
 			<version>2.4</version>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>rjm.romek</groupId>
+            <artifactId>faces_algorithms</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<pluginManagement>
@@ -63,6 +68,7 @@
 					<emulator>
 						<avd>${avd.emulator.name}</avd>
 					</emulator>
+                    <androidManifestFile>AndroidManifest.xml</androidManifestFile>
 				</configuration>
 			</plugin>
 		</plugins>
