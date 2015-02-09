@@ -2,89 +2,58 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
+    <packaging>pom</packaging>
 	<groupId>rjm.romek</groupId>
 	<artifactId>FacesGame</artifactId>
 	<version>0.2-SNAPSHOT</version>
-	<packaging>apk</packaging>
+    <modules>
+        <module>face-game-it</module>
+        <module>face-game-app</module>
+    </modules>
 
-	<name>FacesGame</name>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<platform.version>2.3.3</platform.version>
-		<android.plugin.version>4.1.0</android.plugin.version>
-		<avd.emulator.name>AVD_for_Nexus_4_by_Google</avd.emulator.name>
-	</properties>
+    <properties>
+        <platform.version>2.3.3</platform.version>
+    </properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>rjm.romek</groupId>
-			<artifactId>faces_algorithms</artifactId>
-			<version>0.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.android</groupId>
-			<artifactId>android</artifactId>
-			<version>${platform.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
-		</dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <version>1.9.5</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.android</groupId>
-            <artifactId>android-test</artifactId>
-            <version>${platform.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>2.4</version>
-		</dependency>
-        <dependency>
-            <groupId>rjm.romek</groupId>
-            <artifactId>faces_algorithms</artifactId>
-            <version>0.0.1</version>
-        </dependency>
-    </dependencies>
-
-	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>com.simpligility.maven.plugins</groupId>
-					<artifactId>android-maven-plugin</artifactId>
-					<version>${android.plugin.version}</version>
-					<extensions>true</extensions>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-		<plugins>
-			<plugin>
-				<groupId>com.simpligility.maven.plugins</groupId>
-				<artifactId>android-maven-plugin</artifactId>
-				<configuration>
-					<sdk>
-						<platform>10</platform>
-					</sdk>
-					<emulator>
-						<avd>${avd.emulator.name}</avd>
-					</emulator>
-                    <androidManifestFile>AndroidManifest.xml</androidManifestFile>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>rjm.romek</groupId>
+                <artifactId>faces_algorithms</artifactId>
+                <version>0.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.android</groupId>
+                <artifactId>android</artifactId>
+                <version>${platform.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>3.8.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>1.9.5</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.android</groupId>
+                <artifactId>android-test</artifactId>
+                <version>${platform.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>2.4</version>
+            </dependency>
+            <dependency>
+                <groupId>rjm.romek</groupId>
+                <artifactId>faces_algorithms</artifactId>
+                <version>0.0.1</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>
   

@@ -1,7 +1,5 @@
 package rjm.romek.facegame.service;
 
-import rjm.romek.source.model.Country;
-
 import java.io.IOException;
 import java.io.InputStream;
 

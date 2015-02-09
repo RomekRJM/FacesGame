@@ -1,12 +1,10 @@
 package rjm.romek.facegame.service;
 
+import junit.framework.TestCase;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import junit.framework.TestCase;
-import rjm.romek.facegame.service.TranslatorService;
-import rjm.romek.facegame.service.TranslatorServiceImpl;
 
 
 public class TranslatorServiceImplTest extends TestCase {
