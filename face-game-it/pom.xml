@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>face-game-it</artifactId>
+    <packaging>apk</packaging>
 
     <dependencies>
         <dependency>
@@ -48,14 +49,14 @@
                         <!--<coverage>true|false</coverage>-->
                         <!--<logonly>true|false</logonly>  avd-->
                         <!--<testsize>small|medium|large</testsize>-->
-                        <testSize>small</testSize>
+                        <testSize>medium</testSize>
                         <createReport>true</createReport>
                         <!--<classes>-->
                         <!--<class>your.package.name.YourTestClass</class>-->
                         <!--</classes>-->
-                        <packages>
-                            <package>rjm.romek.facegame</package>
-                        </packages>
+                        <!--<packages>-->
+                        <!--<package>your.package.name</package>-->
+                        <!--</packages>-->
                     </test>
                 </configuration>
             </plugin>

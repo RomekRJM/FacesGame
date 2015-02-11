@@ -1,6 +1,6 @@
 package rjm.romek.facegame;
 
-import android.test.AndroidTestCase;
+import android.test.InstrumentationTestCase;
 import junit.framework.Assert;
 import org.mockito.Mockito;
 import rjm.romek.facegame.data.Parameters;
@@ -12,7 +12,7 @@ import rjm.romek.source.model.Country;
 
 import java.io.FileInputStream;
 
-public class PhotoServiceImplTest extends AndroidTestCase {
+public class PhotoServiceImplTest extends InstrumentationTestCase {
 
     private PhotoService photoService;
 
@@ -37,7 +37,7 @@ public class PhotoServiceImplTest extends AndroidTestCase {
 
         Mockito.when(assetProvider.getCountryDirPath()).thenReturn("");
 
-        photoService = new PhotoServiceImpl(new AssetProviderImpl(getContext().getAssets(), new Parameters()));
+        photoService = new PhotoServiceImpl(new AssetProviderImpl(getInstrumentation().getContext().getAssets(), new Parameters()));
     }
 
     public void testOpensSingleFileFolder() {
