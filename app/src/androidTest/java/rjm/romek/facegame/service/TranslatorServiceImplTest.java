@@ -1,9 +1,6 @@
 package rjm.romek.facegame.service;
 
 import android.test.AndroidTestCase;
-import android.test.InstrumentationTestCase;
-
-import junit.framework.TestCase;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

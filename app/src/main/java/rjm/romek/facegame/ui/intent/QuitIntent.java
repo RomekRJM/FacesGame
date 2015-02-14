@@ -1,7 +1,7 @@
 package rjm.romek.facegame.ui.intent;
 
 import rjm.romek.facegame.ui.activity.LoadingScreen;
-import rjm.romek.facegame.ui.activity.MainMenu;
+
 import android.content.Context;
 import android.content.Intent;
 

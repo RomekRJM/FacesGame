@@ -1,33 +1,33 @@
 package rjm.romek.facegame.model;
 
+import android.graphics.Bitmap;
+
 import rjm.romek.source.model.Country;
 import rjm.romek.source.model.Person;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 public class Question {
 
-    private Person person;
-    private List<Country> countries;
+    private Bitmap personBitmap;
+    private Set<Country> countries;
     private Date date;
     private Country correctAnswer;
     private Country givenAnswer;
-    private String gameUUID;
+    private final String gameUUID;
 
-    public Person getPerson() {
-        return person;
+    public Question() {
+        this.gameUUID = UUID.randomUUID().toString();
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
-    }
-
-    public List<Country> getCountries() {
+    public Set<Country> getCountries() {
         return countries;
     }
 
-    public void setCountries(List<Country> countries) {
+    public void setCountries(Set<Country> countries) {
         this.countries = countries;
     }
 
@@ -59,8 +59,12 @@ public class Question {
         return gameUUID;
     }
 
-    public void setGameUUID(String gameUUID) {
-        this.gameUUID = gameUUID;
+    public Bitmap getPersonBitmap() {
+        return personBitmap;
+    }
+
+    public void setPersonBitmap(Bitmap personBitmap) {
+        this.personBitmap = personBitmap;
     }
 
     public boolean isCorrectlyAnswered() {

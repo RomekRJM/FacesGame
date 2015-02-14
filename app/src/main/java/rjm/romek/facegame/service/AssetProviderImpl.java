@@ -2,7 +2,6 @@ package rjm.romek.facegame.service;
 
 import android.content.res.AssetManager;
 import rjm.romek.facegame.data.Parameters;
-import rjm.romek.source.model.Country;
 
 import java.io.IOException;
 import java.io.InputStream;

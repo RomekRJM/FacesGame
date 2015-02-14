@@ -2,18 +2,12 @@ package rjm.romek.facegame.service;
 
 import android.content.res.AssetManager;
 import android.test.AndroidTestCase;
-import android.test.InstrumentationTestCase;
+
 import junit.framework.Assert;
-import org.mockito.Mockito;
-import rjm.romek.facegame.data.Parameters;
-import rjm.romek.facegame.service.AssetProvider;
-import rjm.romek.facegame.service.AssetProviderImpl;
+
 import rjm.romek.facegame.service.PhotoService;
 import rjm.romek.facegame.service.PhotoServiceImpl;
 import rjm.romek.source.model.Country;
-
-import java.io.FileInputStream;
-import java.util.Properties;
 
 public class PhotoServiceImplTest extends AndroidTestCase {
 

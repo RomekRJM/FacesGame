@@ -25,7 +25,7 @@ public class PhotoServiceImpl implements PhotoService {
 
     @Override
     public Bitmap readRandomInhabitantBitmap(Country country) {
-        InputStream istr = null;
+        InputStream inStr = null;
         Bitmap bitmap = null;
 
         try {
@@ -37,11 +37,11 @@ public class PhotoServiceImpl implements PhotoService {
             }
 
             int randomIndex = random.nextInt(photos.length);
-            istr = assetManager.open(countryDirPath + "/" + photos[randomIndex]);
-            bitmap = BitmapFactory.decodeStream(istr);
+            inStr = assetManager.open(countryDirPath + "/" + photos[randomIndex]);
+            bitmap = BitmapFactory.decodeStream(inStr);
         } catch (IOException e) {
         } finally {
-            IOUtils.closeQuietly(istr);
+            IOUtils.closeQuietly(inStr);
         }
 
         return bitmap;
