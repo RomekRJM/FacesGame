@@ -17,7 +17,7 @@ public class TranslatorServiceImpl implements TranslatorService {
 	}
 
 	@Override
-	public String translate(String uuid) {
+	public String translateToName(String uuid) {
 		String translatedName = null;
 		JsonReader reader = null;
 		
@@ -42,5 +42,31 @@ public class TranslatorServiceImpl implements TranslatorService {
 		
 		return translatedName;
 	}
+
+    @Override
+    public String translateToUUID(String name) {
+        String translatedUUID = null;
+        JsonReader reader = null;
+
+        try {
+            reader = new JsonReader(new InputStreamReader(dictionaryStream));
+
+            reader.beginObject();
+
+            while (reader.hasNext()) {
+                translatedUUID = reader.nextName();
+                String currentname = reader.nextString();
+                if(currentname.equals(name)) {
+                    break;
+                }
+            }
+
+        } catch (IOException exc) {
+        } finally {
+            IOUtils.closeQuietly(reader);
+        }
+
+        return translatedUUID;
+    }
 
 }

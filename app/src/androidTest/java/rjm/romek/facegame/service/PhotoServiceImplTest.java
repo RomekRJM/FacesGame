@@ -22,14 +22,14 @@ public class PhotoServiceImplTest extends AndroidTestCase {
 
     public void testOpensSingleFileFolder() {
         Country country = new Country();
-        country.setCountryDir("0a0349f1-ad9e-466c-94fc-cb122d2a441e");
+        country.setName("Poland");
 
         Assert.assertNotNull(photoService.readRandomInhabitantBitmap(country));
     }
 
     public void testReturnsNullForEmptyFileFolder() {
         Country country = new Country();
-        country.setCountryDir("test");
+        country.setName("test");
 
         Assert.assertNull(photoService.readRandomInhabitantBitmap(country));
     }

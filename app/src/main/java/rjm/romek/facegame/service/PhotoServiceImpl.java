@@ -16,11 +16,13 @@ public class PhotoServiceImpl implements PhotoService {
     private AssetManager assetManager;
     private Parameters parameters;
     private Random random;
+    private TranslatorService translatorService;
 
-    public PhotoServiceImpl(AssetManager assetManager) {
+    public PhotoServiceImpl(AssetManager assetManager) throws IOException {
         this.assetManager = assetManager;
         this.random = new Random();
         this.parameters = new Parameters();
+        this.translatorService = new TranslatorServiceImpl(assetManager.open(parameters.getNamingFile()));
     }
 
     @Override
@@ -29,7 +31,8 @@ public class PhotoServiceImpl implements PhotoService {
         Bitmap bitmap = null;
 
         try {
-            String countryDirPath = parameters.getPhotosDir() + country.getCountryDir();
+            String countryDir = translatorService.translateToUUID(country.getName());
+            String countryDirPath = parameters.getPhotosDir() + countryDir;
             String [] photos = assetManager.list(countryDirPath);
 
             if(photos.length <= 0) {

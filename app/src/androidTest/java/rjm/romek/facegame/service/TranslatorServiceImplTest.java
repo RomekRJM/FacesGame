@@ -25,29 +25,29 @@ public class TranslatorServiceImplTest extends AndroidTestCase {
 	}
 
 	public void testShouldTranslateCountryCorrectly() {
-		assertEquals("Niue", translatorService.translate("26900166-bd4e-4b79-b6f4-bd81a8864f18"));
+		assertEquals("Niue", translatorService.translateToName("26900166-bd4e-4b79-b6f4-bd81a8864f18"));
 	}
 	
 	public void testShouldTranslatePersonCorrectly() {
-		assertEquals("Quett Masire.JPEG", translatorService.translate("68555f7b-2f81-4a4b-893a-4c618f40ddba.JPEG"));
+		assertEquals("Quett Masire.JPEG", translatorService.translateToName("68555f7b-2f81-4a4b-893a-4c618f40ddba.JPEG"));
 	}
 	
 	public void testShouldReturnNullOnNotExistingPerson() {
-		assertNull(translatorService.translate("654.JPEG"));
+		assertNull(translatorService.translateToName("654.JPEG"));
 	}
 	
 	public void testShouldReturnNullOnNotExistingCountry() {
-		assertNull(translatorService.translate("654"));
+		assertNull(translatorService.translateToName("654"));
 	}
 	
 	public void testShouldReturnNullOnInvalidStream() {
 		TranslatorServiceImpl invalid = new TranslatorServiceImpl(null);
-		assertNull(translatorService.translate("smth"));
+		assertNull(translatorService.translateToName("smth"));
 	}
 	
 	public void testShouldReturnNullOnWStream() {
 		TranslatorServiceImpl invalid = new TranslatorServiceImpl(new ByteArrayInputStream("{".getBytes()));
-		assertNull(translatorService.translate("smth"));
+		assertNull(translatorService.translateToName("smth"));
 	}
 
 	public void testShouldReturnNullOnIOException() {
@@ -58,6 +58,43 @@ public class TranslatorServiceImplTest extends AndroidTestCase {
 			}
 		});
 		
-		assertNull(translatorService.translate("smth"));
+		assertNull(translatorService.translateToName("smth"));
 	}
+
+    public void testShouldTranslateToUUIDCountryCorrectly() {
+        assertEquals("26900166-bd4e-4b79-b6f4-bd81a8864f18", translatorService.translateToUUID("Niue"));
+    }
+
+    public void testShouldTranslateToUUIDPersonCorrectly() {
+        assertEquals("68555f7b-2f81-4a4b-893a-4c618f40ddba.JPEG", translatorService.translateToUUID("Quett Masire.JPEG"));
+    }
+
+    public void testShouldReturnNullOnNotExistingPersonUUID() {
+        assertNull(translatorService.translateToUUID("Mysterious XYZ.JPEG"));
+    }
+
+    public void testShouldReturnNullOnNotExistingCountryUUID() {
+        assertNull(translatorService.translateToUUID("Nibyland"));
+    }
+
+    public void testShouldReturnNullOnInvalidStreamUUID() {
+        TranslatorServiceImpl invalid = new TranslatorServiceImpl(null);
+        assertNull(translatorService.translateToUUID("smth"));
+    }
+
+    public void testShouldReturnNullOnWStreamUUID() {
+        TranslatorServiceImpl invalid = new TranslatorServiceImpl(new ByteArrayInputStream("{".getBytes()));
+        assertNull(translatorService.translateToUUID("smth"));
+    }
+
+    public void testShouldReturnNullOnIOExceptionUUID() {
+        TranslatorServiceImpl invalid = new TranslatorServiceImpl(new InputStream() {
+            @Override
+            public int read() throws IOException {
+                throw new IOException();
+            }
+        });
+
+        assertNull(translatorService.translateToUUID("smth"));
+    }
 }

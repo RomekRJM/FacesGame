@@ -4,17 +4,17 @@ import rjm.romek.facegame.data.Parameters;
 import rjm.romek.facegame.model.Difficulty;
 import rjm.romek.facegame.model.Question;
 import rjm.romek.source.model.Country;
-import rjm.romek.source.randomizer.Randomizer;
+import rjm.romek.source.randomizer.CountryRandomizer;
 
 import java.util.*;
 
 public class QuestionServiceImpl implements QuestionService {
 
-    private final Randomizer randomizer;
+    private final CountryRandomizer randomizer;
     private final Parameters parameters;
     private final PhotoService photoService;
 
-    public QuestionServiceImpl(Randomizer randomizer, PhotoService photoService) {
+    public QuestionServiceImpl(CountryRandomizer randomizer, PhotoService photoService) {
         this.randomizer = randomizer;
         this.parameters = new Parameters();
         this.photoService = photoService;

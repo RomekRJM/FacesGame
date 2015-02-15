@@ -9,7 +9,7 @@ import rjm.romek.facegame.model.Difficulty;
 import rjm.romek.facegame.model.Question;
 import rjm.romek.facegame.utils.TestUtils;
 import rjm.romek.source.model.Country;
-import rjm.romek.source.randomizer.Randomizer;
+import rjm.romek.source.randomizer.CountryRandomizer;
 
 public class QuestionServiceImplTest extends AndroidTestCase {
 
@@ -20,7 +20,7 @@ public class QuestionServiceImplTest extends AndroidTestCase {
     public void setUp() throws Exception {
         Set<Country> countries = TestUtils.loadCountries(getContext().getAssets());
         PhotoService photoService = new PhotoServiceImpl(getContext().getAssets());
-        Randomizer randomizer = new Randomizer(countries);
+        CountryRandomizer randomizer = new CountryRandomizer(countries);
         questionService = new QuestionServiceImpl(randomizer, photoService);
         parameters = new Parameters();
     }
