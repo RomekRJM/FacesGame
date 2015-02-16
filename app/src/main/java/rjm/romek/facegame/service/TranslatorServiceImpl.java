@@ -54,9 +54,10 @@ public class TranslatorServiceImpl implements TranslatorService {
             reader.beginObject();
 
             while (reader.hasNext()) {
-                translatedUUID = reader.nextName();
-                String currentname = reader.nextString();
-                if(currentname.equals(name)) {
+                String currentUUID = reader.nextName();
+                String currentName = reader.nextString();
+                if(currentName.equals(name)) {
+                    translatedUUID = currentUUID;
                     break;
                 }
             }
