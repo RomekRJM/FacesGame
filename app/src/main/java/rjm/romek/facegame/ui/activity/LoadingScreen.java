@@ -1,6 +1,7 @@
 package rjm.romek.facegame.ui.activity;
 
 import rjm.romek.facegame.R;
+import rjm.romek.facegame.ui.global.Global;
 import rjm.romek.facegame.ui.intent.MainMenuIntent;
 import rjm.romek.facegame.ui.intent.QuitIntent;
 import rjm.romek.facegame.ui.loader.LoadDataTask;
@@ -38,6 +39,7 @@ public class LoadingScreen extends Activity implements LoadDataTaskListener {
 
 	@Override
 	public void loadingComplete(LoadDataTaskResultCorrect result) {
+        Global.countries = result.getResult();
 		startActivity(new MainMenuIntent(_this));
 	}
 

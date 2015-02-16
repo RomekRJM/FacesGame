@@ -19,9 +19,7 @@ public class QuestionServiceImplTest extends AndroidTestCase {
     @Override
     public void setUp() throws Exception {
         Set<Country> countries = TestUtils.loadCountries(getContext().getAssets());
-        PhotoService photoService = new PhotoServiceImpl(getContext().getAssets());
-        CountryRandomizer randomizer = new CountryRandomizer(countries);
-        questionService = new QuestionServiceImpl(randomizer, photoService);
+        questionService = new QuestionServiceImpl(getContext().getAssets(), countries);
         parameters = new Parameters();
     }
 
