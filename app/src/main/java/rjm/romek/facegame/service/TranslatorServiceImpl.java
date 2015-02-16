@@ -10,10 +10,10 @@ import com.google.gson.stream.JsonReader;
 
 public class TranslatorServiceImpl implements TranslatorService {
 	
-	private final InputStream dictionaryStream;
+	private final JsonReader reader;
 	
 	public TranslatorServiceImpl(InputStream dictionaryStream) {
-		this.dictionaryStream = dictionaryStream;
+        reader = new JsonReader(new InputStreamReader(dictionaryStream));
 	}
 
 	@Override
@@ -22,8 +22,6 @@ public class TranslatorServiceImpl implements TranslatorService {
 		JsonReader reader = null;
 		
 		try {
-			reader = new JsonReader(new InputStreamReader(dictionaryStream));
-			
 			reader.beginObject();
 			
 			while (reader.hasNext()) {
@@ -46,11 +44,8 @@ public class TranslatorServiceImpl implements TranslatorService {
     @Override
     public String translateToUUID(String name) {
         String translatedUUID = null;
-        JsonReader reader = null;
 
         try {
-            reader = new JsonReader(new InputStreamReader(dictionaryStream));
-
             reader.beginObject();
 
             while (reader.hasNext()) {
@@ -69,5 +64,4 @@ public class TranslatorServiceImpl implements TranslatorService {
 
         return translatedUUID;
     }
-
 }
