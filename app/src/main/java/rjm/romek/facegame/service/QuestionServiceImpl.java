@@ -6,6 +6,7 @@ import rjm.romek.facegame.data.Parameters;
 import rjm.romek.facegame.model.Difficulty;
 import rjm.romek.facegame.model.Question;
 import rjm.romek.source.model.Country;
+import rjm.romek.source.model.Person;
 import rjm.romek.source.randomizer.CountryRandomizer;
 
 import java.io.IOException;
@@ -15,12 +16,12 @@ public class QuestionServiceImpl implements QuestionService {
 
     private final CountryRandomizer randomizer;
     private final Parameters parameters;
-    private final PhotoService photoService;
+    private final PersonRandomizerService personRandomizer;
 
     public QuestionServiceImpl(AssetManager assetManager, Set<Country> countries) throws IOException {
         this.randomizer = new CountryRandomizer(countries);
         this.parameters = new Parameters();
-        this.photoService = new PhotoServiceImpl(assetManager);
+        personRandomizer = new PersonRandomizerServiceImpl(assetManager);
     }
 
     @Override
@@ -33,7 +34,7 @@ public class QuestionServiceImpl implements QuestionService {
             Question question = new Question();
             question.setCountries(countries);
             question.setCorrectAnswer(country);
-            question.setPersonBitmap(photoService.readRandomInhabitantBitmap(country));
+            question.setPerson(personRandomizer.readRandomInhabitant(country));
             questions.add(question);
         }
 

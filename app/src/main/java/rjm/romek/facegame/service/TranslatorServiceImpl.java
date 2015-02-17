@@ -13,13 +13,16 @@ public class TranslatorServiceImpl implements TranslatorService {
 	private final JsonReader reader;
 	
 	public TranslatorServiceImpl(InputStream dictionaryStream) {
+        if(dictionaryStream == null) {
+            throw new IllegalArgumentException("Dictionary stream should not be null");
+        }
+
         reader = new JsonReader(new InputStreamReader(dictionaryStream));
 	}
 
 	@Override
 	public String translateToName(String uuid) {
 		String translatedName = null;
-		JsonReader reader = null;
 		
 		try {
 			reader.beginObject();

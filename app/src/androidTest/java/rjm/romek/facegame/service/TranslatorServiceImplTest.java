@@ -39,10 +39,13 @@ public class TranslatorServiceImplTest extends AndroidTestCase {
 	public void testShouldReturnNullOnNotExistingCountry() {
 		assertNull(translatorService.translateToName("654"));
 	}
-	
+
 	public void testShouldReturnNullOnInvalidStream() {
-		TranslatorServiceImpl invalid = new TranslatorServiceImpl(null);
-		assertNull(translatorService.translateToName("smth"));
+        try {
+            new TranslatorServiceImpl(null).translateToName("smth");
+            fail("Expected IllegalArgumentException");
+        } catch (IllegalArgumentException exc) {
+        }
 	}
 	
 	public void testShouldReturnNullOnWStream() {
@@ -78,8 +81,11 @@ public class TranslatorServiceImplTest extends AndroidTestCase {
     }
 
     public void testShouldReturnNullOnInvalidStreamUUID() {
-        TranslatorServiceImpl invalid = new TranslatorServiceImpl(null);
-        assertNull(translatorService.translateToUUID("smth"));
+        try {
+            new TranslatorServiceImpl(null).translateToUUID("smth");
+            fail("Expected IllegalArgumentException");
+        } catch (IllegalArgumentException exc) {
+        }
     }
 
     public void testShouldReturnNullOnWStreamUUID() {

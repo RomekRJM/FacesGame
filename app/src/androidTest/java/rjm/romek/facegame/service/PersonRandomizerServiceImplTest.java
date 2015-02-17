@@ -9,28 +9,28 @@ import rjm.romek.facegame.service.PhotoService;
 import rjm.romek.facegame.service.PhotoServiceImpl;
 import rjm.romek.source.model.Country;
 
-public class PhotoServiceImplTest extends AndroidTestCase {
+public class PersonRandomizerServiceImplTest extends AndroidTestCase {
 
-    private PhotoService photoService;
+    private PersonRandomizerService personService;
 
     @Override
     public void setUp() throws Exception {
         super.setUp();
         AssetManager assetManager = getContext().getAssets();
-        photoService = new PhotoServiceImpl(assetManager);
+        personService = new PersonRandomizerServiceImpl(assetManager);
     }
 
     public void testOpensSingleFileFolder() {
         Country country = new Country();
         country.setName("Poland");
 
-        Assert.assertNotNull(photoService.readRandomInhabitantBitmap(country));
+        Assert.assertNotNull(personService.readRandomInhabitant(country));
     }
 
     public void testReturnsNullForEmptyFileFolder() {
         Country country = new Country();
         country.setName("test");
 
-        Assert.assertNull(photoService.readRandomInhabitantBitmap(country));
+        Assert.assertNull(personService.readRandomInhabitant(country));
     }
 }

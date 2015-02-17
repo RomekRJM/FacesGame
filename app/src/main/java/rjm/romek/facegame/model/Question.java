@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public class Question {
 
-    private Bitmap personBitmap;
+    private Person person;
     private Set<Country> countries;
     private Date date;
     private Country correctAnswer;
@@ -59,12 +59,12 @@ public class Question {
         return gameUUID;
     }
 
-    public Bitmap getPersonBitmap() {
-        return personBitmap;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setPersonBitmap(Bitmap personBitmap) {
-        this.personBitmap = personBitmap;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     public boolean isCorrectlyAnswered() {

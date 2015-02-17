@@ -33,7 +33,7 @@ public class QuestionServiceImplTest extends AndroidTestCase {
 
         for(Question q: questions) {
             assertNotNull(q.getGameUUID());
-            assertNotNull(q.getPersonBitmap());
+            assertNotNull(q.getPerson());
             assertNotNull(q.getCorrectAnswer());
             assertNull(q.getDate());
             assertNull(q.getGivenAnswer());

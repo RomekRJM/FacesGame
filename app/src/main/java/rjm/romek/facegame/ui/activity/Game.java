@@ -3,12 +3,15 @@ package rjm.romek.facegame.ui.activity;
 import rjm.romek.facegame.R;
 import rjm.romek.facegame.model.Difficulty;
 import rjm.romek.facegame.model.Question;
+import rjm.romek.facegame.service.PhotoService;
+import rjm.romek.facegame.service.PhotoServiceImpl;
 import rjm.romek.facegame.service.QuestionService;
 import rjm.romek.facegame.service.QuestionServiceImpl;
 import rjm.romek.facegame.ui.global.Global;
 import rjm.romek.source.model.Country;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,6 +27,7 @@ import java.util.Set;
 public class Game extends Activity implements OnClickListener {
 
     private QuestionService questionService;
+    private PhotoService photoService;
     private Set<Question> questions;
     private Question currentQuestion;
     private List<Button> buttonList;
@@ -51,6 +55,7 @@ public class Game extends Activity implements OnClickListener {
 
     void init() {
         try {
+            photoService = new PhotoServiceImpl(getAssets());
             questionService = createQuestionService();
             questions = questionService.generateQuestions(Difficulty.HARD);
         } catch (IOException e) {
@@ -87,7 +92,7 @@ public class Game extends Activity implements OnClickListener {
     }
 
     void repaint() {
-        portrait.setImageBitmap(currentQuestion.getPersonBitmap());
+        portrait.setImageBitmap(photoService.readFromAssets(currentQuestion.getPerson().getFileUuid()));
         Iterator<Country> countryIterator = currentQuestion.getCountries().iterator();
 
         for(Button button : buttonList) {
