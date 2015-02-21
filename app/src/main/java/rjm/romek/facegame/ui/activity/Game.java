@@ -12,6 +12,9 @@ import rjm.romek.facegame.ui.global.Global;
 import rjm.romek.source.model.Country;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -131,6 +134,10 @@ public class Game extends Activity implements OnClickListener {
             if(countryIterator.hasNext()) {
                 Country country = countryIterator.next();
                 button.setText(country.getName());
+                Bitmap flagBitmap = photoService.readFromAssets(country.getFlag());
+                Drawable flagDrawable = new BitmapDrawable(null, flagBitmap);
+                flagDrawable.setBounds(0, 0, flagBitmap.getWidth(), flagBitmap.getHeight());
+                button.setCompoundDrawables(null, flagDrawable, null, null);
             } else {
                 button.setVisibility(View.GONE);
             }

@@ -17,10 +17,12 @@ public class QuestionServiceImpl implements QuestionService {
     private final CountryRandomizer randomizer;
     private final Parameters parameters;
     private final PersonRandomizerService personRandomizer;
+    private final FlagService flagService;
 
     public QuestionServiceImpl(AssetManager assetManager, Set<Country> countries) throws IOException {
         this.randomizer = new CountryRandomizer(countries);
         this.parameters = new Parameters();
+        this.flagService = new FlagServiceImpl(assetManager);
         personRandomizer = new PersonRandomizerServiceImpl(assetManager);
     }
 
@@ -60,6 +62,10 @@ public class QuestionServiceImpl implements QuestionService {
             countries.add(randomizer.randomNeighbour(validCountry, difficulty.getRadius()));
         }
         countries.add(validCountry);
+
+        for(Country country : countries) {
+            flagService.changeFlagNameToUUID(country);
+        }
         Collections.shuffle(countries);
 
         return countries;
