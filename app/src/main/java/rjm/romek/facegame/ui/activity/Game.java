@@ -136,8 +136,8 @@ public class Game extends Activity implements OnClickListener {
                 button.setText(country.getName());
                 Bitmap flagBitmap = photoService.readFromAssets(country.getFlag());
                 Drawable flagDrawable = new BitmapDrawable(null, flagBitmap);
-                flagDrawable.setBounds(0, 0, flagBitmap.getWidth(), flagBitmap.getHeight());
-                button.setCompoundDrawables(null, flagDrawable, null, null);
+                flagDrawable.setBounds(0, 0, 2*flagBitmap.getWidth(), 2*flagBitmap.getHeight());
+                button.setCompoundDrawables(flagDrawable, null, null, null);
             } else {
                 button.setVisibility(View.GONE);
             }
