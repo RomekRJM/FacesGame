@@ -26,11 +26,11 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Set<Question> generateQuestions(Difficulty difficulty) {
-        Country country = randomizer.randomCountry();
         Set<Question> questions = new LinkedHashSet<Question>();
 
         for(int i=0; i<parameters.getQuestionsInSet(); i++) {
-            Set<Country> countries = generateCountries(difficulty, country);
+            Country country = randomizer.randomCountry();
+            List<Country> countries = generateCountries(difficulty, country);
             Question question = new Question();
             question.setCountries(countries);
             question.setCorrectAnswer(country);
@@ -41,7 +41,19 @@ public class QuestionServiceImpl implements QuestionService {
         return questions;
     }
 
-    private Set<Country> generateCountries(Difficulty difficulty, Country validCountry) {
+    @Override
+    public int countCorrectAnswered(Set<Question> questions) {
+        int correct = 0;
+
+        for(Question q : questions) {
+            if(q.isCorrectlyAnswered()) {
+                ++correct;
+            }
+        }
+        return correct;
+    }
+
+    private List<Country> generateCountries(Difficulty difficulty, Country validCountry) {
         List<Country> countries = new ArrayList<Country>(difficulty.getAvailableAnswers());
 
         for(int i=0; i<difficulty.getAvailableAnswers()-1; ++i) {
@@ -50,10 +62,7 @@ public class QuestionServiceImpl implements QuestionService {
         countries.add(validCountry);
         Collections.shuffle(countries);
 
-        Set<Country> countriesSet = new LinkedHashSet();
-        countriesSet.addAll(countries);
-
-        return countriesSet;
+        return countries;
     }
 
 }

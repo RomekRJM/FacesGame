@@ -13,7 +13,7 @@ import java.util.UUID;
 public class Question {
 
     private Person person;
-    private Set<Country> countries;
+    private List<Country> countries;
     private Date date;
     private Country correctAnswer;
     private Country givenAnswer;
@@ -23,11 +23,11 @@ public class Question {
         this.gameUUID = UUID.randomUUID().toString();
     }
 
-    public Set<Country> getCountries() {
+    public List<Country> getCountries() {
         return countries;
     }
 
-    public void setCountries(Set<Country> countries) {
+    public void setCountries(List<Country> countries) {
         this.countries = countries;
     }
 
@@ -74,5 +74,9 @@ public class Question {
     public void answer(Country country) {
         setGivenAnswer(country);
         setDate(new Date());
+    }
+
+    public void answer(int countryIndex) {
+        answer(getCountries().get(countryIndex));
     }
 }

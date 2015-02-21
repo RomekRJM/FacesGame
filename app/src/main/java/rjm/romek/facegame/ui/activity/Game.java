@@ -2,6 +2,7 @@ package rjm.romek.facegame.ui.activity;
 
 import rjm.romek.facegame.R;
 import rjm.romek.facegame.model.Difficulty;
+import rjm.romek.facegame.model.GamePhase;
 import rjm.romek.facegame.model.Question;
 import rjm.romek.facegame.service.PhotoService;
 import rjm.romek.facegame.service.PhotoServiceImpl;
@@ -11,7 +12,6 @@ import rjm.romek.facegame.ui.global.Global;
 import rjm.romek.source.model.Country;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,9 +29,12 @@ public class Game extends Activity implements OnClickListener {
     private QuestionService questionService;
     private PhotoService photoService;
     private Set<Question> questions;
+    private Iterator<Question> questionsIterator;
     private Question currentQuestion;
     private List<Button> buttonList;
     private ImageView portrait;
+    private int questionIndex;
+    private GamePhase gamePhase;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,21 +46,47 @@ public class Game extends Activity implements OnClickListener {
     public void mainGameLoop() {
         if(questions == null) {
             init();
+            gamePhase = GamePhase.WAITING_FOR_ANSWER;
+            questionIndex = -1;
         }
 
-        runLogic();
-        repaint();
+        ++questionIndex;
+
+        if(questionIndex >= questions.size()) {
+            System.out.println(questionService.countCorrectAnswered(questions) + "/"
+                    + questions.size() + " answered correctly.");
+        }
+
+        switch(gamePhase) {
+            case ANSWER_GIVEN:
+                paintAfterAnswer(); // block for animation duration
+                gamePhase = GamePhase.WAITING_FOR_ANSWER;
+            case WAITING_FOR_ANSWER:
+                runLogic();
+                paintNextQuestion();
+                break;
+        }
+
     }
 
     @Override
 	public void onClick(View v) {
+        if(!(v instanceof Button)) {
+            return;
+        }
+
+        int clickedIndex = buttonList.indexOf((Button)v);
+        currentQuestion.answer(clickedIndex);
+        gamePhase = GamePhase.ANSWER_GIVEN;
+        mainGameLoop();
 	}
 
     void init() {
         try {
             photoService = new PhotoServiceImpl(getAssets());
             questionService = createQuestionService();
-            questions = questionService.generateQuestions(Difficulty.HARD);
+            questions = questionService.generateQuestions(Difficulty.EASY);
+            questionsIterator = questions.iterator();
         } catch (IOException e) {
         }
 
@@ -76,6 +105,11 @@ public class Game extends Activity implements OnClickListener {
         buttonList.add((Button)findViewById(R.id.button2));
         buttonList.add((Button)findViewById(R.id.button3));
         buttonList.add((Button)findViewById(R.id.button4));
+
+        for(Button b: buttonList) {
+            b.setOnClickListener(this);
+        }
+
         return buttonList;
     }
 
@@ -84,14 +118,12 @@ public class Game extends Activity implements OnClickListener {
     }
 
     void runLogic() {
-        Iterator<Question> iterator = questions.iterator();
-
-        if(iterator.hasNext()) {
-            currentQuestion = iterator.next();
+        if(questionsIterator.hasNext()) {
+            currentQuestion = questionsIterator.next();
         }
     }
 
-    void repaint() {
+    void paintNextQuestion() {
         portrait.setImageBitmap(photoService.readFromAssets(currentQuestion.getPerson().getFileUuid()));
         Iterator<Country> countryIterator = currentQuestion.getCountries().iterator();
 
@@ -105,4 +137,11 @@ public class Game extends Activity implements OnClickListener {
         }
     }
 
+    void paintAfterAnswer() {
+        if(currentQuestion.isCorrectlyAnswered()) {
+            System.out.println("Correct!");
+        } else {
+            System.out.println("Wrong! Correct was: " + currentQuestion.getCorrectAnswer().getName());
+        }
+    }
 }

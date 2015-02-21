@@ -6,9 +6,9 @@ public enum Difficulty {
     private Integer availableAnswers;
     private Integer radius;
 
-    Difficulty(Integer radius, Integer availableAnswers) {
-        this.radius = radius;
+    Difficulty(Integer availableAnswers, Integer radius) {
         this.availableAnswers = availableAnswers;
+        this.radius = radius;
     }
 
     public Integer getAvailableAnswers() {

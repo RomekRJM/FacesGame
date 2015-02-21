@@ -7,4 +7,5 @@ import java.util.Set;
 
 public interface QuestionService {
     public Set<Question> generateQuestions(Difficulty difficulty);
+    public int countCorrectAnswered(Set<Question> questions);
 }
