@@ -28,6 +28,9 @@
         <activity android:name="rjm.romek.facegame.ui.activity.MainMenu">
         </activity>
 
+        <activity android:name="rjm.romek.facegame.ui.activity.EndGame">
+        </activity>
+
     </application>
 
 </manifest>

@@ -9,6 +9,7 @@ import rjm.romek.facegame.service.PhotoServiceImpl;
 import rjm.romek.facegame.service.QuestionService;
 import rjm.romek.facegame.service.QuestionServiceImpl;
 import rjm.romek.facegame.ui.global.Global;
+import rjm.romek.facegame.ui.intent.EndGameIntent;
 import rjm.romek.source.model.Country;
 
 import android.app.Activity;
@@ -55,15 +56,15 @@ public class Game extends Activity implements OnClickListener {
 
         ++questionIndex;
 
-        if(questionIndex >= questions.size()) {
-            System.out.println(questionService.countCorrectAnswered(questions) + "/"
-                    + questions.size() + " answered correctly.");
-        }
-
         switch(gamePhase) {
             case ANSWER_GIVEN:
                 paintAfterAnswer(); // block for animation duration
-                gamePhase = GamePhase.WAITING_FOR_ANSWER;
+                if(questionIndex >= questions.size()) {
+                    startActivity(new EndGameIntent(this,
+                            questionService.countCorrectAnswered(questions)));
+                } else {
+                    gamePhase = GamePhase.WAITING_FOR_ANSWER;
+                }
             case WAITING_FOR_ANSWER:
                 runLogic();
                 paintNextQuestion();
