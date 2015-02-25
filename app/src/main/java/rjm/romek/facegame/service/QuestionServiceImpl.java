@@ -62,10 +62,8 @@ public class QuestionServiceImpl implements QuestionService {
             countries.add(randomizer.randomNeighbour(validCountry, difficulty.getRadius()));
         }
         countries.add(validCountry);
+        flagService.changeFlagNameToUUID(countries);
 
-        for(Country country : countries) {
-            flagService.changeFlagNameToUUID(country);
-        }
         Collections.shuffle(countries);
 
         return countries;

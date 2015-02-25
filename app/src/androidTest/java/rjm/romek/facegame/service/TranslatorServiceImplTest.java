@@ -5,7 +5,8 @@ import android.test.AndroidTestCase;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
+import java.util.HashMap;
+import java.util.Map;
 
 public class TranslatorServiceImplTest extends AndroidTestCase {
 	
@@ -102,5 +103,23 @@ public class TranslatorServiceImplTest extends AndroidTestCase {
         });
 
         assertNull(translatorService.translateToUUID("smth"));
+    }
+
+    public void testTranslateInBatch() {
+        Map<String, String> incomplete = new HashMap<String, String>();
+        incomplete.put("empty_1", "Quett Masire.JPEG");
+        incomplete.put("7003eb4f-c5c3-4c42-9ee3-da50d326a33d.jpg", "empty_2");
+        incomplete.put("68555f7b-2f81-4a4b-893a-4c618f40ddba.JPEG", "empty_3");
+        incomplete.put("26900166-bd4e-4b79-b6f4-bd81a8864f18", "Niue");
+        incomplete.put("empty_4", "empty_5");
+
+        Map<String, String> completed = translatorService.translateInBatch(incomplete);
+
+        assertEquals(completed.get("empty_1"), "Quett Masire.JPEG");
+        assertEquals(completed.get("68555f7b-2f81-4a4b-893a-4c618f40ddba.JPEG"), "Quett Masire.JPEG");
+        assertEquals(completed.get("26900166-bd4e-4b79-b6f4-bd81a8864f18"), "Niue");
+        assertEquals(completed.get("7003eb4f-c5c3-4c42-9ee3-da50d326a33d.jpg"), "Luther Wenge.jpg");
+        assertEquals(completed.get("empty_4"), "empty_5");
+        assertEquals(5, completed.size());
     }
 }
