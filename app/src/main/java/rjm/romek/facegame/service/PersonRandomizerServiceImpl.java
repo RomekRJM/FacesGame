@@ -14,11 +14,13 @@ public class PersonRandomizerServiceImpl implements PersonRandomizerService {
     private AssetManager assetManager;
     private Parameters parameters;
     private Random random;
+    private TranslatorService translatorService;
 
     public PersonRandomizerServiceImpl(AssetManager assetManager) {
         this.assetManager = assetManager;
         this.parameters = new Parameters();
         this.random = new Random();
+        this.translatorService = new TranslatorServiceImpl();
     }
 
     @Override
@@ -26,9 +28,7 @@ public class PersonRandomizerServiceImpl implements PersonRandomizerService {
         Person person = null;
 
         try {
-            TranslatorService translatorService =
-                    new TranslatorServiceImpl(assetManager.open(parameters.getNamingFile()));
-            String countryDir = translatorService.translateToUUID(country.getName());
+            String countryDir = translatorService.translateToFileName(country.getName());
             String countryDirPath = parameters.getPhotosDir() + countryDir;
             String [] photos = assetManager.list(countryDirPath);
 
@@ -37,11 +37,9 @@ public class PersonRandomizerServiceImpl implements PersonRandomizerService {
             }
 
             int randomIndex = random.nextInt(photos.length);
-            translatorService =
-                    new TranslatorServiceImpl(assetManager.open(parameters.getNamingFile()));
             String personFile = countryDirPath + "/" + photos[randomIndex];
             String personName = translatorService.translateToName(photos[randomIndex]);
-            person = new Person(personName, personFile);
+            person = new Person(personName);
         } catch (IOException e) {
         }
 

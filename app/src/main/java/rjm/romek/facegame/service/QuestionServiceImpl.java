@@ -22,8 +22,8 @@ public class QuestionServiceImpl implements QuestionService {
     public QuestionServiceImpl(AssetManager assetManager, Set<Country> countries) throws IOException {
         this.randomizer = new CountryRandomizer(countries);
         this.parameters = new Parameters();
-        this.flagService = new FlagServiceImpl(assetManager);
         personRandomizer = new PersonRandomizerServiceImpl(assetManager);
+        flagService = new FlagServiceImpl();
     }
 
     @Override
@@ -33,6 +33,7 @@ public class QuestionServiceImpl implements QuestionService {
         for(int i=0; i<parameters.getQuestionsInSet(); i++) {
             Country country = randomizer.randomCountry();
             List<Country> countries = generateCountries(difficulty, country);
+            flagService.changeNameToFileName(countries);
             Question question = new Question();
             question.setCountries(countries);
             question.setCorrectAnswer(country);
@@ -62,11 +63,9 @@ public class QuestionServiceImpl implements QuestionService {
             countries.add(randomizer.randomNeighbour(validCountry, difficulty.getRadius()));
         }
         countries.add(validCountry);
-        flagService.changeFlagNameToUUID(countries);
 
         Collections.shuffle(countries);
 
         return countries;
     }
-
 }

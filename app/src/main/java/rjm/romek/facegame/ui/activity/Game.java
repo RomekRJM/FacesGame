@@ -128,7 +128,7 @@ public class Game extends Activity implements OnClickListener {
     }
 
     void paintNextQuestion() {
-        portrait.setImageBitmap(photoService.readFromAssets(currentQuestion.getPerson().getFileUuid()));
+        //portrait.setImageBitmap(photoService.readFromAssets(currentQuestion.getPerson()));
         Iterator<Country> countryIterator = currentQuestion.getCountries().iterator();
 
         for(Button button : buttonList) {

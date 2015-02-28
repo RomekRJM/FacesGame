@@ -1,108 +1,36 @@
 package rjm.romek.facegame.service;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
-
-import com.google.gson.stream.JsonReader;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
 
 public class TranslatorServiceImpl implements TranslatorService {
-	
-	private final JsonReader reader;
-	
-	public TranslatorServiceImpl(InputStream dictionaryStream) {
-        if(dictionaryStream == null) {
-            throw new IllegalArgumentException("Dictionary stream should not be null");
-        }
+    private final String encoding;
 
-        reader = new JsonReader(new InputStreamReader(dictionaryStream));
-	}
-
-    @Override
-    public Map<String, String> translateInBatch(Map<String, String> map) {
-        Map<String, String> completed = new HashMap<String, String>();
-
-        try {
-            reader.beginObject();
-
-            while (reader.hasNext()) {
-                String currentUUID = reader.nextName();
-                String currentName = reader.nextString();
-
-                for(Map.Entry<String, String> entry : map.entrySet()) {
-                    if((StringUtils.startsWith(entry.getValue(), EMPTY_PREFIX)
-                            && StringUtils.equals(currentUUID, entry.getKey()))) {
-                        completed.put(currentUUID, currentName);
-                    }
-
-                    if(StringUtils.startsWith(entry.getKey(), EMPTY_PREFIX)
-                            && StringUtils.equals(currentName, entry.getValue()))
-                    {
-                        completed.put(currentUUID, currentName);
-                    }
-                }
-            }
-
-        } catch (IOException exc) {
-        } finally {
-            IOUtils.closeQuietly(reader);
-        }
-
-        map.putAll(completed);
-
-        return map;
+    public TranslatorServiceImpl() {
+        this("UTF-8");
     }
 
-	@Override
-	public String translateToName(String uuid) {
-		String translatedName = null;
-		
-		try {
-			reader.beginObject();
-			
-			while (reader.hasNext()) {
-				if(reader.nextName().equals(uuid)) {
-					translatedName = reader.nextString();
-					break;
-				} else {
-					reader.nextString();
-				}
-			}
-			
-		} catch (IOException exc) {
-		} finally {
-			IOUtils.closeQuietly(reader);
-		}
-		
-		return translatedName;
-	}
+    TranslatorServiceImpl(String encoding) {
+        this.encoding = encoding;
+    }
 
     @Override
-    public String translateToUUID(String name) {
-        String translatedUUID = null;
-
+    public String translateToName(String fileName) {
         try {
-            reader.beginObject();
-
-            while (reader.hasNext()) {
-                String currentUUID = reader.nextName();
-                String currentName = reader.nextString();
-                if(currentName.equals(name)) {
-                    translatedUUID = currentUUID;
-                    break;
-                }
-            }
-
-        } catch (IOException exc) {
-        } finally {
-            IOUtils.closeQuietly(reader);
+            return URLDecoder.decode(fileName, encoding);
+        } catch (UnsupportedEncodingException e) {
+            return fileName;
         }
+    }
 
-        return translatedUUID;
+    @Override
+    public String translateToFileName(String name) {
+        try {
+            return URLEncoder.encode(name, encoding);
+        } catch (UnsupportedEncodingException e) {
+            return name;
+        }
     }
 }

@@ -12,36 +12,19 @@ import rjm.romek.source.model.Country;
 import rjm.romek.source.model.Person;
 
 public class FlagServiceImpl implements FlagService {
-    private AssetManager assetManager;
     private Parameters parameters;
+    private TranslatorService translatorService;
 
-    public FlagServiceImpl(AssetManager assetManager) {
-        this.assetManager = assetManager;
+    public FlagServiceImpl() {
         this.parameters = new Parameters();
+        this.translatorService = new TranslatorServiceImpl();
     }
 
     @Override
-    public void changeFlagNameToUUID(List<Country> countries) {
-        try {
-            TranslatorService translatorService =
-                    new TranslatorServiceImpl(assetManager.open(parameters.getNamingFile()));
-
-            Map<String, String> map = new HashMap<String, String>();
-            for(int i=0; i<countries.size(); ++i) {
-                map.put(TranslatorService.EMPTY_PREFIX + i, countries.get(i).getFlag());
-            }
-
-            translatorService.translateInBatch(map);
-
-            for(Country country : countries) {
-                for(Map.Entry<String, String> entry : map.entrySet()) {
-                    if(country.getFlag().equals(entry.getValue())) {
-                        country.setFlag(parameters.getFlagDir() + entry.getKey());
-                    }
-                }
-            }
-
-        } catch (IOException e) {
+    public void changeNameToFileName(List<Country> countries) {
+        for (Country country : countries) {
+            country.setFlag(parameters.getFlagDir()
+                    + translatorService.translateToFileName(country.getFlag()));
         }
     }
 }

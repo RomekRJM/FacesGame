@@ -5,5 +5,5 @@ import java.util.List;
 import rjm.romek.source.model.Country;
 
 public interface FlagService {
-    public void changeFlagNameToUUID(List<Country> countries);
+    public void changeNameToFileName(List<Country> countries);
 }
