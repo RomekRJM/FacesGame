@@ -37,8 +37,7 @@ public class PersonRandomizerServiceImpl implements PersonRandomizerService {
             }
 
             int randomIndex = random.nextInt(photos.length);
-            String personFile = countryDirPath + "/" + photos[randomIndex];
-            String personName = translatorService.translateToName(photos[randomIndex]);
+            String personName = countryDirPath + "/" + photos[randomIndex];
             person = new Person(personName);
         } catch (IOException e) {
         }
