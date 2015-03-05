@@ -14,11 +14,16 @@ import rjm.romek.source.model.Country;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -38,9 +43,10 @@ public class Game extends Activity implements OnClickListener {
     private List<Button> buttonList;
     private ImageView portrait;
     private int questionIndex;
+    private int clickedIndex;
     private GamePhase gamePhase;
 
-	@Override
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game);
@@ -51,23 +57,16 @@ public class Game extends Activity implements OnClickListener {
         if(questions == null) {
             init();
             gamePhase = GamePhase.WAITING_FOR_ANSWER;
-            questionIndex = -1;
+            questionIndex = 0;
         }
-
-        ++questionIndex;
 
         switch(gamePhase) {
             case ANSWER_GIVEN:
-                paintAfterAnswer(); // block for animation duration
-                if(questionIndex >= questions.size()) {
-                    startActivity(new EndGameIntent(this,
-                            questionService.countCorrectAnswered(questions)));
-                } else {
-                    gamePhase = GamePhase.WAITING_FOR_ANSWER;
-                }
+                paintAfterAnswer();
+                break;
             case WAITING_FOR_ANSWER:
                 runLogic();
-                paintNextQuestion();
+                paintQuestion();
                 break;
         }
 
@@ -79,7 +78,7 @@ public class Game extends Activity implements OnClickListener {
             return;
         }
 
-        int clickedIndex = buttonList.indexOf((Button)v);
+        clickedIndex = buttonList.indexOf((Button)v);
         currentQuestion.answer(clickedIndex);
         gamePhase = GamePhase.ANSWER_GIVEN;
         mainGameLoop();
@@ -127,7 +126,7 @@ public class Game extends Activity implements OnClickListener {
         }
     }
 
-    void paintNextQuestion() {
+    void paintQuestion() {
         portrait.setImageBitmap(photoService.readFromAssets(currentQuestion.getPerson().getName()));
         Iterator<Country> countryIterator = currentQuestion.getCountries().iterator();
 
@@ -146,10 +145,60 @@ public class Game extends Activity implements OnClickListener {
     }
 
     void paintAfterAnswer() {
-        if(currentQuestion.isCorrectlyAnswered()) {
-            System.out.println("Correct!");
+        final Button clicked = buttonList.get(clickedIndex);
+        final int green = Color.parseColor("#11FF00");
+        final int red = Color.parseColor("#FF0000");
+        final int old = clicked.getDrawingCacheBackgroundColor();
+
+        Animation animation = new AlphaAnimation(1, 0);
+        animation.setDuration(500);
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setRepeatCount(8);
+        animation.setRepeatMode(Animation.REVERSE);
+
+        animation.setAnimationListener(
+              new Animation.AnimationListener() {
+                  private long started;
+
+                  @Override
+                  public void onAnimationStart(Animation animation) {
+                      started = System.currentTimeMillis();
+                  }
+
+                  @Override
+                  public void onAnimationEnd(Animation animation) {
+                      clicked.setBackgroundColor(old);
+                      goToNextQuestion();
+                      mainGameLoop();
+                  }
+
+                  @Override
+                  public void onAnimationRepeat(Animation animation) {
+                      if(System.currentTimeMillis() - started < 2000) return;
+
+                      int color = 0;
+                      if(currentQuestion.isCorrectlyAnswered()) {
+                          color = green;
+                      } else {
+                          color = red;
+                      }
+                      clicked.setBackgroundColor(color);
+                  }
+              }
+        );
+
+        clicked.startAnimation(animation);
+    }
+
+    public void goToNextQuestion() {
+        ++questionIndex;
+
+        if(questionIndex >= questions.size()) {
+            startActivity(new EndGameIntent(this,
+                    questionService.countCorrectAnswered(questions)));
         } else {
-            System.out.println("Wrong! Correct was: " + currentQuestion.getCorrectAnswer().getName());
+            gamePhase = GamePhase.WAITING_FOR_ANSWER;
         }
     }
+
 }
