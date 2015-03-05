@@ -15,6 +15,7 @@ import rjm.romek.source.model.Country;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -45,6 +46,7 @@ public class Game extends Activity implements OnClickListener {
     private int questionIndex;
     private int clickedIndex;
     private GamePhase gamePhase;
+    private Drawable buttonBackground;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +95,6 @@ public class Game extends Activity implements OnClickListener {
         } catch (IOException e) {
         }
 
-        buttonList = createButtons();
         portrait = createImageView();
     }
 
@@ -130,6 +131,7 @@ public class Game extends Activity implements OnClickListener {
         portrait.setImageBitmap(photoService.readFromAssets(currentQuestion.getPerson().getName()));
         Iterator<Country> countryIterator = currentQuestion.getCountries().iterator();
 
+        buttonList = createButtons();
         for(Button button : buttonList) {
             if(countryIterator.hasNext()) {
                 Country country = countryIterator.next();
@@ -148,7 +150,6 @@ public class Game extends Activity implements OnClickListener {
         final Button clicked = buttonList.get(clickedIndex);
         final int green = Color.parseColor("#11FF00");
         final int red = Color.parseColor("#FF0000");
-        final int old = clicked.getDrawingCacheBackgroundColor();
 
         Animation animation = new AlphaAnimation(1, 0);
         animation.setDuration(500);
@@ -167,7 +168,7 @@ public class Game extends Activity implements OnClickListener {
 
                   @Override
                   public void onAnimationEnd(Animation animation) {
-                      clicked.setBackgroundColor(old);
+                      clicked.getBackground().clearColorFilter();
                       goToNextQuestion();
                       mainGameLoop();
                   }
@@ -182,7 +183,8 @@ public class Game extends Activity implements OnClickListener {
                       } else {
                           color = red;
                       }
-                      clicked.setBackgroundColor(color);
+                      clicked.getBackground().setColorFilter(red, PorterDuff.Mode.MULTIPLY);
+                      clicked.invalidate();
                   }
               }
         );
