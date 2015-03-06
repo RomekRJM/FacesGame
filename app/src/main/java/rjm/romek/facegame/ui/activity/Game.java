@@ -183,7 +183,7 @@ public class Game extends Activity implements OnClickListener {
                       } else {
                           color = red;
                       }
-                      clicked.getBackground().setColorFilter(red, PorterDuff.Mode.MULTIPLY);
+                      clicked.getBackground().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
                       clicked.invalidate();
                   }
               }
