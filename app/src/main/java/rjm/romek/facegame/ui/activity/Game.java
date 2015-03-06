@@ -52,23 +52,21 @@ public class Game extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game);
+        gamePhase = GamePhase.INIT;
         mainGameLoop();
 	}
 
     public void mainGameLoop() {
-        if(questions == null) {
-            init();
-            gamePhase = GamePhase.WAITING_FOR_ANSWER;
-            questionIndex = 0;
-        }
-
         switch(gamePhase) {
-            case ANSWER_GIVEN:
-                paintAfterAnswer();
+            case INIT:
+                init();
                 break;
             case WAITING_FOR_ANSWER:
                 runLogic();
                 paintQuestion();
+                break;
+            case ANSWER_GIVEN:
+                paintAfterAnswer();
                 break;
         }
 
@@ -95,7 +93,12 @@ public class Game extends Activity implements OnClickListener {
         } catch (IOException e) {
         }
 
+        buttonList = createButtons();
         portrait = createImageView();
+
+        questionIndex = 0;
+        gamePhase = GamePhase.WAITING_FOR_ANSWER;
+        mainGameLoop();
     }
 
     QuestionService createQuestionService() throws IOException {
@@ -131,7 +134,6 @@ public class Game extends Activity implements OnClickListener {
         portrait.setImageBitmap(photoService.readFromAssets(currentQuestion.getPerson().getName()));
         Iterator<Country> countryIterator = currentQuestion.getCountries().iterator();
 
-        buttonList = createButtons();
         for(Button button : buttonList) {
             if(countryIterator.hasNext()) {
                 Country country = countryIterator.next();
