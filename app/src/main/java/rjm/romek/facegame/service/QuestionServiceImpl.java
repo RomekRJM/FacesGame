@@ -58,12 +58,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     private List<Country> generateCountries(Difficulty difficulty, Country validCountry) {
         List<Country> countries = new ArrayList<Country>(difficulty.getAvailableAnswers());
-
-        for(int i=0; i<difficulty.getAvailableAnswers()-1; ++i) {
-            countries.add(randomizer.randomNeighbour(validCountry, difficulty.getRadius()));
-        }
+        countries.addAll(randomizer.randomNeighbours(validCountry,
+                difficulty.getRadius(), difficulty.getAvailableAnswers()-1));
         countries.add(validCountry);
-
         Collections.shuffle(countries);
 
         return countries;
