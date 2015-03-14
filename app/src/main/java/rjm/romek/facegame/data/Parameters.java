@@ -4,7 +4,7 @@ public final class Parameters {
 	private final String countryListFile = "list.json";
     private final String photosDir = "photos/";
     private final String flagDir = "flags/";
-    private final int questionsInSet = 3;
+    private final int questionsInSet = 10;
 
     public int getQuestionsInSet() {
         return questionsInSet;

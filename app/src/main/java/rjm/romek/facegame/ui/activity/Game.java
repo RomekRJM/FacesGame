@@ -78,7 +78,7 @@ public class Game extends Activity implements OnClickListener {
 
     @Override
 	public void onClick(View v) {
-        if(!(v instanceof Button)) {
+        if(!(v instanceof Button) || (gamePhase == GamePhase.ANSWER_GIVEN)) {
             return;
         }
 
@@ -158,7 +158,7 @@ public class Game extends Activity implements OnClickListener {
         Animation animation = new AlphaAnimation(1, 0);
         animation.setDuration(500);
         animation.setInterpolator(new LinearInterpolator());
-        animation.setRepeatCount(8);
+        animation.setRepeatCount(5);
         animation.setRepeatMode(Animation.REVERSE);
 
         animation.setAnimationListener(
@@ -179,7 +179,7 @@ public class Game extends Activity implements OnClickListener {
 
                   @Override
                   public void onAnimationRepeat(Animation animation) {
-                      if(System.currentTimeMillis() - started < 2000) return;
+                      if(System.currentTimeMillis() - started < 1500) return;
 
                       int color = 0;
                       if(currentQuestion.isCorrectlyAnswered()) {
