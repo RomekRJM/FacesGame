@@ -4,6 +4,8 @@ import rjm.romek.facegame.R;
 import rjm.romek.facegame.model.Difficulty;
 import rjm.romek.facegame.model.GamePhase;
 import rjm.romek.facegame.model.Question;
+import rjm.romek.facegame.service.FlagService;
+import rjm.romek.facegame.service.FlagServiceImpl;
 import rjm.romek.facegame.service.PhotoService;
 import rjm.romek.facegame.service.PhotoServiceImpl;
 import rjm.romek.facegame.service.QuestionService;
@@ -37,6 +39,7 @@ import java.util.Set;
 public class Game extends Activity implements OnClickListener {
 
     private QuestionService questionService;
+    private FlagService flagService;
     private PhotoService photoService;
     private Set<Question> questions;
     private Iterator<Question> questionsIterator;
@@ -88,6 +91,7 @@ public class Game extends Activity implements OnClickListener {
     void init() {
         try {
             photoService = new PhotoServiceImpl(getAssets());
+            flagService = new FlagServiceImpl();
             questionService = createQuestionService();
             questions = questionService.generateQuestions(Difficulty.EASY);
             questionsIterator = questions.iterator();
@@ -135,11 +139,9 @@ public class Game extends Activity implements OnClickListener {
             if(countryIterator.hasNext()) {
                 Country country = countryIterator.next();
                 button.setText(country.getName());
-                Bitmap flagBitmap = photoService.readFromAssets(country.getFlag());
+                String flagFileName = flagService.changeNameToFileName(country);
+                Bitmap flagBitmap = photoService.readFromAssets(flagFileName);
                 Drawable flagDrawable = new BitmapDrawable(null, flagBitmap);
-                if(flagBitmap == null) {
-                    System.out.println(country.getName() + ": " + country.getFlag());
-                }
                 flagDrawable.setBounds(0, 0, 2*flagBitmap.getWidth(), 2*flagBitmap.getHeight());
                 button.setCompoundDrawables(flagDrawable, null, null, null);
             } else {

@@ -21,10 +21,7 @@ public class FlagServiceImpl implements FlagService {
     }
 
     @Override
-    public void changeNameToFileName(List<Country> countries) {
-        for (Country country : countries) {
-            country.setFlag(parameters.getFlagDir()
-                    + translatorService.translateToFileName(country.getFlag()));
-        }
+    public String changeNameToFileName(Country country) {
+        return parameters.getFlagDir() + translatorService.translateToFileName(country.getFlag());
     }
 }

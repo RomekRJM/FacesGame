@@ -1,15 +1,10 @@
 package rjm.romek.facegame.data;
 
 public final class Parameters {
-	public final String countryListFile = "list.json";
-    public final String namingFile = "naming.json";
-    public final String photosDir = "photos/";
-    public final String flagDir = "flags/";
-    public final int questionsInSet = 3;
-
-    public String getNamingFile() {
-        return namingFile;
-    }
+	private final String countryListFile = "list.json";
+    private final String photosDir = "photos/";
+    private final String flagDir = "flags/";
+    private final int questionsInSet = 3;
 
     public int getQuestionsInSet() {
         return questionsInSet;
