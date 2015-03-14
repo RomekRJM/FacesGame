@@ -29,7 +29,6 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Set<Question> generateQuestions(Difficulty difficulty) {
         Set<Question> questions = new LinkedHashSet<Question>();
-
         for(int i=0; i<parameters.getQuestionsInSet(); i++) {
             Country country = randomizer.randomCountry();
             List<Country> countries = generateCountries(difficulty, country);

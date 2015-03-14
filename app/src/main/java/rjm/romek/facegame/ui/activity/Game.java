@@ -46,7 +46,6 @@ public class Game extends Activity implements OnClickListener {
     private int questionIndex;
     private int clickedIndex;
     private GamePhase gamePhase;
-    private Drawable buttonBackground;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -138,6 +137,9 @@ public class Game extends Activity implements OnClickListener {
                 button.setText(country.getName());
                 Bitmap flagBitmap = photoService.readFromAssets(country.getFlag());
                 Drawable flagDrawable = new BitmapDrawable(null, flagBitmap);
+                if(flagBitmap == null) {
+                    System.out.println(country.getName() + ": " + country.getFlag());
+                }
                 flagDrawable.setBounds(0, 0, 2*flagBitmap.getWidth(), 2*flagBitmap.getHeight());
                 button.setCompoundDrawables(flagDrawable, null, null, null);
             } else {
