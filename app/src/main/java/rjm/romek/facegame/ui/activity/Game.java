@@ -12,6 +12,7 @@ import rjm.romek.facegame.service.QuestionService;
 import rjm.romek.facegame.service.QuestionServiceImpl;
 import rjm.romek.facegame.ui.global.Global;
 import rjm.romek.facegame.ui.intent.EndGameIntent;
+import rjm.romek.facegame.ui.timer.TimerThread;
 import rjm.romek.source.model.Country;
 
 import android.app.Activity;
@@ -22,6 +23,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AlphaAnimation;
@@ -46,9 +48,11 @@ public class Game extends Activity implements OnClickListener {
     private Question currentQuestion;
     private List<Button> buttonList;
     private ImageView portrait;
+    private SurfaceView timerSurface;
     private int questionIndex;
     private int clickedIndex;
     private GamePhase gamePhase;
+    private TimerThread timerThread;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +73,19 @@ public class Game extends Activity implements OnClickListener {
                 paintAfterAnswer();
                 break;
             case WAITING_FOR_ANSWER:
+                startTimer();
                 runLogic();
                 paintQuestion();
                 break;
         }
 
+    }
+
+    private void startTimer() {
+        if(timerThread == null || !timerThread.isAlive()) {
+            timerThread = new TimerThread(timerSurface, 5000);
+            timerThread.start();
+        }
     }
 
     @Override
@@ -99,6 +111,7 @@ public class Game extends Activity implements OnClickListener {
         }
 
         portrait = createImageView();
+        timerSurface = createSurfaceView();
     }
 
     QuestionService createQuestionService() throws IOException {
@@ -118,6 +131,10 @@ public class Game extends Activity implements OnClickListener {
         }
 
         return buttonList;
+    }
+
+    SurfaceView createSurfaceView() {
+        return (SurfaceView)findViewById(R.id.timerSurface);
     }
 
     ImageView createImageView() {
