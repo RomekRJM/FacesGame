@@ -71,9 +71,10 @@ public class TimerThread extends Thread {
     private void drawTime(Canvas canvas) {
         int width = canvas.getWidth();
         int height = canvas.getHeight();
-        int right = Math.round((float)timePassed/time * width);
+        float completed = (float)timePassed/time;
+        int right = Math.round(completed * width);
 
-        paint.setColor(Color.GREEN);
+        paint.setColor(colorService.getColor(completed));
         canvas.drawRect(0, 0, width, height, paint);
 
         paint.setColor(Color.BLACK);

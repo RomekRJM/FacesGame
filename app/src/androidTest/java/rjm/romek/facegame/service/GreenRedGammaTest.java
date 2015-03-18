@@ -21,4 +21,12 @@ public class GreenRedGammaTest extends TestCase {
         assertEquals(Color.parseColor("#FF8000"), greenRedGamma.getColor(3, 5));
         assertEquals(Color.parseColor("#FF0000"), greenRedGamma.getColor(4, 5));
     }
+
+    public void testGenerationsFloat() {
+        assertEquals(Color.parseColor("#00FF00"), greenRedGamma.getColor(0));
+        assertEquals(Color.parseColor("#80FF00"), greenRedGamma.getColor(1f/4));
+        assertEquals(Color.parseColor("#FFFF00"), greenRedGamma.getColor(2f/4));
+        assertEquals(Color.parseColor("#FF8000"), greenRedGamma.getColor(3f/4));
+        assertEquals(Color.parseColor("#FF0000"), greenRedGamma.getColor(1));
+    }
 }
