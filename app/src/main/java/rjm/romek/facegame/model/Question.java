@@ -18,6 +18,7 @@ public class Question {
     private Country correctAnswer;
     private Country givenAnswer;
     private final String gameUUID;
+    private boolean timedOut;
 
     public Question() {
         this.gameUUID = UUID.randomUUID().toString();
@@ -67,8 +68,16 @@ public class Question {
         this.person = person;
     }
 
+    public boolean isTimedOut() {
+        return timedOut;
+    }
+
+    public void setTimedOut(boolean timedOut) {
+        this.timedOut = timedOut;
+    }
+
     public boolean isCorrectlyAnswered() {
-        return correctAnswer.equals(givenAnswer);
+        return !timedOut && correctAnswer.equals(givenAnswer);
     }
 
     public void answer(Country country) {
@@ -79,4 +88,5 @@ public class Question {
     public void answer(int countryIndex) {
         answer(getCountries().get(countryIndex));
     }
+
 }
