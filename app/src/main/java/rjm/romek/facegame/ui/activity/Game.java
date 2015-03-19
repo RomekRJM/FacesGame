@@ -13,6 +13,7 @@ import rjm.romek.facegame.service.QuestionServiceImpl;
 import rjm.romek.facegame.ui.global.Global;
 import rjm.romek.facegame.ui.intent.EndGameIntent;
 import rjm.romek.facegame.ui.timer.TimerThread;
+import rjm.romek.facegame.ui.timer.TimerThreadListener;
 import rjm.romek.source.model.Country;
 
 import android.app.Activity;
@@ -31,6 +32,7 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,7 +40,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-public class Game extends Activity implements OnClickListener {
+public class Game extends Activity implements OnClickListener, TimerThreadListener {
 
     private QuestionService questionService;
     private FlagService flagService;
@@ -84,6 +86,7 @@ public class Game extends Activity implements OnClickListener {
     private void startTimer() {
         if(timerThread == null || !timerThread.isAlive()) {
             timerThread = new TimerThread(timerSurface, 5000);
+            timerThread.setTimerThreadListener(this);
             timerThread.start();
         }
     }
@@ -168,12 +171,12 @@ public class Game extends Activity implements OnClickListener {
     }
 
     void paintAfterAnswer() {
-        final Button clicked = buttonList.get(clickedIndex);
+        final ImageView blinkingView = portrait;
         final int green = Color.parseColor("#11FF00");
         final int red = Color.parseColor("#FF0000");
 
         Animation animation = new AlphaAnimation(1, 0);
-        animation.setDuration(500);
+        animation.setDuration(750);
         animation.setInterpolator(new LinearInterpolator());
         animation.setRepeatCount(5);
         animation.setRepeatMode(Animation.REVERSE);
@@ -189,7 +192,7 @@ public class Game extends Activity implements OnClickListener {
 
                   @Override
                   public void onAnimationEnd(Animation animation) {
-                      clicked.getBackground().clearColorFilter();
+                      blinkingView.clearColorFilter();
                       goToNextQuestion();
                       mainGameLoop();
                   }
@@ -204,13 +207,13 @@ public class Game extends Activity implements OnClickListener {
                       } else {
                           color = red;
                       }
-                      clicked.getBackground().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
-                      clicked.invalidate();
+                      blinkingView.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
+                      blinkingView.invalidate();
                   }
               }
         );
 
-        clicked.startAnimation(animation);
+        blinkingView.startAnimation(animation);
     }
 
     public void goToNextQuestion() {
@@ -224,4 +227,15 @@ public class Game extends Activity implements OnClickListener {
         }
     }
 
+    @Override
+    public void timeout() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                currentQuestion.setTimedOut(true);
+                gamePhase = GamePhase.ANSWER_GIVEN;
+                mainGameLoop();
+            }
+        });
+    }
 }

@@ -17,7 +17,7 @@ public class TimerThread extends Thread {
     private Paint paint;
     private ColorService colorService;
     private final long INTERVAL = 20;
-    private long refreshesPerCycle;
+    private TimerThreadListener listener;
 
     public TimerThread(SurfaceView surfaceView, long time) {
         this.time = time;
@@ -25,7 +25,10 @@ public class TimerThread extends Thread {
         this.paint = new Paint();
         this.colorService = new GreenRedGamma();
         this.timePassed = 0;
-        this.refreshesPerCycle = time / INTERVAL;
+    }
+
+    public void setTimerThreadListener(TimerThreadListener listener) {
+        this.listener = listener;
     }
 
     public void setRunning(boolean run) {
@@ -53,7 +56,14 @@ public class TimerThread extends Thread {
                 timePassed = time;
                 redrawCanvas();
                 setRunning(false);
+                fireTimeoutEvent();
             }
+        }
+    }
+
+    private void fireTimeoutEvent() {
+        if(listener != null) {
+            listener.timeout();
         }
     }
 
