@@ -95,6 +95,12 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
         }
     }
 
+    private void stopTimer() {
+        if(timerThread != null || timerThread.isAlive()) {
+            timerThread.setRunning(false);
+        }
+    }
+
     @Override
 	public void onClick(View v) {
         if(!(v instanceof Button) || (gamePhase == GamePhase.ANSWER_GIVEN)) {
@@ -104,6 +110,7 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
         clickedIndex = buttonList.indexOf((Button)v);
         currentQuestion.answer(clickedIndex);
         gamePhase = GamePhase.ANSWER_GIVEN;
+        stopTimer();
         mainGameLoop();
 	}
 
