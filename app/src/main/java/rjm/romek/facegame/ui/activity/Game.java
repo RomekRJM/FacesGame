@@ -184,22 +184,20 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
 
     void paintAfterAnswer() {
         final ImageView blinkingView = portrait;
-        final int green = Color.parseColor("#11FF00");
-        final int red = Color.parseColor("#FF8888");
+        final int green = Color.parseColor("#11FF11");
+        final int red = Color.parseColor("#FF1111");
 
         Animation animation = new AlphaAnimation(1, 0);
         animation.setDuration(700);
         animation.setInterpolator(new LinearInterpolator());
-        animation.setRepeatCount(3);
+        animation.setRepeatCount(2);
         animation.setRepeatMode(Animation.REVERSE);
 
         animation.setAnimationListener(
               new Animation.AnimationListener() {
-                  private long started;
 
                   @Override
                   public void onAnimationStart(Animation animation) {
-                      started = System.currentTimeMillis();
                   }
 
                   @Override
