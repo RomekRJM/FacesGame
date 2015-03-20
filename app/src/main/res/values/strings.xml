@@ -5,6 +5,7 @@
     <string name="main_menu_records">Records</string>
     <string name="main_menu_quit">Quit</string>
     <string name="main_menu_title">Faces Game</string>
+    <string name="main_menu_next">Next</string>
     <string name="loading_data">Loading game data</string>
     <string name="loading_screen_dialog_failed_exit">Exit</string>
     <string name="end_game_game_over">GAME OVER</string>

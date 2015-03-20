@@ -18,8 +18,11 @@ import rjm.romek.source.model.Country;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -33,6 +36,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -157,6 +161,7 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
         buttonList = createButtons();
         for(Button button : buttonList) {
             if(countryIterator.hasNext()) {
+                button.setVisibility(View.VISIBLE);
                 Country country = countryIterator.next();
                 button.setText(country.getName());
                 String flagFileName = flagService.changeNameToFileName(country);
@@ -173,12 +178,12 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
     void paintAfterAnswer() {
         final ImageView blinkingView = portrait;
         final int green = Color.parseColor("#11FF00");
-        final int red = Color.parseColor("#FF0000");
+        final int red = Color.parseColor("#FF8888");
 
         Animation animation = new AlphaAnimation(1, 0);
-        animation.setDuration(750);
+        animation.setDuration(700);
         animation.setInterpolator(new LinearInterpolator());
-        animation.setRepeatCount(5);
+        animation.setRepeatCount(3);
         animation.setRepeatMode(Animation.REVERSE);
 
         animation.setAnimationListener(
@@ -192,28 +197,71 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
 
                   @Override
                   public void onAnimationEnd(Animation animation) {
-                      blinkingView.clearColorFilter();
-                      goToNextQuestion();
-                      mainGameLoop();
-                  }
-
-                  @Override
-                  public void onAnimationRepeat(Animation animation) {
-                      if(System.currentTimeMillis() - started < 1500) return;
-
                       int color = 0;
                       if(currentQuestion.isCorrectlyAnswered()) {
                           color = green;
                       } else {
                           color = red;
                       }
+                      paintSymbol();
                       blinkingView.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
                       blinkingView.invalidate();
+                      paintNextQuestionButton(blinkingView);
+                  }
+
+                  @Override
+                  public void onAnimationRepeat(Animation animation) {
                   }
               }
         );
 
         blinkingView.startAnimation(animation);
+    }
+
+    public void paintSymbol() {
+        Bitmap portraitWithSymbol = photoService.readFromAssets(currentQuestion.getPerson().getName())
+                .copy(Bitmap.Config.ARGB_8888, true);
+        String symbolPath;
+
+        if(currentQuestion.isCorrectlyAnswered()) {
+            symbolPath = "icons/right.png";
+        } else {
+            symbolPath = "icons/wrong.png";
+        }
+
+        int symbolSize = Math.min(portraitWithSymbol.getWidth(), portraitWithSymbol.getHeight());
+        Bitmap symbol = Bitmap.createScaledBitmap(photoService.readFromAssets(symbolPath),
+                symbolSize, symbolSize, false);
+        Canvas canvas = new Canvas(portraitWithSymbol);
+        canvas.drawBitmap(symbol, null, new Rect(
+                (portraitWithSymbol.getWidth() - symbol.getWidth()) / 2,
+                (portraitWithSymbol.getHeight() - symbol.getHeight()) / 2,
+                (portraitWithSymbol.getWidth() + symbol.getWidth()) / 2,
+                (portraitWithSymbol.getHeight() + symbol.getHeight()) / 2
+        ), new Paint());
+        portrait.setImageBitmap(portraitWithSymbol);
+        portrait.invalidate();
+    }
+
+    public void paintNextQuestionButton(final ImageView blinkingView) {
+        for(Button button : buttonList) {
+            button.setVisibility(View.GONE);
+        }
+
+        final Button nextButton = new Button(this);
+        nextButton.setText(getString(R.string.main_menu_next));
+        nextButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                blinkingView.clearColorFilter();
+                nextButton.setVisibility(View.GONE);
+                goToNextQuestion();
+                mainGameLoop();
+            }
+        });
+
+        TableLayout layout = (TableLayout) findViewById(R.id.buttonTableLayout);
+        layout.addView(nextButton);
     }
 
     public void goToNextQuestion() {
