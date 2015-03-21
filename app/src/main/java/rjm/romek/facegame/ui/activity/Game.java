@@ -12,8 +12,10 @@ import rjm.romek.facegame.service.QuestionService;
 import rjm.romek.facegame.service.QuestionServiceImpl;
 import rjm.romek.facegame.ui.global.Global;
 import rjm.romek.facegame.ui.intent.EndGameIntent;
+import rjm.romek.facegame.ui.listener.SurfaceLayoutChangeListener;
 import rjm.romek.facegame.ui.timer.TimerThread;
 import rjm.romek.facegame.ui.timer.TimerThreadListener;
+import rjm.romek.facegame.ui.views.SelfAwareSurfaceView;
 import rjm.romek.source.model.Country;
 
 import android.app.Activity;
@@ -24,10 +26,8 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AlphaAnimation;
@@ -35,7 +35,6 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
 
 import java.io.IOException;
@@ -44,7 +43,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-public class Game extends Activity implements OnClickListener, TimerThreadListener {
+public class Game extends Activity implements OnClickListener, TimerThreadListener, SurfaceLayoutChangeListener {
 
     private QuestionService questionService;
     private FlagService flagService;
@@ -54,7 +53,7 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
     private Question currentQuestion;
     private List<Button> buttonList;
     private ImageView portrait;
-    private SurfaceView timerSurface;
+    private SelfAwareSurfaceView timerSurface;
     private int questionIndex;
     private int clickedIndex;
     private GamePhase gamePhase;
@@ -95,6 +94,12 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
         }
     }
 
+    private void redrawTimer() {
+        if(timerThread != null || !timerThread.isAlive()) {
+            timerThread.redrawCanvas();
+        }
+    }
+
     private void stopTimer() {
         if(timerThread != null || timerThread.isAlive()) {
             timerThread.setRunning(false);
@@ -113,6 +118,11 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
         stopTimer();
         mainGameLoop();
 	}
+
+    @Override
+    public void layoutChanged() {
+        redrawTimer();
+    }
 
     void init() {
         try {
@@ -147,8 +157,10 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
         return buttonList;
     }
 
-    SurfaceView createSurfaceView() {
-        return (SurfaceView)findViewById(R.id.timerSurface);
+    SelfAwareSurfaceView createSurfaceView() {
+        SelfAwareSurfaceView surfaceView = (SelfAwareSurfaceView)findViewById(R.id.timerSurface);
+        surfaceView.setSurfaceSizeChangeListener(this);
+        return surfaceView;
     }
 
     ImageView createImageView() {

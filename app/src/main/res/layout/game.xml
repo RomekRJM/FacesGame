@@ -12,7 +12,7 @@
         android:src="@drawable/ic_launcher"
         android:layout_weight="0.82" />
 
-    <SurfaceView
+    <rjm.romek.facegame.ui.views.SelfAwareSurfaceView
         android:layout_width="match_parent"
         android:layout_height="6dp"
         android:id="@+id/timerSurface" />
