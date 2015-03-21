@@ -67,7 +67,7 @@ public class TimerThread extends Thread {
         }
     }
 
-    private void redrawCanvas() {
+    public void redrawCanvas() {
         Canvas canvas = surfaceView.getHolder().lockCanvas();
 
         if(canvas != null){
