@@ -1,14 +1,16 @@
 package rjm.romek.facegame.model;
 
 public enum Difficulty {
-    EASY(2, 5), NORMAL(2, 4), HARD(4, 4), HARDCORE(4, 2);
+    EASY(2, 5, 30000l), NORMAL(2, 4, 25000l), HARD(4, 4, 15000l), HARDCORE(4, 2, 10000l);
 
     private Integer availableAnswers;
     private Integer radius;
+    private Long time;
 
-    Difficulty(Integer availableAnswers, Integer radius) {
+    Difficulty(Integer availableAnswers, Integer radius, Long time) {
         this.availableAnswers = availableAnswers;
         this.radius = radius;
+        this.time = time;
     }
 
     public Integer getAvailableAnswers() {
@@ -27,4 +29,11 @@ public enum Difficulty {
         this.radius = radius;
     }
 
+    public Long getTime() {
+        return time;
+    }
+
+    public void setTime(Long time) {
+        this.time = time;
+    }
 }

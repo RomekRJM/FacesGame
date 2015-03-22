@@ -38,6 +38,7 @@ public class QuestionServiceImplTest extends AndroidTestCase {
             assertNull(q.getDate());
             assertNull(q.getGivenAnswer());
             assertTrue(q.getCountries().contains(q.getCorrectAnswer()));
+            assertTrue(q.getDifficulty().equals(Difficulty.NORMAL));
         }
     }
 

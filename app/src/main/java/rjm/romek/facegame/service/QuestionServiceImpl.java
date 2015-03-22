@@ -34,6 +34,7 @@ public class QuestionServiceImpl implements QuestionService {
             question.setCountries(countries);
             question.setCorrectAnswer(country);
             question.setPerson(personRandomizer.readRandomInhabitant(country));
+            question.setDifficulty(difficulty);
             questions.add(question);
         }
 

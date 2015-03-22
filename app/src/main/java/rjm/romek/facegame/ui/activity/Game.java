@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
@@ -78,8 +79,8 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
                 paintAfterAnswer();
                 break;
             case WAITING_FOR_ANSWER:
-                startTimer();
                 runLogic();
+                startTimer();
                 paintQuestion();
                 break;
         }
@@ -88,7 +89,7 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
 
     private void startTimer() {
         if(timerThread == null || !timerThread.isAlive()) {
-            timerThread = new TimerThread(timerSurface, 5000);
+            timerThread = new TimerThread(timerSurface, currentQuestion.getDifficulty().getTime());
             timerThread.setTimerThreadListener(this);
             timerThread.start();
         }
@@ -181,6 +182,7 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
         for(Button button : buttonList) {
             if(countryIterator.hasNext()) {
                 button.setVisibility(View.VISIBLE);
+                button.getBackground().clearColorFilter();
                 Country country = countryIterator.next();
                 button.setText(country.getName());
                 String flagFileName = flagService.changeNameToFileName(country);
@@ -204,6 +206,8 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
         animation.setInterpolator(new LinearInterpolator());
         animation.setRepeatCount(2);
         animation.setRepeatMode(Animation.REVERSE);
+
+        buttonList.get(clickedIndex).getBackground().setColorFilter(new LightingColorFilter(0xFFFFFFFF, 0x6495ED));
 
         animation.setAnimationListener(
               new Animation.AnimationListener() {

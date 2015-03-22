@@ -18,6 +18,7 @@ public class Question {
     private Country correctAnswer;
     private Country givenAnswer;
     private final String gameUUID;
+    private Difficulty difficulty;
     private boolean timedOut;
 
     public Question() {
@@ -68,6 +69,14 @@ public class Question {
         this.person = person;
     }
 
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
     public boolean isTimedOut() {
         return timedOut;
     }
@@ -88,5 +97,4 @@ public class Question {
     public void answer(int countryIndex) {
         answer(getCountries().get(countryIndex));
     }
-
 }
