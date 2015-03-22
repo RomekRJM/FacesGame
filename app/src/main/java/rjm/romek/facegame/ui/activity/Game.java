@@ -113,10 +113,10 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
             return;
         }
 
-        clickedIndex = buttonList.indexOf((Button)v);
-        currentQuestion.answer(clickedIndex);
-        gamePhase = GamePhase.ANSWER_GIVEN;
         stopTimer();
+        clickedIndex = buttonList.indexOf((Button)v);
+        currentQuestion.answer(clickedIndex, timerThread.getTimePassed());
+        gamePhase = GamePhase.ANSWER_GIVEN;
         mainGameLoop();
 	}
 

@@ -1,13 +1,10 @@
 package rjm.romek.facegame.model;
 
-import android.graphics.Bitmap;
-
 import rjm.romek.source.model.Country;
 import rjm.romek.source.model.Person;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 public class Question {
@@ -19,6 +16,7 @@ public class Question {
     private Country givenAnswer;
     private final String gameUUID;
     private Difficulty difficulty;
+    private long answerTime;
     private boolean timedOut;
 
     public Question() {
@@ -83,18 +81,31 @@ public class Question {
 
     public void setTimedOut(boolean timedOut) {
         this.timedOut = timedOut;
+
+        if(difficulty != null) {
+            setAnswerTime(difficulty.getTime());
+        }
     }
 
     public boolean isCorrectlyAnswered() {
         return !timedOut && correctAnswer.equals(givenAnswer);
     }
 
-    public void answer(Country country) {
+    public void answer(Country country, long answerTime) {
         setGivenAnswer(country);
         setDate(new Date());
+        setAnswerTime(answerTime);
     }
 
-    public void answer(int countryIndex) {
-        answer(getCountries().get(countryIndex));
+    public void answer(int countryIndex, long answerTime) {
+        answer(getCountries().get(countryIndex), answerTime);
+    }
+
+    public long getAnswerTime() {
+        return answerTime;
+    }
+
+    public void setAnswerTime(long answerTime) {
+        this.answerTime = answerTime;
     }
 }

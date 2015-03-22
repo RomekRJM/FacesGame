@@ -61,6 +61,10 @@ public class TimerThread extends Thread {
         }
     }
 
+    public long getTimePassed() {
+        return timePassed;
+    }
+
     private void fireTimeoutEvent() {
         if(listener != null) {
             listener.timeout();
