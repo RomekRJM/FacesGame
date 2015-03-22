@@ -30,14 +30,16 @@ public class QuestionTest extends AndroidTestCase {
     }
 
     public void testCorrectlyAnswered() {
-        question.answer(correct);
+        question.answer(correct, 100l);
         assertTrue(question.isCorrectlyAnswered());
         assertNotNull(question.getDate());
+        assertEquals(100l, question.getAnswerTime());
     }
 
     public void testWronglyAnswered() {
-        question.answer(wrong);
+        question.answer(wrong, 100l);
         assertFalse(question.isCorrectlyAnswered());
         assertNotNull(question.getDate());
+        assertEquals(100l, question.getAnswerTime());
     }
 }
