@@ -15,14 +15,36 @@ public class ScoreServiceImplTest extends TestCase {
         scoreService = new ScoreServiceImpl();
     }
 
-    public void testSingleAnswer() {
+    public void testSingleCorrectAnswerOnEasy() {
         scoreService.addQuestion(createQuestion(true, 0l, Difficulty.EASY));
-        assertParamsCorrect(100l, 1, 100l);
+        assertParamsCorrect(1, 100l, 100l, 0l);
+    }
+
+    public void testSingleWrongAnswerOnEasy() {
+        scoreService.addQuestion(createQuestion(false, 0l, Difficulty.EASY));
+        assertParamsCorrect(1, 0l, 0l, 0l);
+    }
+
+    public void testTwoCorrectAnswersOnEasy() {
+        scoreService.addQuestion(createQuestion(true, 0l, Difficulty.EASY));
+        scoreService.addQuestion(createQuestion(true, 0l, Difficulty.EASY));
+        assertParamsCorrect(2, 200l, 400l, 0l);
+    }
+
+    public void testFourCorrectAnswersAndOneWrongOnEasy() {
+        for(int i=0; i<4; ++i) {
+            scoreService.addQuestion(createQuestion(true, 0l, Difficulty.EASY));
+        }
+        scoreService.addQuestion(createQuestion(false, 0l, Difficulty.EASY));
+
+        assertParamsCorrect(1, 0l, 1600l, 1600l);
     }
 
     public Question createQuestion(boolean correct, long answerGivenAfterTime, Difficulty difficulty) {
         Country country = new Country();
+        country.setName("Poland");
         Country countryWrong = new Country();
+        countryWrong.setName("CCCP");
         Question question = new Question();
         question.setDifficulty(difficulty);
         question.setCorrectAnswer(country);
@@ -34,9 +56,11 @@ public class ScoreServiceImplTest extends TestCase {
         return question;
     }
 
-    public void assertParamsCorrect(long totalScore, int multiplier, long multiplicand) {
-        assertEquals(totalScore, scoreService.getTotalScore());
+    public void assertParamsCorrect(int multiplier, long multiplicand,
+                                    long totalScore, long currentScore) {
         assertEquals(multiplier, scoreService.getMultiplier());
         assertEquals(multiplicand, scoreService.getMultiplicand());
+        assertEquals(totalScore, scoreService.getTotalScore());
+        assertEquals(currentScore, scoreService.getCurrentScore());
     }
 }

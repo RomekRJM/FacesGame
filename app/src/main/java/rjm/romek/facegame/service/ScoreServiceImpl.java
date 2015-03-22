@@ -12,6 +12,7 @@ public class ScoreServiceImpl implements ScoreService {
     private long totalScore;
     private int multiplier;
     private long multiplicand;
+    private long currentScore;
 
     public ScoreServiceImpl() {
         questionList = new ArrayList<Question>();
@@ -25,16 +26,14 @@ public class ScoreServiceImpl implements ScoreService {
 
         if(question.isCorrectlyAnswered()) {
             ++multiplier;
+            long totalTime = difficulty.getTime();
+            long answerTimeAsPercentageOfTotalTime =  (totalTime - question.getAnswerTime()) * 100 / totalTime;
+            multiplicand += Math.round(answerTimeAsPercentageOfTotalTime * difficulty.getLevelPointMultiplier());
+            totalScore = currentScore + multiplier * multiplicand;
         } else {
             multiplier = 1;
-        }
-
-        long totalTime = difficulty.getTime();
-        long answerTimeAsPercentageOfTotalTime =  (totalTime - question.getAnswerTime()) * 100 / totalTime;
-        multiplicand += Math.round(answerTimeAsPercentageOfTotalTime * difficulty.getLevelPointMultiplier());
-
-        if(multiplier == 1) {
-            totalScore += multiplier * multiplicand;
+            multiplicand = 0;
+            currentScore += totalScore;
         }
     }
 
@@ -45,7 +44,7 @@ public class ScoreServiceImpl implements ScoreService {
 
     @Override
     public long getCurrentScore() {
-        return 0;
+        return currentScore;
     }
 
     @Override
@@ -60,6 +59,7 @@ public class ScoreServiceImpl implements ScoreService {
 
     @Override
     public String toString() {
-        return getMultiplier() + "x" + getMultiplicand() + " " + getTotalScore();
+        return getMultiplier() + "x" + getMultiplicand()
+                + " (" + getTotalScore() + ") " + currentScore;
     }
 }
