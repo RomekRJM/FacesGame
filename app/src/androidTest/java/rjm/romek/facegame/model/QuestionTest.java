@@ -2,12 +2,14 @@ package rjm.romek.facegame.model;
 
 import android.test.AndroidTestCase;
 
+import junit.framework.TestCase;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import rjm.romek.source.model.Country;
 
-public class QuestionTest extends AndroidTestCase {
+public class QuestionTest extends TestCase {
 
     private List<Country> list;
     private Country correct;

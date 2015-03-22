@@ -16,15 +16,15 @@ public class ScoreServiceImplTest extends TestCase {
     }
 
     public void testSingleAnswer() {
-        scoreService.addQuestion(createQuestion(true, 5000l));
-        scoreService.getTotalScore();
+        scoreService.addQuestion(createQuestion(true, 0l, Difficulty.EASY));
+        assertParamsCorrect(100l, 1, 100l);
     }
 
-    public Question createQuestion(boolean correct, long answerGivenAfterTime) {
+    public Question createQuestion(boolean correct, long answerGivenAfterTime, Difficulty difficulty) {
         Country country = new Country();
         Country countryWrong = new Country();
         Question question = new Question();
-        question.setDifficulty(Difficulty.HARDCORE);
+        question.setDifficulty(difficulty);
         question.setCorrectAnswer(country);
         if(correct) {
             question.answer(country, answerGivenAfterTime);
@@ -32,5 +32,11 @@ public class ScoreServiceImplTest extends TestCase {
             question.answer(countryWrong, answerGivenAfterTime);
         }
         return question;
+    }
+
+    public void assertParamsCorrect(long totalScore, int multiplier, long multiplicand) {
+        assertEquals(totalScore, scoreService.getTotalScore());
+        assertEquals(multiplier, scoreService.getMultiplier());
+        assertEquals(multiplicand, scoreService.getMultiplicand());
     }
 }

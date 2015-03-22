@@ -60,6 +60,6 @@ public class ScoreServiceImpl implements ScoreService {
 
     @Override
     public String toString() {
-        return getMultiplier() + "*" + getMultiplicand() + " " + getTotalScore();
+        return getMultiplier() + "x" + getMultiplicand() + " " + getTotalScore();
     }
 }

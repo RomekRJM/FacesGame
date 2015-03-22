@@ -2,9 +2,11 @@ package rjm.romek.facegame.service;
 
 import android.test.AndroidTestCase;
 
+import junit.framework.TestCase;
+
 import java.nio.charset.Charset;
 
-public class TranslatorServiceImplTest extends AndroidTestCase {
+public class TranslatorServiceImplTest extends TestCase {
     private final TranslatorService translatorService = new TranslatorServiceImpl(Charset.defaultCharset().displayName());
 
     public void testShouldTranslateEncodedDirName() {
