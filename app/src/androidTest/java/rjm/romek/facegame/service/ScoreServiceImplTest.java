@@ -15,29 +15,41 @@ public class ScoreServiceImplTest extends TestCase {
         scoreService = new ScoreServiceImpl();
     }
 
-    public void testSingleCorrectAnswerOnEasy() {
+    public void test1CorrectAnswerOnEasy() {
         scoreService.addQuestion(createQuestion(true, 0l, Difficulty.EASY));
         assertParamsCorrect(1, 100l, 100l, 0l);
     }
 
-    public void testSingleWrongAnswerOnEasy() {
+    public void test1WrongAnswerOnEasy() {
         scoreService.addQuestion(createQuestion(false, 0l, Difficulty.EASY));
         assertParamsCorrect(1, 0l, 0l, 0l);
     }
 
-    public void testTwoCorrectAnswersOnEasy() {
+    public void test2CorrectAnswersOnEasySecondTookLonger() {
         scoreService.addQuestion(createQuestion(true, 0l, Difficulty.EASY));
-        scoreService.addQuestion(createQuestion(true, 0l, Difficulty.EASY));
-        assertParamsCorrect(2, 200l, 400l, 0l);
+        scoreService.addQuestion(createQuestion(true, Difficulty.EASY.getTime()/2, Difficulty.EASY));
+        assertParamsCorrect(2, 150l, 300l, 0l);
     }
 
-    public void testFourCorrectAnswersAndOneWrongOnEasy() {
+    public void test4CorrectAnswersAnd1WrongOnEasy() {
         for(int i=0; i<4; ++i) {
             scoreService.addQuestion(createQuestion(true, 0l, Difficulty.EASY));
         }
         scoreService.addQuestion(createQuestion(false, 0l, Difficulty.EASY));
 
         assertParamsCorrect(1, 0l, 1600l, 1600l);
+    }
+
+    public void test5CorrectAnswersOnEasy2CorrectAnd1WrongOnNormal() {
+        for(int i=0; i<5; ++i) {
+            scoreService.addQuestion(createQuestion(true, 0l, Difficulty.EASY));
+        }
+        for(int i=0; i<2; ++i) {
+            scoreService.addQuestion(createQuestion(true, 0l, Difficulty.NORMAL));
+        }
+        scoreService.addQuestion(createQuestion(false, 0l, Difficulty.NORMAL));
+
+        assertParamsCorrect(1, 0l, 5600l, 5600l);
     }
 
     public Question createQuestion(boolean correct, long answerGivenAfterTime, Difficulty difficulty) {
