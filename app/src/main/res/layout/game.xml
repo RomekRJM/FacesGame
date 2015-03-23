@@ -5,6 +5,14 @@
     android:orientation="vertical"
     android:id="@+id/topGameLayout">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/game_default_score"
+        android:id="@+id/scoreTextView"
+        android:gravity="right" />
+
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="fill_parent"

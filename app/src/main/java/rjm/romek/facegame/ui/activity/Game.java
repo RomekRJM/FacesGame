@@ -13,6 +13,7 @@ import rjm.romek.facegame.service.QuestionServiceImpl;
 import rjm.romek.facegame.ui.global.Global;
 import rjm.romek.facegame.ui.intent.EndGameIntent;
 import rjm.romek.facegame.ui.listener.SurfaceLayoutChangeListener;
+import rjm.romek.facegame.ui.manager.ScoreManager;
 import rjm.romek.facegame.ui.timer.TimerThread;
 import rjm.romek.facegame.ui.timer.TimerThreadListener;
 import rjm.romek.facegame.ui.views.SelfAwareSurfaceView;
@@ -37,6 +38,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -59,6 +61,7 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
     private int clickedIndex;
     private GamePhase gamePhase;
     private TimerThread timerThread;
+    private ScoreManager scoreManager;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +140,7 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
 
         portrait = createImageView();
         timerSurface = createSurfaceView();
+        scoreManager = new ScoreManager(createScoreTextView());
     }
 
     QuestionService createQuestionService() throws IOException {
@@ -166,6 +170,10 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
 
     ImageView createImageView() {
         return (ImageView)findViewById(R.id.imageView1);
+    }
+
+    TextView createScoreTextView() {
+        return (TextView)findViewById(R.id.scoreTextView);
     }
 
     void runLogic() {
@@ -227,6 +235,7 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
                       paintSymbol();
                       blinkingView.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
                       blinkingView.invalidate();
+                      paintScore();
                       paintNextQuestionButton(blinkingView);
                   }
 
@@ -285,12 +294,17 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
         layout.addView(nextButton);
     }
 
+    public void paintScore() {
+        scoreManager.updateScore(currentQuestion);
+    }
+
     public void goToNextQuestion() {
         ++questionIndex;
 
         if(questionIndex >= questions.size()) {
             startActivity(new EndGameIntent(this,
-                    questionService.countCorrectAnswered(questions)));
+                    questionService.countCorrectAnswered(questions),
+                    scoreManager.getScoreService().getTotalScore()));
         } else {
             gamePhase = GamePhase.WAITING_FOR_ANSWER;
         }

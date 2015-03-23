@@ -1,7 +1,7 @@
 package rjm.romek.facegame.model;
 
 public enum Difficulty {
-    EASY(2, 5, 30000l, 1.0f), NORMAL(2, 4, 25000l, 1.5f), HARD(4, 4, 15000l, 2.0f), HARDCORE(4, 2, 10000l, 2.5f);
+    EASY(2, 5, 30000l, 0.1f), NORMAL(2, 4, 25000l, 0.15f), HARD(4, 4, 15000l, 0.2f), HARDCORE(4, 2, 10000l, 0.3f);
 
     private Integer availableAnswers;
     private Integer radius;

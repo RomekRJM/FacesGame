@@ -18,7 +18,6 @@ public class EndGame extends Activity implements OnClickListener {
     private Button buttonBack;
     private Button buttonAgain;
     private TextView scoreTextView;
-    private int score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +30,9 @@ public class EndGame extends Activity implements OnClickListener {
         buttonAgain.setOnClickListener(this);
 
         scoreTextView = (TextView)findViewById(R.id.scoreTextView);
-        score = getIntent().getIntExtra(EndGameIntent.SCORE, 0);
-        scoreTextView.setText(getString(R.string.end_game_score) + score);
+        long score = getIntent().getLongExtra(EndGameIntent.SCORE, 0);
+        int correct = getIntent().getIntExtra(EndGameIntent.CORRECT_ANSWERS, 0);
+        scoreTextView.setText(getString(R.string.end_game_score) + score + " (" + correct + ")");
     }
 
     @Override
