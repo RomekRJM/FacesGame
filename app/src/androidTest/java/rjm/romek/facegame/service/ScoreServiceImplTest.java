@@ -17,18 +17,18 @@ public class ScoreServiceImplTest extends TestCase {
 
     public void test1CorrectAnswerOnEasy() {
         scoreService.addQuestion(createQuestion(true, 0l, Difficulty.EASY));
-        assertParamsCorrect(1, 100l, 100l, 0l);
+        assertParamsCorrect(1, 10l, 10l, 0l);
     }
 
     public void test1WrongAnswerOnEasy() {
         scoreService.addQuestion(createQuestion(false, 0l, Difficulty.EASY));
-        assertParamsCorrect(1, 0l, 0l, 0l);
+        assertParamsCorrect(0, 0l, 0l, 0l);
     }
 
     public void test2CorrectAnswersOnEasySecondTookLonger() {
         scoreService.addQuestion(createQuestion(true, 0l, Difficulty.EASY));
         scoreService.addQuestion(createQuestion(true, Difficulty.EASY.getTime()/2, Difficulty.EASY));
-        assertParamsCorrect(2, 150l, 300l, 0l);
+        assertParamsCorrect(2, 15l, 30l, 0l);
     }
 
     public void test4CorrectAnswersAnd1WrongOnEasy() {
@@ -37,7 +37,7 @@ public class ScoreServiceImplTest extends TestCase {
         }
         scoreService.addQuestion(createQuestion(false, 0l, Difficulty.EASY));
 
-        assertParamsCorrect(1, 0l, 1600l, 1600l);
+        assertParamsCorrect(0, 0l, 160l, 160l);
     }
 
     public void test5CorrectAnswersOnEasy2CorrectAnd1WrongOnNormal() {
@@ -49,7 +49,7 @@ public class ScoreServiceImplTest extends TestCase {
         }
         scoreService.addQuestion(createQuestion(false, 0l, Difficulty.NORMAL));
 
-        assertParamsCorrect(1, 0l, 5600l, 5600l);
+        assertParamsCorrect(0, 0l, 560l, 560l);
     }
 
     public Question createQuestion(boolean correct, long answerGivenAfterTime, Difficulty difficulty) {
