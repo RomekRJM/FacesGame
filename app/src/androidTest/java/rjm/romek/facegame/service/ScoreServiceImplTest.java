@@ -40,6 +40,17 @@ public class ScoreServiceImplTest extends TestCase {
         assertParamsCorrect(0, 0l, 160l, 160l);
     }
 
+    public void test2CorrectAnswersAnd1WrongAnd1CorrectAnd1WrongOnEasy() {
+        for(int i=0; i<2; ++i) {
+            scoreService.addQuestion(createQuestion(true, 0l, Difficulty.EASY));
+        }
+        scoreService.addQuestion(createQuestion(false, 0l, Difficulty.EASY));
+        scoreService.addQuestion(createQuestion(true, 0l, Difficulty.EASY));
+        scoreService.addQuestion(createQuestion(false, 0l, Difficulty.EASY));
+
+        assertParamsCorrect(0, 0l, 50l, 50l);
+    }
+
     public void test5CorrectAnswersOnEasy2CorrectAnd1WrongOnNormal() {
         for(int i=0; i<5; ++i) {
             scoreService.addQuestion(createQuestion(true, 0l, Difficulty.EASY));

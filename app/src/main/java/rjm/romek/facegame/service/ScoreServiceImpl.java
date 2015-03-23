@@ -31,9 +31,9 @@ public class ScoreServiceImpl implements ScoreService {
             multiplicand += Math.round(answerTimeAsPercentageOfTotalTime * difficulty.getLevelPointMultiplier());
             totalScore = currentScore + multiplier * multiplicand;
         } else {
+            currentScore += multiplier * multiplicand;
             multiplier = 0;
             multiplicand = 0;
-            currentScore += totalScore;
         }
     }
 
