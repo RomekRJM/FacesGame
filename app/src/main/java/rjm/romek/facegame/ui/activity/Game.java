@@ -1,24 +1,5 @@
 package rjm.romek.facegame.ui.activity;
 
-import rjm.romek.facegame.R;
-import rjm.romek.facegame.model.Difficulty;
-import rjm.romek.facegame.model.GamePhase;
-import rjm.romek.facegame.model.Question;
-import rjm.romek.facegame.service.FlagService;
-import rjm.romek.facegame.service.FlagServiceImpl;
-import rjm.romek.facegame.service.PhotoService;
-import rjm.romek.facegame.service.PhotoServiceImpl;
-import rjm.romek.facegame.service.QuestionService;
-import rjm.romek.facegame.service.QuestionServiceImpl;
-import rjm.romek.facegame.ui.global.Global;
-import rjm.romek.facegame.ui.intent.EndGameIntent;
-import rjm.romek.facegame.ui.listener.SurfaceLayoutChangeListener;
-import rjm.romek.facegame.ui.manager.ScoreManager;
-import rjm.romek.facegame.ui.timer.TimerThread;
-import rjm.romek.facegame.ui.timer.TimerThreadListener;
-import rjm.romek.facegame.ui.views.SelfAwareSurfaceView;
-import rjm.romek.source.model.Country;
-
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -46,6 +27,25 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import rjm.romek.facegame.R;
+import rjm.romek.facegame.model.Difficulty;
+import rjm.romek.facegame.model.GamePhase;
+import rjm.romek.facegame.model.Question;
+import rjm.romek.facegame.service.FlagService;
+import rjm.romek.facegame.service.FlagServiceImpl;
+import rjm.romek.facegame.service.PhotoService;
+import rjm.romek.facegame.service.PhotoServiceImpl;
+import rjm.romek.facegame.service.QuestionService;
+import rjm.romek.facegame.service.QuestionServiceImpl;
+import rjm.romek.facegame.ui.global.Global;
+import rjm.romek.facegame.ui.intent.EndGameIntent;
+import rjm.romek.facegame.ui.listener.SurfaceLayoutChangeListener;
+import rjm.romek.facegame.ui.manager.ScoreManager;
+import rjm.romek.facegame.ui.timer.TimerThread;
+import rjm.romek.facegame.ui.timer.TimerThreadListener;
+import rjm.romek.facegame.ui.views.SelfAwareSurfaceView;
+import rjm.romek.source.model.Country;
+
 public class Game extends Activity implements OnClickListener, TimerThreadListener, SurfaceLayoutChangeListener {
 
     private QuestionService questionService;
@@ -64,20 +64,20 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
     private ScoreManager scoreManager;
 
     @Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.game);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.game);
         mainGameLoop();
-	}
+    }
 
     public void mainGameLoop() {
-        if(questions == null) {
+        if (questions == null) {
             init();
             gamePhase = GamePhase.WAITING_FOR_ANSWER;
             questionIndex = 0;
         }
 
-        switch(gamePhase) {
+        switch (gamePhase) {
             case ANSWER_GIVEN:
                 paintAfterAnswer();
                 break;
@@ -91,7 +91,7 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
     }
 
     private void startTimer() {
-        if(timerThread == null || !timerThread.isAlive()) {
+        if (timerThread == null || !timerThread.isAlive()) {
             timerThread = new TimerThread(timerSurface, currentQuestion.getDifficulty().getTime());
             timerThread.setTimerThreadListener(this);
             timerThread.start();
@@ -99,29 +99,29 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
     }
 
     private void redrawTimer() {
-        if(timerThread != null || !timerThread.isAlive()) {
+        if (timerThread != null || !timerThread.isAlive()) {
             timerThread.redrawCanvas();
         }
     }
 
     private void stopTimer() {
-        if(timerThread != null || timerThread.isAlive()) {
+        if (timerThread != null || timerThread.isAlive()) {
             timerThread.setRunning(false);
         }
     }
 
     @Override
-	public void onClick(View v) {
-        if(!(v instanceof Button) || (gamePhase == GamePhase.ANSWER_GIVEN)) {
+    public void onClick(View v) {
+        if (!(v instanceof Button) || (gamePhase == GamePhase.ANSWER_GIVEN)) {
             return;
         }
 
         stopTimer();
-        clickedIndex = buttonList.indexOf((Button)v);
+        clickedIndex = buttonList.indexOf((Button) v);
         currentQuestion.answer(clickedIndex, timerThread.getTimePassed());
         gamePhase = GamePhase.ANSWER_GIVEN;
         mainGameLoop();
-	}
+    }
 
     @Override
     public void layoutChanged() {
@@ -149,13 +149,13 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
     }
 
     List<Button> createButtons() {
-        List<Button> buttonList = new ArrayList<Button>();
-        buttonList.add((Button)findViewById(R.id.button1));
-        buttonList.add((Button)findViewById(R.id.button2));
-        buttonList.add((Button)findViewById(R.id.button3));
-        buttonList.add((Button)findViewById(R.id.button4));
+        List<Button> buttonList = new ArrayList<>();
+        buttonList.add((Button) findViewById(R.id.button1));
+        buttonList.add((Button) findViewById(R.id.button2));
+        buttonList.add((Button) findViewById(R.id.button3));
+        buttonList.add((Button) findViewById(R.id.button4));
 
-        for(Button b: buttonList) {
+        for (Button b : buttonList) {
             b.setOnClickListener(this);
         }
 
@@ -163,21 +163,21 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
     }
 
     SelfAwareSurfaceView createSurfaceView() {
-        SelfAwareSurfaceView surfaceView = (SelfAwareSurfaceView)findViewById(R.id.timerSurface);
+        SelfAwareSurfaceView surfaceView = (SelfAwareSurfaceView) findViewById(R.id.timerSurface);
         surfaceView.setSurfaceSizeChangeListener(this);
         return surfaceView;
     }
 
     ImageView createImageView() {
-        return (ImageView)findViewById(R.id.imageView1);
+        return (ImageView) findViewById(R.id.imageView1);
     }
 
     TextView createScoreTextView() {
-        return (TextView)findViewById(R.id.scoreTextView);
+        return (TextView) findViewById(R.id.scoreTextView);
     }
 
     void runLogic() {
-        if(questionsIterator.hasNext()) {
+        if (questionsIterator.hasNext()) {
             currentQuestion = questionsIterator.next();
         }
     }
@@ -187,8 +187,8 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
         Iterator<Country> countryIterator = currentQuestion.getCountries().iterator();
 
         buttonList = createButtons();
-        for(Button button : buttonList) {
-            if(countryIterator.hasNext()) {
+        for (Button button : buttonList) {
+            if (countryIterator.hasNext()) {
                 button.setVisibility(View.VISIBLE);
                 button.getBackground().clearColorFilter();
                 Country country = countryIterator.next();
@@ -196,7 +196,7 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
                 String flagFileName = flagService.changeNameToFileName(country);
                 Bitmap flagBitmap = photoService.readFromAssets(flagFileName);
                 Drawable flagDrawable = new BitmapDrawable(null, flagBitmap);
-                flagDrawable.setBounds(0, 0, 2*flagBitmap.getWidth(), 2*flagBitmap.getHeight());
+                flagDrawable.setBounds(0, 0, 2 * flagBitmap.getWidth(), 2 * flagBitmap.getHeight());
                 button.setCompoundDrawables(flagDrawable, null, null, null);
             } else {
                 button.setVisibility(View.GONE);
@@ -215,34 +215,37 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
         animation.setRepeatCount(2);
         animation.setRepeatMode(Animation.REVERSE);
 
-        buttonList.get(clickedIndex).getBackground().setColorFilter(new LightingColorFilter(0xFFFFFFFF, 0x6495ED));
+        if (!currentQuestion.isTimedOut()) {
+            buttonList.get(clickedIndex).getBackground()
+                    .setColorFilter(new LightingColorFilter(0xFFFFFFFF, 0x6495ED));
+        }
 
         animation.setAnimationListener(
-              new Animation.AnimationListener() {
+                new Animation.AnimationListener() {
 
-                  @Override
-                  public void onAnimationStart(Animation animation) {
-                  }
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                    }
 
-                  @Override
-                  public void onAnimationEnd(Animation animation) {
-                      int color = 0;
-                      if(currentQuestion.isCorrectlyAnswered()) {
-                          color = green;
-                      } else {
-                          color = red;
-                      }
-                      paintSymbol();
-                      blinkingView.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
-                      blinkingView.invalidate();
-                      paintScore();
-                      paintNextQuestionButton(blinkingView);
-                  }
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        int color;
+                        if (currentQuestion.isCorrectlyAnswered()) {
+                            color = green;
+                        } else {
+                            color = red;
+                        }
+                        paintSymbol();
+                        blinkingView.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
+                        blinkingView.invalidate();
+                        paintScore();
+                        paintNextQuestionButton(blinkingView);
+                    }
 
-                  @Override
-                  public void onAnimationRepeat(Animation animation) {
-                  }
-              }
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                    }
+                }
         );
 
         blinkingView.startAnimation(animation);
@@ -253,7 +256,7 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
                 .copy(Bitmap.Config.ARGB_8888, true);
         String symbolPath;
 
-        if(currentQuestion.isCorrectlyAnswered()) {
+        if (currentQuestion.isCorrectlyAnswered()) {
             symbolPath = "icons/right.png";
         } else {
             symbolPath = "icons/wrong.png";
@@ -274,7 +277,7 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
     }
 
     public void paintNextQuestionButton(final ImageView blinkingView) {
-        for(Button button : buttonList) {
+        for (Button button : buttonList) {
             button.setVisibility(View.GONE);
         }
 
@@ -301,7 +304,7 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
     public void goToNextQuestion() {
         ++questionIndex;
 
-        if(questionIndex >= questions.size()) {
+        if (questionIndex >= questions.size()) {
             startActivity(new EndGameIntent(this,
                     questionService.countCorrectAnswered(questions),
                     scoreManager.getScoreService().getTotalScore()));

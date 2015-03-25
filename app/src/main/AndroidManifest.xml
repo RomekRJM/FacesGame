@@ -1,9 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="rjm.romek.facegame"
-    android:versionCode="1"
-    android:versionName="1.0"
     android:installLocation="preferExternal"
-    >
+    android:versionCode="1"
+    android:versionName="1.0">
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -13,12 +12,14 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
 
-        <meta-data android:name="com.google.android.gms.version"
+        <meta-data
+            android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name="rjm.romek.facegame.ui.activity.LoadingScreen"
+        <activity
+            android:name="rjm.romek.facegame.ui.activity.LoadingScreen"
             android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,17 +27,17 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="rjm.romek.facegame.ui.activity.Game"
-            android:configChanges="orientation|screenSize">
-        </activity>
+        <activity
+            android:name="rjm.romek.facegame.ui.activity.Game"
+            android:configChanges="orientation|screenSize"></activity>
 
-        <activity android:name="rjm.romek.facegame.ui.activity.MainMenu"
-            android:configChanges="orientation|screenSize">
-        </activity>
+        <activity
+            android:name="rjm.romek.facegame.ui.activity.MainMenu"
+            android:configChanges="orientation|screenSize"></activity>
 
-        <activity android:name="rjm.romek.facegame.ui.activity.EndGame"
-            android:configChanges="orientation|screenSize">
-        </activity>
+        <activity
+            android:name="rjm.romek.facegame.ui.activity.EndGame"
+            android:configChanges="orientation|screenSize"></activity>
 
     </application>
 

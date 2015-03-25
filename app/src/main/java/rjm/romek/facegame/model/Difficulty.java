@@ -19,31 +19,15 @@ public enum Difficulty {
         return availableAnswers;
     }
 
-    public void setAvailableAnswers(Integer availableAnswers) {
-        this.availableAnswers = availableAnswers;
-    }
-
     public Integer getRadius() {
         return radius;
-    }
-
-    public void setRadius(Integer radius) {
-        this.radius = radius;
     }
 
     public Long getTime() {
         return time;
     }
 
-    public void setTime(Long time) {
-        this.time = time;
-    }
-
     public Float getLevelPointMultiplier() {
         return levelPointMultiplier;
-    }
-
-    public void setLevelPointMultiplier(Float levelPointMultiplier) {
-        this.levelPointMultiplier = levelPointMultiplier;
     }
 }

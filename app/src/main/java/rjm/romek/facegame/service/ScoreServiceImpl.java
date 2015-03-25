@@ -27,10 +27,10 @@ public class ScoreServiceImpl implements ScoreService {
 
         Difficulty difficulty = question.getDifficulty();
 
-        if(question.isCorrectlyAnswered()) {
+        if (question.isCorrectlyAnswered()) {
             ++multiplier;
             long totalTime = difficulty.getTime();
-            long answerTimeAsPercentageOfTotalTime =  max(((totalTime - question.getAnswerTime()) * 100 / totalTime) - 1, 10);
+            long answerTimeAsPercentageOfTotalTime = max(((totalTime - question.getAnswerTime()) * 100 / totalTime) - 1, 10);
             multiplicand += ceil(answerTimeAsPercentageOfTotalTime * difficulty.getLevelPointMultiplier());
             totalScore = currentScore + multiplier * multiplicand;
         } else {

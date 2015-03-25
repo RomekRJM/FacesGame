@@ -10,13 +10,13 @@ import rjm.romek.facegame.service.GreenRedGamma;
 
 public class TimerThread extends Thread {
 
+    private final long time;
+    private final long INTERVAL = 20;
     private SurfaceView surfaceView;
     private boolean running;
-    private final long time;
     private long timePassed;
     private Paint paint;
     private ColorService colorService;
-    private final long INTERVAL = 20;
     private TimerThreadListener listener;
 
     public TimerThread(SurfaceView surfaceView, long time) {
@@ -39,7 +39,7 @@ public class TimerThread extends Thread {
     public void run() {
         setRunning(true);
 
-        while(running){
+        while (running) {
             long startTime = System.currentTimeMillis();
 
             redrawCanvas();
@@ -52,7 +52,7 @@ public class TimerThread extends Thread {
             long endTime = System.currentTimeMillis();
             timePassed += (endTime - startTime);
 
-            if(timePassed >= time) {
+            if (timePassed >= time) {
                 timePassed = time;
                 redrawCanvas();
                 setRunning(false);
@@ -66,7 +66,7 @@ public class TimerThread extends Thread {
     }
 
     private void fireTimeoutEvent() {
-        if(listener != null) {
+        if (listener != null) {
             listener.timeout();
         }
     }
@@ -74,7 +74,7 @@ public class TimerThread extends Thread {
     public void redrawCanvas() {
         Canvas canvas = surfaceView.getHolder().lockCanvas();
 
-        if(canvas != null){
+        if (canvas != null) {
             synchronized (surfaceView.getHolder()) {
                 drawTime(canvas);
             }
@@ -85,7 +85,7 @@ public class TimerThread extends Thread {
     private void drawTime(Canvas canvas) {
         int width = canvas.getWidth();
         int height = canvas.getHeight();
-        float completed = (float)timePassed/time;
+        float completed = (float) timePassed / time;
         int right = Math.round(completed * width);
 
         paint.setColor(colorService.getColor(completed));

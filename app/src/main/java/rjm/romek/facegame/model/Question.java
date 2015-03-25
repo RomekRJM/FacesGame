@@ -1,20 +1,20 @@
 package rjm.romek.facegame.model;
 
-import rjm.romek.source.model.Country;
-import rjm.romek.source.model.Person;
-
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import rjm.romek.source.model.Country;
+import rjm.romek.source.model.Person;
+
 public class Question {
 
+    private final String gameUUID;
     private Person person;
     private List<Country> countries;
     private Date date;
     private Country correctAnswer;
     private Country givenAnswer;
-    private final String gameUUID;
     private Difficulty difficulty;
     private long answerTime;
     private boolean timedOut;
@@ -82,7 +82,7 @@ public class Question {
     public void setTimedOut(boolean timedOut) {
         this.timedOut = timedOut;
 
-        if(difficulty != null) {
+        if (difficulty != null) {
             setAnswerTime(difficulty.getTime());
         }
     }

@@ -26,18 +26,18 @@ public class ScoreServiceImplTest extends TestCase {
     }
 
     public void test1CorrectLateAnswerOnHardcore() {
-        scoreService.addQuestion(createQuestion(true, Difficulty.HARDCORE.getTime()-1l, Difficulty.HARDCORE));
+        scoreService.addQuestion(createQuestion(true, Difficulty.HARDCORE.getTime() - 1l, Difficulty.HARDCORE));
         assertParamsCorrect(1, 3l, 3l, 0l);
     }
 
     public void test2CorrectAnswersOnEasySecondTookLonger() {
         scoreService.addQuestion(createQuestion(true, 0l, Difficulty.EASY));
-        scoreService.addQuestion(createQuestion(true, Difficulty.EASY.getTime()/2, Difficulty.EASY));
+        scoreService.addQuestion(createQuestion(true, Difficulty.EASY.getTime() / 2, Difficulty.EASY));
         assertParamsCorrect(2, 15l, 30l, 0l);
     }
 
     public void test4CorrectAnswersAnd1WrongOnEasy() {
-        for(int i=0; i<4; ++i) {
+        for (int i = 0; i < 4; ++i) {
             scoreService.addQuestion(createQuestion(true, 0l, Difficulty.EASY));
         }
         scoreService.addQuestion(createQuestion(false, 0l, Difficulty.EASY));
@@ -46,7 +46,7 @@ public class ScoreServiceImplTest extends TestCase {
     }
 
     public void test2CorrectAnswersAnd1WrongAnd1CorrectAnd1WrongOnEasy() {
-        for(int i=0; i<2; ++i) {
+        for (int i = 0; i < 2; ++i) {
             scoreService.addQuestion(createQuestion(true, 0l, Difficulty.EASY));
         }
         scoreService.addQuestion(createQuestion(false, 0l, Difficulty.EASY));
@@ -57,10 +57,10 @@ public class ScoreServiceImplTest extends TestCase {
     }
 
     public void test5CorrectAnswersOnEasy2CorrectAnd1WrongOnNormal() {
-        for(int i=0; i<5; ++i) {
+        for (int i = 0; i < 5; ++i) {
             scoreService.addQuestion(createQuestion(true, 0l, Difficulty.EASY));
         }
-        for(int i=0; i<2; ++i) {
+        for (int i = 0; i < 2; ++i) {
             scoreService.addQuestion(createQuestion(true, 0l, Difficulty.NORMAL));
         }
         scoreService.addQuestion(createQuestion(false, 0l, Difficulty.NORMAL));
@@ -76,7 +76,7 @@ public class ScoreServiceImplTest extends TestCase {
         Question question = new Question();
         question.setDifficulty(difficulty);
         question.setCorrectAnswer(country);
-        if(correct) {
+        if (correct) {
             question.answer(country, answerGivenAfterTime);
         } else {
             question.answer(countryWrong, answerGivenAfterTime);

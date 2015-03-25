@@ -1,7 +1,5 @@
 package rjm.romek.facegame.model;
 
-import android.test.AndroidTestCase;
-
 import junit.framework.TestCase;
 
 import java.util.ArrayList;
@@ -18,7 +16,7 @@ public class QuestionTest extends TestCase {
 
     @Override
     public void setUp() {
-        list = new ArrayList<Country>();
+        list = new ArrayList<>();
         correct = new Country();
         correct.setName("Poland");
         wrong = new Country();

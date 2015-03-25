@@ -1,37 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/topGameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/topGameLayout">
+    android:orientation="vertical">
 
     <TextView
+        android:id="@+id/scoreTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:gravity="right"
         android:text="@string/game_default_score"
-        android:id="@+id/scoreTextView"
-        android:gravity="right" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:src="@drawable/ic_launcher"
-        android:layout_weight="0.82" />
+        android:layout_weight="0.82"
+        android:src="@drawable/ic_launcher" />
 
     <rjm.romek.facegame.ui.views.SelfAwareSurfaceView
+        android:id="@+id/timerSurface"
         android:layout_width="match_parent"
-        android:layout_height="6dp"
-        android:id="@+id/timerSurface" />
+        android:layout_height="6dp" />
 
     <TableLayout
         android:id="@+id/buttonTableLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TableRow android:layout_width="fill_parent"
+        <TableRow
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content">
+
             <Button
                 android:id="@+id/button1"
                 android:layout_width="0dip"
@@ -49,8 +51,10 @@
                 android:text="Button" />
         </TableRow>
 
-        <TableRow android:layout_width="fill_parent"
+        <TableRow
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content">
+
             <Button
                 android:id="@+id/button3"
                 android:layout_width="0dip"

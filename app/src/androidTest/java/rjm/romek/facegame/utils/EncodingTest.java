@@ -4,11 +4,6 @@ import android.test.AndroidTestCase;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import rjm.romek.facegame.model.Question;
-import rjm.romek.source.model.Country;
 
 public class EncodingTest extends AndroidTestCase {
 

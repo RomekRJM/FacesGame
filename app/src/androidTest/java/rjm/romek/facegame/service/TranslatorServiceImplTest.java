@@ -1,7 +1,5 @@
 package rjm.romek.facegame.service;
 
-import android.test.AndroidTestCase;
-
 import junit.framework.TestCase;
 
 import java.nio.charset.Charset;

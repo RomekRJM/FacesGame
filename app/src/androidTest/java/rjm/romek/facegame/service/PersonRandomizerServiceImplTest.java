@@ -5,8 +5,6 @@ import android.test.AndroidTestCase;
 
 import junit.framework.Assert;
 
-import rjm.romek.facegame.service.PhotoService;
-import rjm.romek.facegame.service.PhotoServiceImpl;
 import rjm.romek.source.model.Country;
 
 public class PersonRandomizerServiceImplTest extends AndroidTestCase {

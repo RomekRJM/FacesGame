@@ -19,15 +19,15 @@ public class ScoreManager {
         scoreService.addQuestion(question);
         StringBuilder sb = new StringBuilder();
 
-        if(scoreService.getMultiplier() >= 1) {
+        if (scoreService.getMultiplier() >= 1) {
 
-            if(scoreService.getMultiplier() > 1) {
+            if (scoreService.getMultiplier() > 1) {
                 sb.append(scoreService.getMultiplier()).append("x");
             }
 
             sb.append(scoreService.getMultiplicand());
 
-            if(scoreService.getCurrentScore() > 0) {
+            if (scoreService.getCurrentScore() > 0) {
                 sb.append(" + ").append(scoreService.getCurrentScore());
             }
 

@@ -11,7 +11,6 @@ import rjm.romek.facegame.R;
 import rjm.romek.facegame.ui.intent.EndGameIntent;
 import rjm.romek.facegame.ui.intent.GameIntent;
 import rjm.romek.facegame.ui.intent.MainMenuIntent;
-import rjm.romek.facegame.ui.intent.QuitIntent;
 
 public class EndGame extends Activity implements OnClickListener {
 
@@ -24,12 +23,12 @@ public class EndGame extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.end_game);
 
-        buttonBack = (Button)findViewById(R.id.buttonBack);
+        buttonBack = (Button) findViewById(R.id.buttonBack);
         buttonBack.setOnClickListener(this);
-        buttonAgain = (Button)findViewById(R.id.buttonAgain);
+        buttonAgain = (Button) findViewById(R.id.buttonAgain);
         buttonAgain.setOnClickListener(this);
 
-        scoreTextView = (TextView)findViewById(R.id.scoreTextView);
+        scoreTextView = (TextView) findViewById(R.id.scoreTextView);
         long score = getIntent().getLongExtra(EndGameIntent.SCORE, 0);
         int correct = getIntent().getIntExtra(EndGameIntent.CORRECT_ANSWERS, 0);
         scoreTextView.setText(getString(R.string.end_game_score) + score + " (" + correct + ")");
@@ -37,13 +36,13 @@ public class EndGame extends Activity implements OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if(!(v instanceof Button)) {
+        if (!(v instanceof Button)) {
             return;
         }
 
-        if(v == buttonBack) {
+        if (v == buttonBack) {
             startActivity(new MainMenuIntent(this));
-        } else if(v == buttonAgain) {
+        } else if (v == buttonAgain) {
             startActivity(new GameIntent(this));
         }
     }

@@ -30,9 +30,9 @@ public class PersonRandomizerServiceImpl implements PersonRandomizerService {
         try {
             String countryDir = translatorService.translateToFileName(country.getName());
             String countryDirPath = parameters.getPhotosDir() + countryDir;
-            String [] photos = assetManager.list(countryDirPath);
+            String[] photos = assetManager.list(countryDirPath);
 
-            if(photos.length <= 0) {
+            if (photos.length <= 0) {
                 return null;
             }
 

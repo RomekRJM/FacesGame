@@ -9,7 +9,6 @@ import rjm.romek.facegame.model.Difficulty;
 import rjm.romek.facegame.model.Question;
 import rjm.romek.facegame.utils.TestUtils;
 import rjm.romek.source.model.Country;
-import rjm.romek.source.randomizer.CountryRandomizer;
 
 public class QuestionServiceImplTest extends AndroidTestCase {
 
@@ -31,7 +30,7 @@ public class QuestionServiceImplTest extends AndroidTestCase {
     public void testReturnsValidQuestions() throws Exception {
         Set<Question> questions = questionService.generateQuestions(Difficulty.NORMAL);
 
-        for(Question q: questions) {
+        for (Question q : questions) {
             assertNotNull(q.getGameUUID());
             assertNotNull(q.getPerson());
             assertNotNull(q.getCorrectAnswer());
@@ -45,8 +44,8 @@ public class QuestionServiceImplTest extends AndroidTestCase {
     public void testReturnsValidQuestionsWithProperCountries() throws Exception {
         Set<Question> questions = questionService.generateQuestions(Difficulty.HARD);
 
-        for(Question q: questions) {
-            assertEquals((int)Difficulty.HARD.getAvailableAnswers(), q.getCountries().size());
+        for (Question q : questions) {
+            assertEquals((int) Difficulty.HARD.getAvailableAnswers(), q.getCountries().size());
             assertTrue(q.getCountries().contains(q.getCorrectAnswer()));
         }
     }

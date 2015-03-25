@@ -3,7 +3,6 @@ package rjm.romek.facegame.service;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.nio.charset.Charset;
 
 public class TranslatorServiceImpl implements TranslatorService {
     private final String encoding;
