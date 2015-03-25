@@ -25,6 +25,11 @@ public class ScoreServiceImplTest extends TestCase {
         assertParamsCorrect(0, 0l, 0l, 0l);
     }
 
+    public void test1CorrectLateAnswerOnHardcore() {
+        scoreService.addQuestion(createQuestion(true, Difficulty.HARDCORE.getTime()-1l, Difficulty.HARDCORE));
+        assertParamsCorrect(1, 3l, 3l, 0l);
+    }
+
     public void test2CorrectAnswersOnEasySecondTookLonger() {
         scoreService.addQuestion(createQuestion(true, 0l, Difficulty.EASY));
         scoreService.addQuestion(createQuestion(true, Difficulty.EASY.getTime()/2, Difficulty.EASY));

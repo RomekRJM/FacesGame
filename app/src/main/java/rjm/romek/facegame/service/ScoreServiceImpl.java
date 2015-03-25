@@ -6,6 +6,9 @@ import java.util.List;
 import rjm.romek.facegame.model.Difficulty;
 import rjm.romek.facegame.model.Question;
 
+import static java.lang.Math.ceil;
+import static java.lang.Math.max;
+
 public class ScoreServiceImpl implements ScoreService {
 
     private List<Question> questionList;
@@ -15,7 +18,7 @@ public class ScoreServiceImpl implements ScoreService {
     private long currentScore;
 
     public ScoreServiceImpl() {
-        questionList = new ArrayList<Question>();
+        questionList = new ArrayList<>();
     }
 
     @Override
@@ -27,8 +30,8 @@ public class ScoreServiceImpl implements ScoreService {
         if(question.isCorrectlyAnswered()) {
             ++multiplier;
             long totalTime = difficulty.getTime();
-            long answerTimeAsPercentageOfTotalTime =  (totalTime - question.getAnswerTime()) * 100 / totalTime;
-            multiplicand += Math.round(answerTimeAsPercentageOfTotalTime * difficulty.getLevelPointMultiplier());
+            long answerTimeAsPercentageOfTotalTime =  max(((totalTime - question.getAnswerTime()) * 100 / totalTime) - 1, 10);
+            multiplicand += ceil(answerTimeAsPercentageOfTotalTime * difficulty.getLevelPointMultiplier());
             totalScore = currentScore + multiplier * multiplicand;
         } else {
             currentScore += multiplier * multiplicand;
