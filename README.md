@@ -7,7 +7,7 @@ Android game, where you have to match photo of a person with nationality.
 For best game experience, always checkout most recent tag. Master will compile, but is not guaranteed to be stable.
 
 
-## History change
+## Changes history
 
 v0.2 - 25.03.2015
 
