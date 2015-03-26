@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Set;
 
 import rjm.romek.facegame.R;
-import rjm.romek.facegame.model.Difficulty;
 import rjm.romek.facegame.model.GamePhase;
 import rjm.romek.facegame.model.Question;
 import rjm.romek.facegame.service.FlagService;
@@ -117,7 +116,7 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
         }
 
         stopTimer();
-        clickedIndex = buttonList.indexOf((Button) v);
+        clickedIndex = buttonList.indexOf(v);
         currentQuestion.answer(clickedIndex, timerThread.getTimePassed());
         gamePhase = GamePhase.ANSWER_GIVEN;
         mainGameLoop();
@@ -133,7 +132,7 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
             photoService = new PhotoServiceImpl(getAssets());
             flagService = new FlagServiceImpl();
             questionService = createQuestionService();
-            questions = questionService.generateQuestions(Difficulty.EASY);
+            questions = questionService.generateQuestions();
             questionsIterator = questions.iterator();
         } catch (IOException e) {
         }

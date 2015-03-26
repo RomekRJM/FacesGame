@@ -28,9 +28,10 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Set<Question> generateQuestions(Difficulty difficulty) {
+    public Set<Question> generateQuestions() {
         Set<Question> questions = new LinkedHashSet<>();
         for (int i = 0; i < parameters.getQuestionsInSet(); i++) {
+            Difficulty difficulty = getDifficultyForQuestion(i);
             Country country = randomizer.randomCountry();
             List<Country> countries = generateCountries(difficulty, country);
             Question question = new Question();
@@ -64,5 +65,18 @@ public class QuestionServiceImpl implements QuestionService {
         Collections.shuffle(countries);
 
         return countries;
+    }
+
+    private Difficulty getDifficultyForQuestion(int number) {
+        switch (number / parameters.getChangeDifficultyEvery()) {
+            case 0:
+                return Difficulty.EASY;
+            case 1:
+                return Difficulty.NORMAL;
+            case 2:
+                return Difficulty.HARD;
+            default:
+                return Difficulty.HARDCORE;
+        }
     }
 }
