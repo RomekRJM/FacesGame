@@ -3,6 +3,7 @@ package rjm.romek.facegame.service;
 import android.test.AndroidTestCase;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import rjm.romek.facegame.data.Parameters;
@@ -46,6 +47,7 @@ public class QuestionServiceImplTest extends AndroidTestCase {
         for (Question q : questions) {
             assertEquals(q.getDifficulty().getAvailableAnswers().intValue(), q.getCountries().size());
             assertTrue(q.getCountries().contains(q.getCorrectAnswer()));
+            assertCountriesHaveValidFields(q.getCountries());
         }
     }
 
@@ -61,6 +63,14 @@ public class QuestionServiceImplTest extends AndroidTestCase {
             }
             assertTrue(question.getDifficulty().ordinal() >= lastQuestion.getDifficulty().ordinal());
             lastQuestion = question;
+        }
+    }
+
+    private void assertCountriesHaveValidFields(List<Country> countries) {
+        for(Country country : countries) {
+            assertNotNull(country.getFlag());
+            assertNotNull(country.getName());
+            assertNotNull(country.getBorders());
         }
     }
 }
