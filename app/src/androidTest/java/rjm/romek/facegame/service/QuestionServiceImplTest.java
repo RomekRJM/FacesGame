@@ -42,12 +42,14 @@ public class QuestionServiceImplTest extends AndroidTestCase {
     }
 
     public void testReturnsValidQuestionsWithProperCountries() throws Exception {
-        Set<Question> questions = questionService.generateQuestions();
+        for (int i = 0; i < 100; ++i) {
+            Set<Question> questions = questionService.generateQuestions();
 
-        for (Question q : questions) {
-            assertEquals(q.getDifficulty().getAvailableAnswers().intValue(), q.getCountries().size());
-            assertTrue(q.getCountries().contains(q.getCorrectAnswer()));
-            assertCountriesHaveValidFields(q.getCountries());
+            for (Question q : questions) {
+                assertEquals(q.getDifficulty().getAvailableAnswers().intValue(), q.getCountries().size());
+                assertTrue(q.getCountries().contains(q.getCorrectAnswer()));
+                assertCountriesHaveValidFields(q.getCountries());
+            }
         }
     }
 
@@ -67,9 +69,9 @@ public class QuestionServiceImplTest extends AndroidTestCase {
     }
 
     private void assertCountriesHaveValidFields(List<Country> countries) {
-        for(Country country : countries) {
-            assertNotNull(country.getFlag());
+        for (Country country : countries) {
             assertNotNull(country.getName());
+            assertNotNull(country.getFlag());
             assertNotNull(country.getBorders());
         }
     }
