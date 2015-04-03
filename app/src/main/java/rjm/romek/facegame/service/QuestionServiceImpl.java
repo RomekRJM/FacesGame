@@ -9,7 +9,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import rjm.romek.facegame.data.Parameters;
+import rjm.romek.facegame.common.Parameters;
 import rjm.romek.facegame.model.Difficulty;
 import rjm.romek.facegame.model.Question;
 import rjm.romek.source.model.Country;

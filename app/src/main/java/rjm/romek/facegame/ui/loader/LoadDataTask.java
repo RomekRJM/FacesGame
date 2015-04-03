@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 
 import java.io.IOException;
 
-import rjm.romek.facegame.data.Parameters;
+import rjm.romek.facegame.common.Parameters;
 import rjm.romek.source.gen.CountriesDeserializer;
 
 public class LoadDataTask extends AsyncTask<Void, Void, LoadDataTaskResult> {

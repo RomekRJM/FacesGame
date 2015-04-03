@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import rjm.romek.facegame.data.Parameters;
+import rjm.romek.facegame.common.Parameters;
 import rjm.romek.facegame.model.Question;
 import rjm.romek.facegame.utils.TestUtils;
 import rjm.romek.source.model.Country;

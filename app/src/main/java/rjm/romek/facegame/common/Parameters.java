@@ -1,4 +1,4 @@
-package rjm.romek.facegame.data;
+package rjm.romek.facegame.common;
 
 public final class Parameters {
     private final String countryListFile = "list.json";

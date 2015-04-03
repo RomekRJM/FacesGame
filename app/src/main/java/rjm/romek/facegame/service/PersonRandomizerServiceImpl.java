@@ -5,7 +5,7 @@ import android.content.res.AssetManager;
 import java.io.IOException;
 import java.util.Random;
 
-import rjm.romek.facegame.data.Parameters;
+import rjm.romek.facegame.common.Parameters;
 import rjm.romek.source.model.Country;
 import rjm.romek.source.model.Person;
 

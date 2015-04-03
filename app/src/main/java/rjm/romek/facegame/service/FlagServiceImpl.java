@@ -1,6 +1,6 @@
 package rjm.romek.facegame.service;
 
-import rjm.romek.facegame.data.Parameters;
+import rjm.romek.facegame.common.Parameters;
 import rjm.romek.source.model.Country;
 
 public class FlagServiceImpl implements FlagService {
