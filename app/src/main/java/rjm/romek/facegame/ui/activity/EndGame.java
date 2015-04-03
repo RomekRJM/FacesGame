@@ -7,7 +7,11 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Date;
+
 import rjm.romek.facegame.R;
+import rjm.romek.facegame.data.ScoreContract;
+import rjm.romek.facegame.model.Score;
 import rjm.romek.facegame.ui.intent.EndGameIntent;
 import rjm.romek.facegame.ui.intent.GameIntent;
 import rjm.romek.facegame.ui.intent.MainMenuIntent;
@@ -32,6 +36,17 @@ public class EndGame extends Activity implements OnClickListener {
         long score = getIntent().getLongExtra(EndGameIntent.SCORE, 0);
         int correct = getIntent().getIntExtra(EndGameIntent.CORRECT_ANSWERS, 0);
         scoreTextView.setText(getString(R.string.end_game_score) + score + " (" + correct + ")");
+
+        saveScore(score, correct);
+    }
+
+    private void saveScore(long scoreValue, int correctAnswers) {
+        Score score = new Score();
+        score.setDate(new Date());
+        score.setScore(scoreValue);
+        score.setCorrectAnswers(correctAnswers);
+        score.setPlayer("Player");
+        new ScoreContract(this).saveScore(score);
     }
 
     @Override

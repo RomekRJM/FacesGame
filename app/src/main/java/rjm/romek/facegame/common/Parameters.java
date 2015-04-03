@@ -6,6 +6,7 @@ public final class Parameters {
     private final String flagDir = "flags/";
     private final int questionsInSet = 12;
     private final int changeDifficultyEvery = 3;
+    private final int limitTopScore = 10;
 
     public int getQuestionsInSet() {
         return questionsInSet;
@@ -25,5 +26,9 @@ public final class Parameters {
 
     public int getChangeDifficultyEvery() {
         return changeDifficultyEvery;
+    }
+
+    public int getLimitTopScore() {
+        return limitTopScore;
     }
 }
