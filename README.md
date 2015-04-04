@@ -9,6 +9,22 @@ For best game experience, always checkout most recent tag. Master will compile, 
 
 ## Changes history
 
+v0.3 - 04.04.2015
+
+Enhancements:
+
+* Added missing countries and photos: Abkhazia, Somaliland, Kosovo, Vatican City, 
+  Transnistria, South Ossetia, Nagorno-Karabakh, Maldives, Saint Lucia, Norfolk Island.
+* Implemented storage of scores in sqlite and top scores view.
+* Difficulty level grows every few question: less time, more possible answers, 
+  countries closer to each other.
+  
+Bug fixes:
+
+* End game buttons now visible on landscape mode.
+* Corrected behaviour of faces_algorithm library, for randomizing close countries.  
+
+
 v0.2 - 25.03.2015
 
 Enhancements:
@@ -17,6 +33,7 @@ Enhancements:
 * More sophisticated method, for computing and displaying score, based on how quick answer was given and answering spree multiplier.
 * Portrait flashes changing color to red/green with check/cross mark, when correct/wrong answer given.
 * User has to press a button to go to next question.
+
 
 v0.1 - 16.03.2015 
 
