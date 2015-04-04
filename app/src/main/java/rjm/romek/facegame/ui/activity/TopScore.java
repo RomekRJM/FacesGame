@@ -20,21 +20,16 @@ public class TopScore extends ListActivity {
     private Parameters parameters;
     private SimpleCursorAdapter adapter;
     static final String[] FROM = { ScoreEntry.PLAYER, ScoreEntry.SCORE,
-            ScoreEntry.CORRECT_ANSWERS, ScoreEntry.DATE };
+            ScoreEntry.CORRECT_ANSWERS, ScoreEntry.DATE, ScoreEntry._ID };
     static final int[] TO = { R.id.text_player, R.id.text_score, R.id.text_correct,
-            R.id.text_date };
+            R.id.text_date, R.id.text_position };
+    private static int positionCounter;
 
     static final ViewBinder VIEW_BINDER = new ViewBinder() {
 
-        private long lastId = -1l;
-        private int cntr = 1;
-
         @Override
         public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-            long id = cursor.getLong(cursor.getColumnIndex(ScoreEntry._ID));
-            if (lastId == id) {
-                return false;
-            } else if (view.getId() == R.id.text_date) {
+            if (view.getId() == R.id.text_date) {
                 long time = cursor.getLong(cursor
                         .getColumnIndex(ScoreEntry.DATE));
                 CharSequence relativeTime = DateUtils
@@ -46,10 +41,14 @@ public class TopScore extends ListActivity {
                 String correctText = correct + " correct answers";
                 ((TextView) view).setText(correctText);
             } else if (view.getId() == R.id.text_position) {
-                String positionText = cntr + ".";
+                String positionText = positionCounter + ".";
                 ((TextView) view).setText(positionText);
+                ++positionCounter;
+            } else if (view.getId() == R.id.text_score) {
+                String scoreText = "" + cursor.getLong(cursor
+                        .getColumnIndex(ScoreEntry.SCORE));
+                ((TextView) view).setText(scoreText);
             }
-            ++cntr;
             return true;
         }
     };
@@ -62,6 +61,7 @@ public class TopScore extends ListActivity {
     }
 
     public void init() {
+        positionCounter = 1;
         Cursor cursor = new ScoreContract(this).getTopScoresCursor(parameters.getLimitTopScore());
 
         adapter = new SimpleCursorAdapter(this, R.layout.top_score_row, cursor, FROM, TO);
