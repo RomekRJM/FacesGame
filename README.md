@@ -9,7 +9,7 @@ For best game experience, always checkout most recent tag. Master will compile, 
 
 ## Changes history
 
-v0.3 - 04.04.2015
+**v0.3 - 04.04.2015**
 
 Enhancements:
 
@@ -25,7 +25,7 @@ Bug fixes:
 * Corrected behaviour of faces_algorithm library, for randomizing close countries.  
 
 
-v0.2 - 25.03.2015
+**v0.2 - 25.03.2015**
 
 Enhancements:
 
@@ -35,6 +35,6 @@ Enhancements:
 * User has to press a button to go to next question.
 
 
-v0.1 - 16.03.2015 
+**v0.1 - 16.03.2015**
 
 * Initial, somehow playable version.
