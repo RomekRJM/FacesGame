@@ -3,29 +3,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
     <TextView
-        android:id="@+id/text_score"
+        android:id="@+id/text_position"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="1.   690 (8)"
+        android:text="1."
         android:textAppearance="?android:attr/textAppearanceLarge" />
+    <TextView
+        android:id="@+id/text_player"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/text_position"
+        android:text="RJM"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <TextView
+        android:id="@+id/text_correct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:text="Right answers: 2"
+        android:layout_below="@+id/text_score"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
     <TextView
         android:id="@+id/text_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
         android:text="10 minutes ago"
+        android:layout_below="@+id/text_score"
         android:textAppearance="?android:attr/textAppearanceMedium" />
     <TextView
-        android:id="@+id/text_player"
+        android:id="@+id/text_score"
         android:autoLink="all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/text_score"
-        android:text="RJM"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:text="578"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 </RelativeLayout>

@@ -8,6 +8,7 @@ import android.view.View.OnClickListener;
 import rjm.romek.facegame.R;
 import rjm.romek.facegame.ui.intent.GameIntent;
 import rjm.romek.facegame.ui.intent.QuitIntent;
+import rjm.romek.facegame.ui.intent.TopScoreIntent;
 
 public class MainMenu extends Activity implements OnClickListener {
 
@@ -30,6 +31,7 @@ public class MainMenu extends Activity implements OnClickListener {
                 break;
 
             case R.id.records_button:
+                startActivity(new TopScoreIntent(this));
                 break;
 
             case R.id.about_the_game_button:

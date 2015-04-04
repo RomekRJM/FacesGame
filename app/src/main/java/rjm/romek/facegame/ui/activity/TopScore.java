@@ -20,20 +20,36 @@ public class TopScore extends ListActivity {
     private Parameters parameters;
     private SimpleCursorAdapter adapter;
     static final String[] FROM = { ScoreEntry.PLAYER, ScoreEntry.SCORE,
-            /*ScoreEntry.CORRECT_ANSWERS,*/ ScoreEntry.DATE };
-    static final int[] TO = { R.id.text_player, R.id.text_score,
+            ScoreEntry.CORRECT_ANSWERS, ScoreEntry.DATE };
+    static final int[] TO = { R.id.text_player, R.id.text_score, R.id.text_correct,
             R.id.text_date };
 
     static final ViewBinder VIEW_BINDER = new ViewBinder() {
+
+        private long lastId = -1l;
+        private int cntr = 1;
+
         @Override
         public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-            if (view.getId() != R.id.text_date)
+            long id = cursor.getLong(cursor.getColumnIndex(ScoreEntry._ID));
+            if (lastId == id) {
                 return false;
-            long time = cursor.getLong(cursor
-                    .getColumnIndex(ScoreEntry.DATE));
-            CharSequence relativeTime = DateUtils
-                    .getRelativeTimeSpanString(time);
-            ((TextView) view).setText(relativeTime);
+            } else if (view.getId() == R.id.text_date) {
+                long time = cursor.getLong(cursor
+                        .getColumnIndex(ScoreEntry.DATE));
+                CharSequence relativeTime = DateUtils
+                        .getRelativeTimeSpanString(time);
+                ((TextView) view).setText(relativeTime);
+            } else if (view.getId() == R.id.text_correct) {
+                int correct = cursor.getInt(cursor
+                        .getColumnIndex(ScoreEntry.CORRECT_ANSWERS));
+                String correctText = correct + " correct answers";
+                ((TextView) view).setText(correctText);
+            } else if (view.getId() == R.id.text_position) {
+                String positionText = cntr + ".";
+                ((TextView) view).setText(positionText);
+            }
+            ++cntr;
             return true;
         }
     };
@@ -41,7 +57,6 @@ public class TopScore extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.top_score);
         this.parameters = new Parameters();
         init();
     }
