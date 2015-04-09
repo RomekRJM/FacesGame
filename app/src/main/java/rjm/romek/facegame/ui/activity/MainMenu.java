@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import rjm.romek.facegame.R;
+import rjm.romek.facegame.ui.intent.CollectableIntent;
 import rjm.romek.facegame.ui.intent.GameIntent;
 import rjm.romek.facegame.ui.intent.QuitIntent;
 import rjm.romek.facegame.ui.intent.TopScoreIntent;
@@ -19,6 +20,7 @@ public class MainMenu extends Activity implements OnClickListener {
         setContentView(R.layout.main_menu);
         findViewById(R.id.new_game_button).setOnClickListener(this);
         findViewById(R.id.records_button).setOnClickListener(this);
+        findViewById(R.id.collectable_button).setOnClickListener(this);
         findViewById(R.id.about_the_game_button).setOnClickListener(this);
         findViewById(R.id.quit_button).setOnClickListener(this);
     }
@@ -32,6 +34,10 @@ public class MainMenu extends Activity implements OnClickListener {
 
             case R.id.records_button:
                 startActivity(new TopScoreIntent(this));
+                break;
+
+            case R.id.collectable_button:
+                startActivity(new CollectableIntent(this));
                 break;
 
             case R.id.about_the_game_button:

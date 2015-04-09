@@ -14,8 +14,10 @@
     <string name="end_game_again">Again!</string>
     <string name="game_default_score">0</string>
     <string name="title_activity_top_score">TopScore</string>
+    <string name="title_activity_collectables">Collectables</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="top_score_title">Top Scores</string>
+    <string name="main_menu_collectable">Collectable</string>
 </resources>
