@@ -7,11 +7,23 @@
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:columnWidth="90dp"
         android:numColumns="auto_fit"
-        android:verticalSpacing="10dp"
-        android:horizontalSpacing="10dp"
-        android:stretchMode="columnWidth"
         android:gravity="center"
-        />
+        android:columnWidth="65dp"
+        android:stretchMode="spacingWidth"
+        android:verticalSpacing="10dp"
+        android:layout_weight="0.9" />
+
+    <TextView
+        android:id="@+id/collectable_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:gravity="center_horizontal"
+        android:paddingBottom="10dp"
+        android:text="@string/collectable_test"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
 </LinearLayout>

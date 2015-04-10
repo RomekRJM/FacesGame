@@ -1,19 +1,22 @@
 package rjm.romek.facegame.ui.adapter;
 
-import android.content.Context;
+import android.app.Activity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import rjm.romek.facegame.R;
+
 import static rjm.romek.facegame.R.drawable.*;
 
 public class ImageAdapter extends BaseAdapter {
-    private Context context;
+    private Activity activity;
 
-    public ImageAdapter(Context c) {
-        context = c;
+    public ImageAdapter(Activity a) {
+        activity = a;
     }
 
     public int getCount() {
@@ -29,18 +32,17 @@ public class ImageAdapter extends BaseAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        ImageView imageView;
+        LayoutInflater inflater = activity.getLayoutInflater();
+
         if (convertView == null) {
-            imageView = new ImageView(context);
-            imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setPadding(8, 8, 8, 8);
-        } else {
-            imageView = (ImageView) convertView;
+            convertView = inflater.inflate(R.layout.collectables_row, null);
+            convertView.setLayoutParams(new GridView.LayoutParams(85, 85));
+            convertView.setPadding(8, 8, 8, 8);
         }
 
+        ImageView imageView = (ImageView) convertView.findViewById(R.id.imageView1);
         imageView.setImageResource(faces[position]);
-        return imageView;
+        return convertView;
     }
 
     private Integer[] faces = {
