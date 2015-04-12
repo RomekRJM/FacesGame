@@ -10,6 +10,11 @@ import rjm.romek.facegame.model.Score;
 
 public class ScoreContract {
     private final Context context;
+    public static final String CREATE_SCORE_TABLE =
+            String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+                            " %s text, %s int, %s int, %s int)",
+                    ScoreEntry.TABLE_NAME, ScoreEntry._ID, ScoreEntry.PLAYER,
+                    ScoreEntry.SCORE, ScoreEntry.CORRECT_ANSWERS, ScoreEntry.DATE);
 
     public ScoreContract(Context context) {
         this.context = context;

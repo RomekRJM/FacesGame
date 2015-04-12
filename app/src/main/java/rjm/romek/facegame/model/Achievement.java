@@ -4,7 +4,9 @@ public interface Achievement{
 
     public boolean isUnlocked();
 
-    public String getProgress();
+    public String getName();
+
+    public String getData();
 
     public String getPrize();
 
