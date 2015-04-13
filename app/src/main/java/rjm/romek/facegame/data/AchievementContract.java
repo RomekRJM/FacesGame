@@ -32,56 +32,18 @@ public class AchievementContract {
         public static final String LAST_UPDATED = "last_updated";
     }
 
-    private static class InitialAchievement implements Achievement {
-
-        private String name;
-        private String description;
-        private String prize;
-
-        public InitialAchievement(String name, String description, String prize) {
-            this.name = name;
-            this.description = description;
-            this.prize = prize;
-        }
-
-        @Override
-        public boolean isUnlocked() {
-            return false;
-        }
-
-        @Override
-        public String getName() {
-            return name;
-        }
-
-        @Override
-        public String getData() {
-            return null;
-        }
-
-        @Override
-        public String getPrize() {
-            return prize;
-        }
-
-        @Override
-        public String getDescription() {
-            return description;
-        }
-    }
-
     public static void populateAchievements(SQLiteDatabase db) {
 
         Achievement [] achievements = new Achievement[]{
-                new InitialAchievement("Grucho", "Guess 3 in a row", "face_1.png"),
-                new InitialAchievement("Teether", "Guess 5 in a row", "face_2.png"),
-                new InitialAchievement("Grumpo", "Guess 7 in a row", "face_3.png"),
-                new InitialAchievement("Huggy", "Guess 10 in a row", "face_4.png"),
-                new InitialAchievement("Shamo", "Have total 30 correct guesses", "face_5.png"),
-                new InitialAchievement("Kissulla", "Have total 100 correct guesses", "face_6.png"),
-                new InitialAchievement("Silencio", "Have total 250 correct guesses", "face_7.png"),
-                new InitialAchievement("Yawner", "Have total 500 correct guesses", "face_8.png"),
-                new InitialAchievement("Blusho", "Have total 1000 correct guesses", "face_9.png"),
+                new Achievement("Grucho", "Guess 3 in a row", "face_1.png"),
+                new Achievement("Teether", "Guess 5 in a row", "face_2.png"),
+                new Achievement("Grumpo", "Guess 7 in a row", "face_3.png"),
+                new Achievement("Huggy", "Guess 10 in a row", "face_4.png"),
+                new Achievement("Shamo", "Have total 30 correct guesses", "face_5.png"),
+                new Achievement("Kissulla", "Have total 100 correct guesses", "face_6.png"),
+                new Achievement("Silencio", "Have total 250 correct guesses", "face_7.png"),
+                new Achievement("Yawner", "Have total 500 correct guesses", "face_8.png"),
+                new Achievement("Blusho", "Have total 1000 correct guesses", "face_9.png"),
         };
 
         for(Achievement a : achievements) {
@@ -108,6 +70,34 @@ public class AchievementContract {
         );
     }
 
+    public Achievement findByName(String name) {
+        SQLiteDatabase db = DbHelper.getInstance(context).getReadableDatabase();
+
+        String[] projection = {AchievementEntry._ID, AchievementEntry.NAME,
+                AchievementEntry.DESCRIPTION, AchievementEntry.DATA, AchievementEntry.PRIZE,
+                AchievementEntry.UNLOCKED, AchievementEntry.LAST_UPDATED};
+
+        Cursor cursor = db.query(
+                AchievementEntry.TABLE_NAME,              // The table to query
+                projection,                               // The columns to return
+                AchievementEntry.NAME + " LIKE %s ",      // The columns for the WHERE clause
+                new String[]{ name },                     // The values for the WHERE clause
+                null,                                     // don't group the rows
+                null,                                     // don't filter by row groups
+                null                                      // The sort order
+        );
+
+        cursor.moveToFirst();
+
+        Achievement achievement = new Achievement();
+        achievement.setName(cursor.getString(cursor.getColumnIndex(AchievementEntry.NAME)));
+        achievement.setData(cursor.getString(cursor.getColumnIndex(AchievementEntry.DATA)));
+        achievement.setDescription(cursor.getString(cursor.getColumnIndex(AchievementEntry.DESCRIPTION)));
+        achievement.setIsUnlocked(cursor.getInt(cursor.getColumnIndex(AchievementEntry.UNLOCKED)) != 0);
+        achievement.setPrize(cursor.getString(cursor.getColumnIndex(AchievementEntry.PRIZE)));
+        return achievement;
+    }
+
     private static void createAchievement(Achievement achievement, SQLiteDatabase db) {
         ContentValues values = new ContentValues();
         values.put(AchievementEntry.NAME, achievement.getName());
@@ -124,6 +114,8 @@ public class AchievementContract {
         ContentValues values = new ContentValues();
         values.put(AchievementEntry.DATA, achievement.getData());
         values.put(AchievementEntry.LAST_UPDATED, System.currentTimeMillis());
-        db.insertWithOnConflict(AchievementEntry.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+        db.updateWithOnConflict(AchievementEntry.TABLE_NAME, values,
+                AchievementEntry.NAME + " LIKE %s ", new String[]{ achievement.getName() },
+                SQLiteDatabase.CONFLICT_IGNORE);
     }
 }
