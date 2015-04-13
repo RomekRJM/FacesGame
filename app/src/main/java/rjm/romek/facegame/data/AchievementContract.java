@@ -32,6 +32,59 @@ public class AchievementContract {
         public static final String LAST_UPDATED = "last_updated";
     }
 
+    private class InitialAchievement implements Achievement {
+
+        private String name;
+        private String description;
+        private String prize;
+
+        public InitialAchievement(String name, String description, String prize) {
+            this.name = name;
+            this.description = description;
+            this.prize = prize;
+        }
+
+        @Override
+        public boolean isUnlocked() {
+            return false;
+        }
+
+        @Override
+        public String getName() {
+            return name;
+        }
+
+        @Override
+        public String getData() {
+            return null;
+        }
+
+        @Override
+        public String getPrize() {
+            return prize;
+        }
+
+        @Override
+        public String getDescription() {
+            return description;
+        }
+    }
+
+    public void populateAchievements() {
+
+        Achievement [] achievements = new Achievement[]{
+                new InitialAchievement("Grucho", "Guess 3 in a row", "face_1.png"),
+                new InitialAchievement("Teether", "Guess 5 in a row", "face_2.png"),
+                new InitialAchievement("Grumpo", "Guess 7 in a row", "face_3.png"),
+                new InitialAchievement("Huggy", "Guess 10 in a row", "face_4.png"),
+                new InitialAchievement("Shamo", "Have total 30 correct guesses", "face_5.png"),
+                new InitialAchievement("Kissulla", "Have total 100 correct guesses", "face_6.png"),
+                new InitialAchievement("Silencio", "Have total 250 correct guesses", "face_7.png"),
+                new InitialAchievement("Yawner", "Have total 500 correct guesses", "face_8.png"),
+                new InitialAchievement("Blusho", "Have total 1000 correct guesses", "face_9.png"),
+        };
+    }
+
     public Cursor getAchievements() {
         SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
 
