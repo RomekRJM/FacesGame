@@ -29,7 +29,7 @@ public class ScoreContract {
     }
 
     public Cursor getTopScoresCursor(int limit) {
-        SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
+        SQLiteDatabase db = DbHelper.getInstance(context).getReadableDatabase();
 
         String[] projection = {ScoreEntry._ID, ScoreEntry.PLAYER, ScoreEntry.CORRECT_ANSWERS,
                 ScoreEntry.SCORE, ScoreEntry.DATE};
@@ -47,7 +47,7 @@ public class ScoreContract {
     }
 
     public void saveScore(Score score) {
-        SQLiteDatabase db = new DbHelper(context).getWritableDatabase();
+        SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(ScoreEntry.PLAYER, score.getPlayer());

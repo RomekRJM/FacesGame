@@ -32,7 +32,7 @@ public class AchievementContract {
         public static final String LAST_UPDATED = "last_updated";
     }
 
-    private class InitialAchievement implements Achievement {
+    private static class InitialAchievement implements Achievement {
 
         private String name;
         private String description;
@@ -70,7 +70,7 @@ public class AchievementContract {
         }
     }
 
-    public void populateAchievements() {
+    public static void populateAchievements(SQLiteDatabase db) {
 
         Achievement [] achievements = new Achievement[]{
                 new InitialAchievement("Grucho", "Guess 3 in a row", "face_1.png"),
@@ -83,10 +83,14 @@ public class AchievementContract {
                 new InitialAchievement("Yawner", "Have total 500 correct guesses", "face_8.png"),
                 new InitialAchievement("Blusho", "Have total 1000 correct guesses", "face_9.png"),
         };
+
+        for(Achievement a : achievements) {
+            createAchievement(a, db);
+        }
     }
 
     public Cursor getAchievements() {
-        SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
+        SQLiteDatabase db = DbHelper.getInstance(context).getReadableDatabase();
 
         String[] projection = {AchievementEntry._ID, AchievementEntry.NAME,
                 AchievementEntry.DESCRIPTION, AchievementEntry.DATA, AchievementEntry.PRIZE,
@@ -104,9 +108,7 @@ public class AchievementContract {
         );
     }
 
-    public void createAchievement(Achievement achievement) {
-        SQLiteDatabase db = new DbHelper(context).getWritableDatabase();
-
+    private static void createAchievement(Achievement achievement, SQLiteDatabase db) {
         ContentValues values = new ContentValues();
         values.put(AchievementEntry.NAME, achievement.getName());
         values.put(AchievementEntry.DESCRIPTION, achievement.getDescription());
@@ -117,7 +119,7 @@ public class AchievementContract {
     }
 
     public void updateAchievement(Achievement achievement) {
-        SQLiteDatabase db = new DbHelper(context).getWritableDatabase();
+        SQLiteDatabase db = DbHelper.getInstance(context).getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(AchievementEntry.DATA, achievement.getData());
