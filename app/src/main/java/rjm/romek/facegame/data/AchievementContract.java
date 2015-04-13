@@ -93,7 +93,7 @@ public class AchievementContract {
         achievement.setName(cursor.getString(cursor.getColumnIndex(AchievementEntry.NAME)));
         achievement.setData(cursor.getString(cursor.getColumnIndex(AchievementEntry.DATA)));
         achievement.setDescription(cursor.getString(cursor.getColumnIndex(AchievementEntry.DESCRIPTION)));
-        achievement.setIsUnlocked(cursor.getInt(cursor.getColumnIndex(AchievementEntry.UNLOCKED)) != 0);
+        achievement.setUnlocked(cursor.getInt(cursor.getColumnIndex(AchievementEntry.UNLOCKED)) != 0);
         achievement.setPrize(cursor.getString(cursor.getColumnIndex(AchievementEntry.PRIZE)));
         return achievement;
     }

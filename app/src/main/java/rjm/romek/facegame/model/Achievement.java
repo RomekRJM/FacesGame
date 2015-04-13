@@ -5,7 +5,7 @@ public class Achievement {
     private String description;
     private String prize;
     private String data;
-    private Boolean isUnlocked;
+    private Boolean unlocked;
 
     public Achievement() {
 
@@ -16,7 +16,7 @@ public class Achievement {
         this.description = description;
         this.prize = prize;
         this.data = null;
-        this.isUnlocked = false;
+        this.unlocked = false;
     }
 
     public void setName(String name) {
@@ -35,12 +35,12 @@ public class Achievement {
         this.data = data;
     }
 
-    public void setIsUnlocked(Boolean isUnlocked) {
-        this.isUnlocked = isUnlocked;
+    public void setUnlocked(Boolean unlocked) {
+        this.unlocked = unlocked;
     }
 
     public boolean isUnlocked() {
-        return isUnlocked;
+        return unlocked;
     }
 
     public String getName() {
