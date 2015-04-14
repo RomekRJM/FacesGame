@@ -7,6 +7,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Date;
 
 import rjm.romek.facegame.R;
@@ -21,6 +23,7 @@ public class EndGame extends Activity implements OnClickListener {
     private Button buttonBack;
     private Button buttonAgain;
     private TextView scoreTextView;
+    private TextView achievementTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +39,13 @@ public class EndGame extends Activity implements OnClickListener {
         long score = getIntent().getLongExtra(EndGameIntent.SCORE, 0);
         int correct = getIntent().getIntExtra(EndGameIntent.CORRECT_ANSWERS, 0);
         scoreTextView.setText(getString(R.string.end_game_score) + score + " (" + correct + ")");
-
         saveScore(score, correct);
+
+        achievementTextView = (TextView) findViewById(R.id.achievementsTextView);
+        String [] unlockedAchievements = getIntent().getStringArrayExtra(
+                EndGameIntent.UNLOCKED_ACHIEVEMENTS);
+        achievementTextView.setText(getString(R.string.end_game_achievements_unlocked)
+                + StringUtils.join(unlockedAchievements, ", "));
     }
 
     private void saveScore(long scoreValue, int correctAnswers) {

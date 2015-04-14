@@ -16,13 +16,14 @@ public class Achievement<C> {
     public Achievement() {
     }
 
-    public Achievement(String name, String description, String prize, AchievementUpdater<java.util.Set<Question>, Long> updater) {
+    public Achievement(String name, String description, String prize,
+                       String data, AchievementUpdater updater) {
         this.name = name;
         this.description = description;
         this.prize = prize;
-        this.data = null;
+        this.data = data;
         this.unlocked = false;
-        this.updater = null;
+        this.updater = updater;
     }
 
     public void setName(String name) {

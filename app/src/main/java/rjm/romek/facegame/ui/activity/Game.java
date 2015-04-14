@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Set;
 
 import rjm.romek.facegame.R;
+import rjm.romek.facegame.achievement.AchievementManager;
 import rjm.romek.facegame.model.GamePhase;
 import rjm.romek.facegame.model.Question;
 import rjm.romek.facegame.service.FlagService;
@@ -304,9 +305,12 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
         ++questionIndex;
 
         if (questionIndex >= questions.size()) {
+            String[] unlockedAchievementsNames =
+                    AchievementManager.checkAchievementsForUpdates(questions, getBaseContext());
             startActivity(new EndGameIntent(this,
                     questionService.countCorrectAnswered(questions),
-                    scoreManager.getScoreService().getTotalScore()));
+                    scoreManager.getScoreService().getTotalScore(),
+                    unlockedAchievementsNames));
         } else {
             gamePhase = GamePhase.WAITING_FOR_ANSWER;
         }

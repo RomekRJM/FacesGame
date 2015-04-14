@@ -68,7 +68,7 @@ public class AchievementContract {
         Cursor cursor = db.query(
                 AchievementEntry.TABLE_NAME,              // The table to query
                 projection,                               // The columns to return
-                AchievementEntry.NAME + " LIKE %s ",      // The columns for the WHERE clause
+                AchievementEntry.NAME + " LIKE ?",      // The columns for the WHERE clause
                 new String[]{ name },                     // The values for the WHERE clause
                 null,                                     // don't group the rows
                 null,                                     // don't filter by row groups
@@ -102,8 +102,9 @@ public class AchievementContract {
         ContentValues values = new ContentValues();
         values.put(AchievementEntry.DATA, achievement.getData());
         values.put(AchievementEntry.LAST_UPDATED, System.currentTimeMillis());
+        values.put(AchievementEntry.UNLOCKED, achievement.isUnlocked());
         db.updateWithOnConflict(AchievementEntry.TABLE_NAME, values,
-                AchievementEntry.NAME + " LIKE %s ", new String[]{ achievement.getName() },
+                AchievementEntry.NAME + " LIKE ? ", new String[]{ achievement.getName() },
                 SQLiteDatabase.CONFLICT_IGNORE);
     }
 }
