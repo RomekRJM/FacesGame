@@ -1,5 +1,10 @@
 package rjm.romek.facegame.achievement;
 
+import android.content.Context;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import rjm.romek.facegame.model.Achievement;
 
 public class AchievementManager {
@@ -15,5 +20,16 @@ public class AchievementManager {
             new Achievement("Blusho", "Have total 1000 correct guesses", "face_9.png", new TotalCorrectAnswerAchievement(1000))
     };
 
+    public List<Achievement> checkAchievementsForUpdates(Object update, Context context) {
+
+        List<Achievement> unlockedAchievements = new ArrayList<>();
+        for(Achievement achievement : achievements) {
+            if(achievement.updateAchievement(update, context)) {
+                unlockedAchievements.add(achievement);
+            }
+        }
+
+        return unlockedAchievements;
+    }
 
 }

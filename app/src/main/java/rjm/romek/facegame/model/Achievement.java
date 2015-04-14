@@ -4,7 +4,7 @@ import android.content.Context;
 
 import rjm.romek.facegame.achievement.AchievementUpdater;
 
-public class Achievement {
+public class Achievement<C> {
     private String name;
     private String description;
     private String prize;
@@ -16,7 +16,7 @@ public class Achievement {
     public Achievement() {
     }
 
-    public Achievement(String name, String description, String prize, AchievementUpdater updater) {
+    public Achievement(String name, String description, String prize, AchievementUpdater<java.util.Set<Question>, Long> updater) {
         this.name = name;
         this.description = description;
         this.prize = prize;
@@ -65,9 +65,9 @@ public class Achievement {
         return description;
     }
 
-    public boolean updateAchievement(Object update, Context context) {
+    public boolean updateAchievement(C change, Context context) {
         boolean wasUnlocked = isUnlocked();
-        updater.updateAchievement(name, update, context);
+        updater.updateAchievement(name, change, context);
         return !wasUnlocked && isUnlocked();
     }
 }

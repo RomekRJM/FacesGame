@@ -17,4 +17,8 @@ public abstract class QuestionCounterAchievementUpdater extends AchievementUpdat
     public boolean meetsCondition(Achievement achievement) {
         return Long.valueOf(achievement.getData()) >= value;
     }
+
+    public boolean changeAffectsAchievement(Object change) {
+        return change != null && Set.class.isAssignableFrom(change.getClass());
+    }
 }
