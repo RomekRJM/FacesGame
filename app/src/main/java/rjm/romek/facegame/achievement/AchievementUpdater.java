@@ -6,13 +6,8 @@ import rjm.romek.facegame.data.AchievementContract;
 import rjm.romek.facegame.model.Achievement;
 
 public abstract class AchievementUpdater<U> {
-    protected final String achievementName;
 
-    protected AchievementUpdater(String achievementName) {
-        this.achievementName = achievementName;
-    }
-
-    public void updateAchievement(U update, Context context) {
+    public void updateAchievement(String achievementName, U update, Context context) {
         AchievementContract achievementContract = new AchievementContract(context);
         Achievement achievement = achievementContract.findByName(achievementName);
         update(update, achievement);

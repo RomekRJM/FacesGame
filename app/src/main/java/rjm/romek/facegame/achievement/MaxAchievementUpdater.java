@@ -4,8 +4,8 @@ import rjm.romek.facegame.model.Achievement;
 
 public class MaxAchievementUpdater extends CounterAchievementUpdater {
 
-    public MaxAchievementUpdater(String name, long value) {
-        super(name, value);
+    public MaxAchievementUpdater(long value) {
+        super(value);
     }
 
     @Override

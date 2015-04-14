@@ -2,12 +2,11 @@ package rjm.romek.facegame.achievement;
 
 import rjm.romek.facegame.model.Achievement;
 
-public abstract class CounterAchievementUpdater extends AchievementUpdater<Long> {
+public class CounterAchievementUpdater extends AchievementUpdater<Long> {
 
     protected final long value;
 
-    public CounterAchievementUpdater(String name, long value) {
-        super(name);
+    public CounterAchievementUpdater(long value) {
         this.value = value;
     }
 
