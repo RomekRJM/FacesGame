@@ -2,7 +2,7 @@ package rjm.romek.facegame.achievement;
 
 import rjm.romek.facegame.model.Achievement;
 
-public class MaxAchievementUpdater extends CounterAchievementUpdater {
+public abstract class MaxAchievementUpdater extends QuestionCounterAchievementUpdater {
 
     public MaxAchievementUpdater(long value) {
         super(value);

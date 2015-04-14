@@ -2,12 +2,9 @@ package rjm.romek.facegame.achievement;
 
 import rjm.romek.facegame.model.Achievement;
 
-public class CounterAchievementUpdater extends AchievementUpdater<Long> {
-
-    protected final long value;
-
-    public CounterAchievementUpdater(long value) {
-        this.value = value;
+public abstract class SumAchievementUpdater extends QuestionCounterAchievementUpdater {
+    public SumAchievementUpdater(long value) {
+        super(value);
     }
 
     @Override
@@ -15,10 +12,5 @@ public class CounterAchievementUpdater extends AchievementUpdater<Long> {
         long counter = Long.valueOf(achievement.getData());
         long newValue = counter + update;
         achievement.setData(String.valueOf(newValue));
-    }
-
-    @Override
-    public boolean meetsCondition(Achievement achievement) {
-        return Long.valueOf(achievement.getData()) >= value;
     }
 }
