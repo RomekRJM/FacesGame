@@ -2,7 +2,7 @@ package rjm.romek.facegame.achievement;
 
 import rjm.romek.facegame.model.Achievement;
 
-public abstract class CounterAchievementUpdater extends AbstractAchievementUpdater<Long> {
+public abstract class CounterAchievementUpdater extends AchievementUpdater<Long> {
 
     protected final long value;
 

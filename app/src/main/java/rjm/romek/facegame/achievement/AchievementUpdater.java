@@ -5,10 +5,10 @@ import android.content.Context;
 import rjm.romek.facegame.data.AchievementContract;
 import rjm.romek.facegame.model.Achievement;
 
-public abstract class AbstractAchievementUpdater<U> {
+public abstract class AchievementUpdater<U> {
     protected final String achievementName;
 
-    protected AbstractAchievementUpdater(String achievementName) {
+    protected AchievementUpdater(String achievementName) {
         this.achievementName = achievementName;
     }
 

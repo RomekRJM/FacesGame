@@ -1,11 +1,14 @@
 package rjm.romek.facegame.model;
 
+import rjm.romek.facegame.achievement.AchievementUpdater;
+
 public class Achievement {
     private String name;
     private String description;
     private String prize;
     private String data;
     private Boolean unlocked;
+    private AchievementUpdater updater;
 
     public Achievement() {
 
