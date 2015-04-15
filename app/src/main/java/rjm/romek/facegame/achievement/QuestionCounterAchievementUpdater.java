@@ -14,11 +14,11 @@ public abstract class QuestionCounterAchievementUpdater extends AchievementUpdat
     }
 
     @Override
-    public boolean meetsCondition(Achievement achievement) {
+    protected boolean meetsCondition(Achievement achievement) {
         return Long.valueOf(achievement.getData()) >= value;
     }
 
-    public boolean changeAffectsAchievement(Object change) {
+    protected boolean changeAffectsAchievement(Object change) {
         return change != null && Set.class.isAssignableFrom(change.getClass());
     }
 }

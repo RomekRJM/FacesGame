@@ -10,7 +10,7 @@ public class TotalCorrectAnswerAchievement extends SumAchievementUpdater {
     }
 
     @Override
-    public Long transform(Set<Question> change) {
+    protected Long transform(Set<Question> change) {
         long totalCorrectAnswers = 0;
 
         for(Question q : change) {

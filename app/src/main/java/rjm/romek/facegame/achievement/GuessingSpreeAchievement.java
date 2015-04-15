@@ -11,7 +11,7 @@ public class GuessingSpreeAchievement extends MaxAchievementUpdater {
     }
 
     @Override
-    public Long transform(Set<Question> change) {
+    protected Long transform(Set<Question> change) {
         long currentSpree = 0;
         long longestSpree = 0;
 

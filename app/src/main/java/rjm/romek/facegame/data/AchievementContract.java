@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
+import java.util.Date;
+
 import rjm.romek.facegame.achievement.AchievementManager;
 import rjm.romek.facegame.model.Achievement;
 
@@ -83,6 +85,7 @@ public class AchievementContract {
         achievement.setDescription(cursor.getString(cursor.getColumnIndex(AchievementEntry.DESCRIPTION)));
         achievement.setUnlocked(cursor.getInt(cursor.getColumnIndex(AchievementEntry.UNLOCKED)) != 0);
         achievement.setPrize(cursor.getString(cursor.getColumnIndex(AchievementEntry.PRIZE)));
+        achievement.setLastModified(new Date(cursor.getLong(cursor.getColumnIndex(AchievementEntry.LAST_UPDATED))));
         return achievement;
     }
 
@@ -93,6 +96,7 @@ public class AchievementContract {
         values.put(AchievementEntry.DATA, achievement.getData());
         values.put(AchievementEntry.PRIZE, achievement.getPrize());
         values.put(AchievementEntry.UNLOCKED, achievement.isUnlocked());
+        values.put(AchievementEntry.LAST_UPDATED, achievement.getLastModified().getTime());
         db.insertWithOnConflict(AchievementEntry.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_IGNORE);
     }
 

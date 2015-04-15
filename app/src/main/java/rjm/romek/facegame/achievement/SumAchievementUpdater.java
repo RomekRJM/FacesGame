@@ -8,7 +8,7 @@ public abstract class SumAchievementUpdater extends QuestionCounterAchievementUp
     }
 
     @Override
-    public void update(Long update, Achievement achievement) {
+    protected void update(Long update, Achievement achievement) {
         long counter = Long.valueOf(achievement.getData());
         long newValue = counter + update;
         achievement.setData(String.valueOf(newValue));

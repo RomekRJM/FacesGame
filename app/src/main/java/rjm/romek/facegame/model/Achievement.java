@@ -2,6 +2,8 @@ package rjm.romek.facegame.model;
 
 import android.content.Context;
 
+import java.util.Date;
+
 import rjm.romek.facegame.achievement.AchievementUpdater;
 
 public class Achievement<C> {
@@ -10,6 +12,7 @@ public class Achievement<C> {
     private String prize;
     private String data;
     private Boolean unlocked;
+    private Date lastModified;
 
     private AchievementUpdater updater;
 
@@ -66,9 +69,17 @@ public class Achievement<C> {
         return description;
     }
 
+    public Date getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(Date lastModified) {
+        this.lastModified = lastModified;
+    }
+
     public boolean updateAchievement(C change, Context context) {
         boolean wasUnlocked = isUnlocked();
-        updater.updateAchievement(name, change, context);
+        updater.updateAchievement(this, change, context);
         return !wasUnlocked && isUnlocked();
     }
 }

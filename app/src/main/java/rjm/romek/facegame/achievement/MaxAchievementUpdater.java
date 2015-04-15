@@ -9,7 +9,7 @@ public abstract class MaxAchievementUpdater extends QuestionCounterAchievementUp
     }
 
     @Override
-    public void update(Long update, Achievement achievement) {
+    protected void update(Long update, Achievement achievement) {
         long counter = Long.valueOf(achievement.getData());
         long newValue = Math.max(counter, update);
         achievement.setData(String.valueOf(newValue));
