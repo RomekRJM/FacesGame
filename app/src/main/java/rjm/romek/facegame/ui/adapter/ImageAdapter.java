@@ -35,7 +35,7 @@ public class ImageAdapter extends BaseAdapter {
         LayoutInflater inflater = activity.getLayoutInflater();
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.collectables_row, null);
+            convertView = inflater.inflate(R.layout.collectables_cell, null);
             convertView.setLayoutParams(new GridView.LayoutParams(85, 85));
             convertView.setPadding(8, 8, 8, 8);
         }
@@ -45,7 +45,7 @@ public class ImageAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private Integer[] faces = {
+    static Integer[] faces = {
             face_1, face_2, face_3, face_4, face_5, face_6, face_7, face_8, face_9,
             face_10, face_11, face_12, face_13, face_14, face_15, face_16, face_17, face_18, face_19,
             face_20, face_21, face_22, face_23, face_24, face_25, face_26, face_27, face_28, face_29,
