@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.apache.commons.lang3.StringUtils;
@@ -12,8 +13,11 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Date;
 
 import rjm.romek.facegame.R;
+import rjm.romek.facegame.data.AchievementContract;
 import rjm.romek.facegame.data.ScoreContract;
+import rjm.romek.facegame.model.Achievement;
 import rjm.romek.facegame.model.Score;
+import rjm.romek.facegame.ui.adapter.NewAchievementsAdapter;
 import rjm.romek.facegame.ui.intent.EndGameIntent;
 import rjm.romek.facegame.ui.intent.GameIntent;
 import rjm.romek.facegame.ui.intent.MainMenuIntent;
@@ -23,7 +27,7 @@ public class EndGame extends Activity implements OnClickListener {
     private Button buttonBack;
     private Button buttonAgain;
     private TextView scoreTextView;
-    private TextView achievementTextView;
+    private AchievementContract achievementContract;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +45,21 @@ public class EndGame extends Activity implements OnClickListener {
         scoreTextView.setText(getString(R.string.end_game_score) + score + " (" + correct + ")");
         saveScore(score, correct);
 
-        achievementTextView = (TextView) findViewById(R.id.achievementsTextView);
         String [] unlockedAchievements = getIntent().getStringArrayExtra(
                 EndGameIntent.UNLOCKED_ACHIEVEMENTS);
-        achievementTextView.setText(getString(R.string.end_game_achievements_unlocked)
-                + StringUtils.join(unlockedAchievements, ", "));
+        achievementContract = new AchievementContract(getBaseContext());
+        Achievement [] newAchievements = new Achievement[unlockedAchievements.length];
+
+        int i=0;
+        for(String achievementName : unlockedAchievements) {
+            newAchievements[i] = achievementContract.findByName(achievementName);
+            ++i;
+        }
+
+        ListView listView = (ListView) findViewById(R.id.listViewNewAchievements);
+        NewAchievementsAdapter customAdapter = new NewAchievementsAdapter(this,
+                R.layout.collectable_row, newAchievements);
+        listView.setAdapter(customAdapter);
     }
 
     private void saveScore(long scoreValue, int correctAnswers) {
