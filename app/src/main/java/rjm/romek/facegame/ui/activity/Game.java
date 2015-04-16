@@ -169,7 +169,7 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
     }
 
     ImageView createImageView() {
-        return (ImageView) findViewById(R.id.imageView1);
+        return (ImageView) findViewById(R.id.imageViewPortrait);
     }
 
     TextView createScoreTextView() {
