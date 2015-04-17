@@ -19,12 +19,13 @@ import rjm.romek.facegame.data.AchievementContract;
 import rjm.romek.facegame.model.Achievement;
 import rjm.romek.facegame.ui.views.CollectableRowPopulator;
 
-import static rjm.romek.facegame.data.AchievementContract.*;
+import static rjm.romek.facegame.data.AchievementContract.AchievementEntry;
 
 public class Collectable extends Activity {
     private SimpleCursorAdapter adapter;
-    private static final String [] FROM = new String[] {AchievementEntry.PRIZE};
-    private static final int [] TO = new int[] {R.id.imageViewCollectable};
+    private static final String[] FROM = new String[]{AchievementEntry.PRIZE};
+    private static final int[] TO = new int[]{R.id.imageViewCollectable};
+    private final Activity _this = this;
 
     private class CollectableViewBinder implements ViewBinder {
 
@@ -61,25 +62,33 @@ public class Collectable extends Activity {
 
         final AchievementContract achievementContract = new AchievementContract(this);
         final CollectableRowPopulator collectableRowPopulator = new CollectableRowPopulator();
-        final Context context = getBaseContext();
+        final CollectableViewBinder collectableViewBinder = new CollectableViewBinder(this);
 
         adapter = new SimpleCursorAdapter(this, R.layout.collectables_cell,
                 achievementContract.getAchievementsCursor(), FROM, TO);
-        adapter.setViewBinder(new CollectableViewBinder(this));
+        adapter.setViewBinder(collectableViewBinder);
         gridview.setAdapter(adapter);
 
         gridview.setOnItemClickListener(new OnItemClickListener() {
+            private View lastSelected;
+
             @Override
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-
-                System.out.println("Position: " + position + ", id: " + id);
                 Achievement selected = achievementContract.findById(position + 1);
 
-                if(selected.isUnlocked()) {
+                if (selected.isUnlocked()) {
                     collectableRowPopulator.populate(selected,
-                            findViewById(R.id.collectable_row_bottom), context);
+                            findViewById(R.id.collectable_row_bottom), _this);
                 }
+
+                if (lastSelected != null) {
+                    lastSelected.setBackgroundResource(R.drawable.grid_border);
+                }
+
+                v.setSelected(true);
+                v.setBackgroundResource(R.drawable.grid_border_selected);
+                lastSelected = v;
             }
         });
     }
