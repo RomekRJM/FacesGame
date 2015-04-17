@@ -78,8 +78,6 @@ public class Achievement<C> {
     }
 
     public boolean updateAchievement(C change, Context context) {
-        boolean wasUnlocked = isUnlocked();
-        updater.updateAchievement(this, change, context);
-        return !wasUnlocked && isUnlocked();
+        return updater.updateAchievement(this, change, context);
     }
 }

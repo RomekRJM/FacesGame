@@ -57,7 +57,7 @@ public class Collectable extends Activity {
 
         AchievementContract achievementContract = new AchievementContract(this);
         adapter = new SimpleCursorAdapter(this, R.layout.collectables_cell,
-                achievementContract.getAchievements(), FROM, TO);
+                achievementContract.getAchievementsCursor(), FROM, TO);
         adapter.setViewBinder(new CollectableViewBinder(this));
         gridview.setAdapter(adapter);
     }

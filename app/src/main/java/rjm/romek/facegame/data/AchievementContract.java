@@ -6,7 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import rjm.romek.facegame.achievement.AchievementManager;
 import rjm.romek.facegame.model.Achievement;
@@ -41,7 +43,7 @@ public class AchievementContract {
         }
     }
 
-    public Cursor getAchievements() {
+    public Cursor getAchievementsCursor() {
         SQLiteDatabase db = DbHelper.getInstance(context).getReadableDatabase();
 
         String[] projection = {AchievementEntry._ID, AchievementEntry.NAME,
@@ -58,6 +60,18 @@ public class AchievementContract {
                 null,                                     // don't filter by row groups
                 sortOrder                                 // The sort order
         );
+    }
+
+    public List<Achievement> getAchievements() {
+        Cursor cursor = getAchievementsCursor();
+        List<Achievement> achievements = new ArrayList<Achievement>();
+
+        while(cursor.moveToNext()) {
+            achievements.add(toAchievement(cursor));
+        }
+
+        cursor.close();
+        return achievements;
     }
 
     public Achievement findByName(String name) {
@@ -78,15 +92,7 @@ public class AchievementContract {
         );
 
         cursor.moveToFirst();
-
-        Achievement achievement = new Achievement();
-        achievement.setName(cursor.getString(cursor.getColumnIndex(AchievementEntry.NAME)));
-        achievement.setData(cursor.getString(cursor.getColumnIndex(AchievementEntry.DATA)));
-        achievement.setDescription(cursor.getString(cursor.getColumnIndex(AchievementEntry.DESCRIPTION)));
-        achievement.setUnlocked(cursor.getInt(cursor.getColumnIndex(AchievementEntry.UNLOCKED)) != 0);
-        achievement.setPrize(cursor.getString(cursor.getColumnIndex(AchievementEntry.PRIZE)));
-        achievement.setLastModified(new Date(cursor.getLong(cursor.getColumnIndex(AchievementEntry.LAST_UPDATED))));
-        return achievement;
+        return toAchievement(cursor);
     }
 
     private static void createAchievement(Achievement achievement, SQLiteDatabase db) {
@@ -110,5 +116,16 @@ public class AchievementContract {
         db.updateWithOnConflict(AchievementEntry.TABLE_NAME, values,
                 AchievementEntry.NAME + " LIKE ? ", new String[]{ achievement.getName() },
                 SQLiteDatabase.CONFLICT_IGNORE);
+    }
+
+    private Achievement toAchievement(Cursor cursor) {
+        Achievement achievement = new Achievement();
+        achievement.setName(cursor.getString(cursor.getColumnIndex(AchievementEntry.NAME)));
+        achievement.setData(cursor.getString(cursor.getColumnIndex(AchievementEntry.DATA)));
+        achievement.setDescription(cursor.getString(cursor.getColumnIndex(AchievementEntry.DESCRIPTION)));
+        achievement.setUnlocked(cursor.getInt(cursor.getColumnIndex(AchievementEntry.UNLOCKED)) != 0);
+        achievement.setPrize(cursor.getString(cursor.getColumnIndex(AchievementEntry.PRIZE)));
+        achievement.setLastModified(new Date(cursor.getLong(cursor.getColumnIndex(AchievementEntry.LAST_UPDATED))));
+        return achievement;
     }
 }

@@ -7,16 +7,19 @@ import rjm.romek.facegame.model.Achievement;
 
 public abstract class AchievementUpdater<C, U> {
 
-    public void updateAchievement(Achievement achievement, C change, Context context) {
-        if (!changeAffectsAchievement(change)) return;
+    public boolean updateAchievement(Achievement achievement, C change, Context context) {
+        if (!changeAffectsAchievement(change)) return false;
 
         AchievementContract achievementContract = new AchievementContract(context);
         Achievement dbAchievement = achievementContract.findByName(achievement.getName());
+        boolean wasUnlocked = dbAchievement.isUnlocked();
         U update = transform(change);
         update(update, dbAchievement);
-        achievement.setUnlocked(meetsCondition(dbAchievement));
+        dbAchievement.setUnlocked(meetsCondition(dbAchievement));
         achievementContract.updateAchievement(dbAchievement);
         mergeAchievements(dbAchievement, achievement);
+
+        return !wasUnlocked && achievement.isUnlocked();
     }
 
     protected abstract boolean changeAffectsAchievement(Object change);
@@ -32,4 +35,5 @@ public abstract class AchievementUpdater<C, U> {
         destination.setUnlocked(source.isUnlocked());
         destination.setLastModified(source.getLastModified());
     }
+
 }
