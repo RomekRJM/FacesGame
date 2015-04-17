@@ -28,6 +28,7 @@ public class Achievement<C> {
         this.prize = prize;
         this.data = data;
         this.unlocked = false;
+        this.lastModified = new Date();
         this.updater = updater;
     }
 

@@ -17,7 +17,11 @@ public class AchievementManager {
             new Achievement(6, "Kissulla", "Have total 100 correct guesses", "face_6.png", "0", new TotalCorrectAnswerAchievement(100)),
             new Achievement(7, "Silencio", "Have total 250 correct guesses", "face_7.png", "0", new TotalCorrectAnswerAchievement(250)),
             new Achievement(8, "Yawner", "Have total 500 correct guesses", "face_8.png", "0", new TotalCorrectAnswerAchievement(500)),
-            new Achievement(9, "Blusho", "Have total 1000 correct guesses", "face_9.png", "0", new TotalCorrectAnswerAchievement(1000))
+            new Achievement(9, "Blusho", "Have total 1000 correct guesses", "face_9.png", "0", new TotalCorrectAnswerAchievement(1000)),
+            new Achievement(10, "Positivo", "Complete 1 game", "face_10.png", "0", new TotalGamesAchievementUpdater(1)),
+            new Achievement(11, "Prayen", "Complete 5 games", "face_11.png", "0", new TotalGamesAchievementUpdater(10)),
+            new Achievement(12, "Cooka", "Complete 25 games", "face_12.png", "0", new TotalGamesAchievementUpdater(25)),
+            new Achievement(13, "Weeper", "Complete 75 games", "face_13.png", "0", new TotalGamesAchievementUpdater(75))
     };
 
     public static String[] checkAchievementsForUpdates(Object update, Context context) {

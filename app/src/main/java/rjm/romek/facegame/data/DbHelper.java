@@ -10,7 +10,7 @@ import static rjm.romek.facegame.data.ScoreContract.*;
 
 public class DbHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = "faces.db";
-    public static final int DB_VERSION = 4;
+    public static final int DB_VERSION = 5;
     static final String TAG = "DbHelper";
     private static DbHelper instance;
 
