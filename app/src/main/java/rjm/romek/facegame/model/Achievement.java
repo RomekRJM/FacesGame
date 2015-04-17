@@ -7,6 +7,7 @@ import java.util.Date;
 import rjm.romek.facegame.achievement.AchievementUpdater;
 
 public class Achievement<C> {
+    private Integer id;
     private String name;
     private String description;
     private String prize;
@@ -19,14 +20,23 @@ public class Achievement<C> {
     public Achievement() {
     }
 
-    public Achievement(String name, String description, String prize,
+    public Achievement(Integer id, String name, String description, String prize,
                        String data, AchievementUpdater updater) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.prize = prize;
         this.data = data;
         this.unlocked = false;
         this.updater = updater;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public void setName(String name) {

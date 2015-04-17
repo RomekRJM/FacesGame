@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
@@ -14,6 +16,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import rjm.romek.facegame.R;
 import rjm.romek.facegame.data.AchievementContract;
+import rjm.romek.facegame.model.Achievement;
+import rjm.romek.facegame.ui.views.CollectableRowPopulator;
 
 import static rjm.romek.facegame.data.AchievementContract.*;
 
@@ -55,11 +59,29 @@ public class Collectable extends Activity {
 
         GridView gridview = (GridView) findViewById(R.id.gridview);
 
-        AchievementContract achievementContract = new AchievementContract(this);
+        final AchievementContract achievementContract = new AchievementContract(this);
+        final CollectableRowPopulator collectableRowPopulator = new CollectableRowPopulator();
+        final Context context = getBaseContext();
+
         adapter = new SimpleCursorAdapter(this, R.layout.collectables_cell,
                 achievementContract.getAchievementsCursor(), FROM, TO);
         adapter.setViewBinder(new CollectableViewBinder(this));
         gridview.setAdapter(adapter);
+
+        gridview.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+
+                System.out.println("Position: " + position + ", id: " + id);
+                Achievement selected = achievementContract.findById(position + 1);
+
+                if(selected.isUnlocked()) {
+                    collectableRowPopulator.populate(selected,
+                            findViewById(R.id.collectable_row_bottom), context);
+                }
+            }
+        });
     }
 
 }

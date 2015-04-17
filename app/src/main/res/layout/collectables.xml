@@ -6,7 +6,7 @@
     <GridView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/gridview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:numColumns="auto_fit"
         android:gravity="center"
         android:columnWidth="65dp"
@@ -14,16 +14,11 @@
         android:verticalSpacing="10dp"
         android:layout_weight="0.9" />
 
-    <TextView
-        android:id="@+id/collectable_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="false"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:gravity="center_horizontal"
-        android:paddingBottom="10dp"
-        android:text="@string/collectable_test"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+    <include layout="@layout/collectable_row" android:id="@+id/collectable_row_bottom"/>
     
 </LinearLayout>

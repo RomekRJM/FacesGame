@@ -21,7 +21,7 @@ public class AchievementContract {
     }
 
     public static final String CREATE_ACHIEVEMENT_TABLE =
-            String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+            String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY NOT NULL," +
                             " %s text, %s text, %s text, %s text, %s int, %s int)",
                     AchievementEntry.TABLE_NAME, AchievementEntry._ID, AchievementEntry.NAME,
                     AchievementEntry.DESCRIPTION, AchievementEntry.DATA, AchievementEntry.PRIZE,
@@ -37,6 +37,10 @@ public class AchievementContract {
         public static final String LAST_UPDATED = "last_updated";
     }
 
+    private final String [] FULL_PROJECTION = {AchievementEntry._ID, AchievementEntry.NAME,
+            AchievementEntry.DESCRIPTION, AchievementEntry.DATA, AchievementEntry.PRIZE,
+            AchievementEntry.UNLOCKED, AchievementEntry.LAST_UPDATED};
+
     public static void populateAchievements(SQLiteDatabase db) {
         for(Achievement a : AchievementManager.achievements) {
             createAchievement(a, db);
@@ -45,15 +49,11 @@ public class AchievementContract {
 
     public Cursor getAchievementsCursor() {
         SQLiteDatabase db = DbHelper.getInstance(context).getReadableDatabase();
-
-        String[] projection = {AchievementEntry._ID, AchievementEntry.NAME,
-                AchievementEntry.DESCRIPTION, AchievementEntry.DATA, AchievementEntry.PRIZE,
-                AchievementEntry.UNLOCKED, AchievementEntry.LAST_UPDATED};
         String sortOrder = String.format("%s ASC", AchievementEntry._ID);
 
         return db.query(
                 AchievementEntry.TABLE_NAME,              // The table to query
-                projection,                               // The columns to return
+                FULL_PROJECTION,                          // The columns to return
                 null,                                     // The columns for the WHERE clause
                 null,                                     // The values for the WHERE clause
                 null,                                     // don't group the rows
@@ -64,7 +64,7 @@ public class AchievementContract {
 
     public List<Achievement> getAchievements() {
         Cursor cursor = getAchievementsCursor();
-        List<Achievement> achievements = new ArrayList<Achievement>();
+        List<Achievement> achievements = new ArrayList<>();
 
         while(cursor.moveToNext()) {
             achievements.add(toAchievement(cursor));
@@ -77,15 +77,28 @@ public class AchievementContract {
     public Achievement findByName(String name) {
         SQLiteDatabase db = DbHelper.getInstance(context).getReadableDatabase();
 
-        String[] projection = {AchievementEntry._ID, AchievementEntry.NAME,
-                AchievementEntry.DESCRIPTION, AchievementEntry.DATA, AchievementEntry.PRIZE,
-                AchievementEntry.UNLOCKED, AchievementEntry.LAST_UPDATED};
+        Cursor cursor = db.query(
+                AchievementEntry.TABLE_NAME,              // The table to query
+                FULL_PROJECTION,                          // The columns to return
+                AchievementEntry.NAME + " LIKE ?",        // The columns for the WHERE clause
+                new String[]{ name },                     // The values for the WHERE clause
+                null,                                     // don't group the rows
+                null,                                     // don't filter by row groups
+                null                                      // The sort order
+        );
+
+        cursor.moveToFirst();
+        return toAchievement(cursor);
+    }
+
+    public Achievement findById(Integer id) {
+        SQLiteDatabase db = DbHelper.getInstance(context).getReadableDatabase();
 
         Cursor cursor = db.query(
                 AchievementEntry.TABLE_NAME,              // The table to query
-                projection,                               // The columns to return
-                AchievementEntry.NAME + " LIKE ?",      // The columns for the WHERE clause
-                new String[]{ name },                     // The values for the WHERE clause
+                FULL_PROJECTION,                          // The columns to return
+                AchievementEntry._ID + " = ?",             // The columns for the WHERE clause
+                new String[]{ id.toString() },            // The values for the WHERE clause
                 null,                                     // don't group the rows
                 null,                                     // don't filter by row groups
                 null                                      // The sort order
@@ -97,6 +110,7 @@ public class AchievementContract {
 
     private static void createAchievement(Achievement achievement, SQLiteDatabase db) {
         ContentValues values = new ContentValues();
+        values.put(AchievementEntry._ID, achievement.getId());
         values.put(AchievementEntry.NAME, achievement.getName());
         values.put(AchievementEntry.DESCRIPTION, achievement.getDescription());
         values.put(AchievementEntry.DATA, achievement.getData());
@@ -120,6 +134,7 @@ public class AchievementContract {
 
     private Achievement toAchievement(Cursor cursor) {
         Achievement achievement = new Achievement();
+        achievement.setId(cursor.getInt(cursor.getColumnIndex(AchievementEntry._ID)));
         achievement.setName(cursor.getString(cursor.getColumnIndex(AchievementEntry.NAME)));
         achievement.setData(cursor.getString(cursor.getColumnIndex(AchievementEntry.DATA)));
         achievement.setDescription(cursor.getString(cursor.getColumnIndex(AchievementEntry.DESCRIPTION)));
