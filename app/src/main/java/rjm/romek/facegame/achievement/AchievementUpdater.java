@@ -2,10 +2,20 @@ package rjm.romek.facegame.achievement;
 
 import android.content.Context;
 
+import rjm.romek.facegame.achievement.condition.Condition;
+import rjm.romek.facegame.achievement.updater.Update;
 import rjm.romek.facegame.data.AchievementContract;
 import rjm.romek.facegame.model.Achievement;
 
 public abstract class AchievementUpdater<C, U> {
+
+    protected Condition condition;
+    protected Update update;
+
+    public AchievementUpdater(Condition condition, Update update) {
+        this.condition = condition;
+        this.update = update;
+    }
 
     public boolean updateAchievement(Achievement achievement, C change, Context context) {
         if (!changeAffectsAchievement(change)) return false;
@@ -13,9 +23,9 @@ public abstract class AchievementUpdater<C, U> {
         AchievementContract achievementContract = new AchievementContract(context);
         Achievement dbAchievement = achievementContract.findByName(achievement.getName());
         boolean wasUnlocked = dbAchievement.isUnlocked();
-        U update = transform(change);
-        update(update, dbAchievement);
-        dbAchievement.setUnlocked(meetsCondition(dbAchievement));
+        U updateValue = transform(change);
+        update.update(updateValue, dbAchievement);
+        dbAchievement.setUnlocked(condition.meetsCondition(dbAchievement));
         achievementContract.updateAchievement(dbAchievement);
         mergeAchievements(dbAchievement, achievement);
 
@@ -25,10 +35,6 @@ public abstract class AchievementUpdater<C, U> {
     protected abstract boolean changeAffectsAchievement(Object change);
 
     protected abstract U transform(C change);
-
-    protected abstract void update(U update, Achievement achievement);
-
-    protected abstract boolean meetsCondition(Achievement achievement);
 
     private void mergeAchievements(Achievement source, Achievement destination) {
         destination.setData(source.getData());
