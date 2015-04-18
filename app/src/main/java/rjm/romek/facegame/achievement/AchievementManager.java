@@ -26,10 +26,15 @@ public class AchievementManager {
             new Achievement(15, "Afraido", "Reach score 500", "face_15.png", "0", new ScoreAchievementUpdater(500)),
             new Achievement(16, "Yuppz", "Reach score 750", "face_16.png", "0", new ScoreAchievementUpdater(750)),
             new Achievement(17, "Unlucko", "Reach score 1000", "face_17.png", "0", new ScoreAchievementUpdater(1000)),
-            new Achievement(18, "Watchy", "Reach score 1200", "face_18.png", "0", new ScoreAchievementUpdater(1200))
+            new Achievement(18, "Watchy", "Reach score 1200", "face_18.png", "0", new ScoreAchievementUpdater(1200)),
+            new Achievement(19, "Onetimo", "Gather 500 points in any number of games", "face_19.png", "0", new ScoreAchievementUpdater(500)),
+            new Achievement(20, "Ohmydo", "Gather 2000 points in any number of games", "face_20.png", "0", new ScoreAchievementUpdater(2000)),
+            new Achievement(21, "Karminia", "Gather 5000 points in any number of games", "face_21.png", "0", new ScoreAchievementUpdater(5000)),
+            new Achievement(22, "Rosario", "Gather 10000 points in any number of games", "face_22.png", "0", new ScoreAchievementUpdater(10000)),
+            new Achievement(23, "Amphetamo", "Gather 20000 points in any number of games", "face_23.png", "0", new ScoreAchievementUpdater(20000))
     };
 
-    public static String[] checkAchievementsForUpdates(Object update, Context context) {
+    public static List<String> checkAchievementsForUpdates(Object update, Context context) {
 
         List<String> unlockedAchievements = new ArrayList<>();
         for (Achievement achievement : achievements) {
@@ -38,7 +43,7 @@ public class AchievementManager {
             }
         }
 
-        return unlockedAchievements.toArray(new String[unlockedAchievements.size()]);
+        return unlockedAchievements;
     }
 
 }

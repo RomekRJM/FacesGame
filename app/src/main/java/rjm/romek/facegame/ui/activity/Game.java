@@ -303,14 +303,17 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
 
     public void goToNextQuestion() {
         ++questionIndex;
+        Long totalScore = scoreManager.getScoreService().getTotalScore();
 
         if (questionIndex >= questions.size()) {
-            String[] unlockedAchievementsNames =
+            List<String> unlockedAchievementsNames =
                     AchievementManager.checkAchievementsForUpdates(questions, getBaseContext());
+            unlockedAchievementsNames.addAll(
+                    AchievementManager.checkAchievementsForUpdates(totalScore, getBaseContext()));
             startActivity(new EndGameIntent(this,
                     questionService.countCorrectAnswered(questions),
-                    scoreManager.getScoreService().getTotalScore(),
-                    unlockedAchievementsNames));
+                    totalScore,
+                    unlockedAchievementsNames.toArray(new String[unlockedAchievementsNames.size()])));
         } else {
             gamePhase = GamePhase.WAITING_FOR_ANSWER;
         }
