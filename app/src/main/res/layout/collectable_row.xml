@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/imageViewFaceRow"
-        android:text="Grucho"
+        android:text="@string/collectable_no_selection"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -26,7 +26,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/text_face_name"
         android:layout_toRightOf="@+id/imageViewFaceRow"
-        android:text="For: Guess 2 in a row"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -35,6 +34,5 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/text_score"
-        android:text="10 minutes ago"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 </RelativeLayout>

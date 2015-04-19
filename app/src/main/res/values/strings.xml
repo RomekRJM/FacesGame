@@ -22,4 +22,5 @@
     <string name="main_menu_collectable">Collectable</string>
     <string name="collectable_test">Grucho: award for answering spree of 5!</string>
     <string name="end_game_achievements_unlocked">Achievements unlocked: </string>
+    <string name="collectable_no_selection">Select a face</string>
 </resources>
