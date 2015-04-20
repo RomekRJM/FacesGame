@@ -9,7 +9,7 @@ import rjm.romek.facegame.model.Achievement;
 
 public class AchievementManager {
     public static final Achievement[] achievements = new Achievement[]{
-            new Achievement(1, "Grucho", "Guess 2 in a row", "face_1.png", "0", new GuessingSpreeAchievement(2)),
+            new Achievement(1, "Grucho", "Guess 3 in a row", "face_1.png", "0", new GuessingSpreeAchievement(3)),
             new Achievement(2, "Teether", "Guess 5 in a row", "face_2.png", "0", new GuessingSpreeAchievement(5)),
             new Achievement(3, "Grumpo", "Guess 7 in a row", "face_3.png", "0", new GuessingSpreeAchievement(7)),
             new Achievement(4, "Huggy", "Guess 10 in a row", "face_4.png", "0", new GuessingSpreeAchievement(10)),

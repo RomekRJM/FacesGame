@@ -3,8 +3,8 @@ package rjm.romek.facegame.service;
 import junit.framework.TestCase;
 
 import rjm.romek.facegame.model.Difficulty;
-import rjm.romek.facegame.model.Question;
-import rjm.romek.source.model.Country;
+
+import static rjm.romek.facegame.utils.TestUtils.*;
 
 public class ScoreServiceImplTest extends TestCase {
     ScoreService scoreService;
@@ -66,22 +66,6 @@ public class ScoreServiceImplTest extends TestCase {
         scoreService.addQuestion(createQuestion(false, 0l, Difficulty.NORMAL));
 
         assertParamsCorrect(0, 0l, 560l, 560l);
-    }
-
-    public Question createQuestion(boolean correct, long answerGivenAfterTime, Difficulty difficulty) {
-        Country country = new Country();
-        country.setName("Poland");
-        Country countryWrong = new Country();
-        countryWrong.setName("CCCP");
-        Question question = new Question();
-        question.setDifficulty(difficulty);
-        question.setCorrectAnswer(country);
-        if (correct) {
-            question.answer(country, answerGivenAfterTime);
-        } else {
-            question.answer(countryWrong, answerGivenAfterTime);
-        }
-        return question;
     }
 
     public void assertParamsCorrect(int multiplier, long multiplicand,
