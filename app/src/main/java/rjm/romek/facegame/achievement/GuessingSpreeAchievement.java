@@ -2,14 +2,14 @@ package rjm.romek.facegame.achievement;
 
 import java.util.Set;
 
-import rjm.romek.facegame.achievement.condition.IsGreaterCondition;
+import rjm.romek.facegame.achievement.condition.IsGreaterOrEqualCondition;
 import rjm.romek.facegame.achievement.updater.MaxUpdate;
 import rjm.romek.facegame.model.Question;
 
 public class GuessingSpreeAchievement extends QuestionCounterAchievementUpdater {
 
     public GuessingSpreeAchievement(long value) {
-        super(new IsGreaterCondition(value), new MaxUpdate());
+        super(new IsGreaterOrEqualCondition(value), new MaxUpdate());
     }
 
     @Override

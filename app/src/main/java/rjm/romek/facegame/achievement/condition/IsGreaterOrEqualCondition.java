@@ -2,11 +2,11 @@ package rjm.romek.facegame.achievement.condition;
 
 import rjm.romek.facegame.model.Achievement;
 
-public class IsGreaterCondition implements Condition {
+public class IsGreaterOrEqualCondition implements Condition {
 
     private long value;
 
-    public IsGreaterCondition(long value) {
+    public IsGreaterOrEqualCondition(long value) {
         this.value = value;
     }
 
