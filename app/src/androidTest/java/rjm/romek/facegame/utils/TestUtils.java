@@ -3,6 +3,7 @@ package rjm.romek.facegame.utils;
 import android.content.res.AssetManager;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -42,4 +43,12 @@ public class TestUtils {
 
         return questions;
     }
+
+    public static Set<Question> createCorrectQuestions(int length) {
+        boolean [] correct = new boolean[length];
+        Arrays.fill(correct, true);
+
+        return createQuestionSet(correct);
+    }
+
 }
