@@ -6,9 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import rjm.romek.facegame.achievement.AchievementManager;
 import rjm.romek.facegame.model.Achievement;
@@ -62,18 +60,6 @@ public class AchievementContract {
         );
     }
 
-    public List<Achievement> getAchievements() {
-        Cursor cursor = getAchievementsCursor();
-        List<Achievement> achievements = new ArrayList<>();
-
-        while(cursor.moveToNext()) {
-            achievements.add(toAchievement(cursor));
-        }
-
-        cursor.close();
-        return achievements;
-    }
-
     public Achievement findByName(String name) {
         SQLiteDatabase db = DbHelper.getInstance(context).getReadableDatabase();
 
@@ -125,7 +111,7 @@ public class AchievementContract {
 
         ContentValues values = new ContentValues();
         values.put(AchievementEntry.DATA, achievement.getData());
-        values.put(AchievementEntry.LAST_UPDATED, System.currentTimeMillis());
+        values.put(AchievementEntry.LAST_UPDATED, achievement.getLastModified().getTime());
         values.put(AchievementEntry.UNLOCKED, achievement.isUnlocked());
         db.updateWithOnConflict(AchievementEntry.TABLE_NAME, values,
                 AchievementEntry.NAME + " LIKE ? ", new String[]{ achievement.getName() },

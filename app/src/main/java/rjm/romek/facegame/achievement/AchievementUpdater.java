@@ -2,6 +2,8 @@ package rjm.romek.facegame.achievement;
 
 import android.content.Context;
 
+import java.util.Date;
+
 import rjm.romek.facegame.achievement.condition.Condition;
 import rjm.romek.facegame.achievement.updater.Update;
 import rjm.romek.facegame.data.AchievementContract;
@@ -22,14 +24,23 @@ public abstract class AchievementUpdater<C, U> {
 
         AchievementContract achievementContract = new AchievementContract(context);
         Achievement dbAchievement = achievementContract.findByName(achievement.getName());
+
         boolean wasUnlocked = dbAchievement.isUnlocked();
+
         U updateValue = transform(change);
         update.update(updateValue, dbAchievement);
+
         dbAchievement.setUnlocked(condition.meetsCondition(dbAchievement));
+
+        boolean justUnlocked = !wasUnlocked && dbAchievement.isUnlocked();
+        if(justUnlocked) {
+            dbAchievement.setLastModified(new Date());
+        }
+
         achievementContract.updateAchievement(dbAchievement);
         mergeAchievements(dbAchievement, achievement);
 
-        return !wasUnlocked && achievement.isUnlocked();
+        return justUnlocked;
     }
 
     protected abstract boolean changeAffectsAchievement(Object change);
