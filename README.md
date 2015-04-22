@@ -9,6 +9,16 @@ For best game experience, always checkout most recent tag. Master will compile, 
 
 ## Changes history
 
+**v0.4 - 22.04.2015**
+
+Enhancements:
+
+* Added achievements subsystem backed up by sqlite.
+* New view: Collectable, for displaying detailed info about achievements, using funny faces.
+* Implemented logic for following achievements: "Guess x in a row", "Have total x correct guesses",
+"Complete x game", "Reach score x", "Gather x points in any number of games"
+* Achievements shown on end game screen.
+
 **v0.3 - 04.04.2015**
 
 Enhancements:
