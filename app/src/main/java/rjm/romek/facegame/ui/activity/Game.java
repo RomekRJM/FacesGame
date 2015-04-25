@@ -41,19 +41,23 @@ import rjm.romek.facegame.service.QuestionServiceImpl;
 import rjm.romek.facegame.ui.global.Global;
 import rjm.romek.facegame.ui.intent.EndGameIntent;
 import rjm.romek.facegame.ui.listener.SurfaceLayoutChangeListener;
+import rjm.romek.facegame.ui.loader.LoadQuestionTask;
+import rjm.romek.facegame.ui.loader.LoadQuestionTaskListener;
 import rjm.romek.facegame.ui.manager.ScoreManager;
 import rjm.romek.facegame.ui.timer.TimerThread;
 import rjm.romek.facegame.ui.timer.TimerThreadListener;
 import rjm.romek.facegame.ui.views.SelfAwareSurfaceView;
 import rjm.romek.source.model.Country;
 
-public class Game extends Activity implements OnClickListener, TimerThreadListener, SurfaceLayoutChangeListener {
+public class Game extends Activity implements OnClickListener,
+        TimerThreadListener, SurfaceLayoutChangeListener, LoadQuestionTaskListener {
 
     private QuestionService questionService;
     private FlagService flagService;
     private PhotoService photoService;
     private Set<Question> questions;
     private Question currentQuestion;
+    private Question nextQuestion;
     private List<Button> buttonList;
     private ImageView portrait;
     private SelfAwareSurfaceView timerSurface;
@@ -77,6 +81,7 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
 
         switch (gamePhase) {
             case ANSWER_GIVEN:
+                generateNextQuestion();
                 paintAfterAnswer();
                 break;
             case WAITING_FOR_ANSWER:
@@ -86,6 +91,12 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
                 break;
         }
 
+    }
+
+    private void generateNextQuestion() {
+        LoadQuestionTask loadQuestionTask = new LoadQuestionTask(questionService);
+        loadQuestionTask.setListener(this);
+        loadQuestionTask.execute(questions);
     }
 
     private void startTimer() {
@@ -126,12 +137,26 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
         redrawTimer();
     }
 
+    @Override
+    public void loadingComplete(Question question) {
+        setNextQuestion(question);
+    }
+
+    private synchronized Question getNextQuestion() {
+        return nextQuestion;
+    }
+
+    private synchronized void setNextQuestion(Question question) {
+        nextQuestion = question;
+    }
+
     void init() {
         try {
             photoService = new PhotoServiceImpl(getAssets());
             flagService = new FlagServiceImpl();
             questionService = createQuestionService();
             questions = new LinkedHashSet<>();
+            setNextQuestion(questionService.generateQuestion(questions));
         } catch (IOException e) {
         }
 
@@ -174,7 +199,7 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
     }
 
     void runLogic() {
-        currentQuestion = questionService.generateQuestion();
+        currentQuestion = getNextQuestion();
         questions.add(currentQuestion);
     }
 

@@ -4,6 +4,7 @@ import android.test.AndroidTestCase;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -74,7 +75,7 @@ public class QuestionServiceImplTest extends AndroidTestCase {
         QuestionService questionService = new QuestionServiceImpl(getContext().getAssets(), countries);
         Set<Question> questions = new HashSet<>();
         for(int i=0; i<12; ++i) {
-            questions.add(questionService.generateQuestion());
+            questions.add(questionService.generateQuestion(new LinkedHashSet<Question>()));
         }
 
         return questions;

@@ -19,18 +19,16 @@ public class QuestionServiceImpl implements QuestionService {
     private final CountryRandomizer randomizer;
     private final Parameters parameters;
     private final PersonRandomizerService personRandomizer;
-    private int position;
 
     public QuestionServiceImpl(AssetManager assetManager, Set<Country> countries) throws IOException {
         this.randomizer = new CountryRandomizer(countries);
         this.parameters = new Parameters();
         personRandomizer = new PersonRandomizerServiceImpl(assetManager);
-        position = 0;
     }
 
     @Override
-    public Question generateQuestion() {
-        Difficulty difficulty = getDifficultyForQuestion(position);
+    public Question generateQuestion(Set<Question> previous) {
+        Difficulty difficulty = getDifficultyForQuestion(previous);
         Country country = randomizer.randomCountry();
         List<Country> countries = generateCountries(difficulty, country);
         Question question = new Question();
@@ -38,7 +36,6 @@ public class QuestionServiceImpl implements QuestionService {
         question.setCorrectAnswer(country);
         question.setPerson(personRandomizer.readRandomInhabitant(country));
         question.setDifficulty(difficulty);
-        ++position;
 
         return question;
     }
@@ -65,8 +62,9 @@ public class QuestionServiceImpl implements QuestionService {
         return countries;
     }
 
-    private Difficulty getDifficultyForQuestion(int number) {
-        switch (number / parameters.getChangeDifficultyEvery()) {
+    private Difficulty getDifficultyForQuestion(Set<Question> prevoius) {
+
+        switch (prevoius.size() / parameters.getChangeDifficultyEvery()) {
             case 0:
                 return Difficulty.EASY;
             case 1:
