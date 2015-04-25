@@ -5,7 +5,6 @@ import android.content.res.AssetManager;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -20,29 +19,28 @@ public class QuestionServiceImpl implements QuestionService {
     private final CountryRandomizer randomizer;
     private final Parameters parameters;
     private final PersonRandomizerService personRandomizer;
+    private int position;
 
     public QuestionServiceImpl(AssetManager assetManager, Set<Country> countries) throws IOException {
         this.randomizer = new CountryRandomizer(countries);
         this.parameters = new Parameters();
         personRandomizer = new PersonRandomizerServiceImpl(assetManager);
+        position = 0;
     }
 
     @Override
-    public Set<Question> generateQuestions() {
-        Set<Question> questions = new LinkedHashSet<>();
-        for (int i = 0; i < parameters.getQuestionsInSet(); i++) {
-            Difficulty difficulty = getDifficultyForQuestion(i);
-            Country country = randomizer.randomCountry();
-            List<Country> countries = generateCountries(difficulty, country);
-            Question question = new Question();
-            question.setCountries(countries);
-            question.setCorrectAnswer(country);
-            question.setPerson(personRandomizer.readRandomInhabitant(country));
-            question.setDifficulty(difficulty);
-            questions.add(question);
-        }
+    public Question generateQuestion() {
+        Difficulty difficulty = getDifficultyForQuestion(position);
+        Country country = randomizer.randomCountry();
+        List<Country> countries = generateCountries(difficulty, country);
+        Question question = new Question();
+        question.setCountries(countries);
+        question.setCorrectAnswer(country);
+        question.setPerson(personRandomizer.readRandomInhabitant(country));
+        question.setDifficulty(difficulty);
+        ++position;
 
-        return questions;
+        return question;
     }
 
     @Override

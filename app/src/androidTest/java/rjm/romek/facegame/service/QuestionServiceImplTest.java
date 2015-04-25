@@ -2,7 +2,8 @@ package rjm.romek.facegame.service;
 
 import android.test.AndroidTestCase;
 
-import java.util.Iterator;
+import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -12,24 +13,17 @@ import rjm.romek.facegame.utils.TestUtils;
 import rjm.romek.source.model.Country;
 
 public class QuestionServiceImplTest extends AndroidTestCase {
-
-    private QuestionService questionService;
+    private Set<Country> countries;
     private Parameters parameters;
 
     @Override
     public void setUp() throws Exception {
-        Set<Country> countries = TestUtils.loadCountries(getContext().getAssets());
-        questionService = new QuestionServiceImpl(getContext().getAssets(), countries);
+        countries = TestUtils.loadCountries(getContext().getAssets());
         parameters = new Parameters();
     }
 
-    public void testReturnsCorrectNumberOfQuestions() throws Exception {
-        Set<Question> questions = questionService.generateQuestions();
-        assertEquals(parameters.getQuestionsInSet(), questions.size());
-    }
-
     public void testReturnsValidQuestions() throws Exception {
-        Set<Question> questions = questionService.generateQuestions();
+        Set<Question> questions = generate12();
 
         for (Question q : questions) {
             assertNotNull(q.getGameUUID());
@@ -43,7 +37,7 @@ public class QuestionServiceImplTest extends AndroidTestCase {
 
     public void testReturnsValidQuestionsWithProperCountries() throws Exception {
         for (int i = 0; i < 100; ++i) {
-            Set<Question> questions = questionService.generateQuestions();
+            Set<Question> questions = generate12();
 
             for (Question q : questions) {
                 assertEquals(q.getDifficulty().getAvailableAnswers().intValue(), q.getCountries().size());
@@ -52,9 +46,9 @@ public class QuestionServiceImplTest extends AndroidTestCase {
             }
         }
     }
-
+    /*
     public void testReturnsQuestionsWithGrowingDifficulty() throws Exception {
-        Set<Question> questions = questionService.generateQuestions();
+        Set<Question> questions = generate12();
         Iterator<Question> iterator = questions.iterator();
         Question lastQuestion = iterator.next();
 
@@ -67,12 +61,22 @@ public class QuestionServiceImplTest extends AndroidTestCase {
             lastQuestion = question;
         }
     }
-
+    */
     private void assertCountriesHaveValidFields(List<Country> countries) {
         for (Country country : countries) {
             assertNotNull(country.getName());
             assertNotNull(country.getFlag());
             assertNotNull(country.getBorders());
         }
+    }
+
+    private Set<Question> generate12() throws IOException {
+        QuestionService questionService = new QuestionServiceImpl(getContext().getAssets(), countries);
+        Set<Question> questions = new HashSet<>();
+        for(int i=0; i<12; ++i) {
+            questions.add(questionService.generateQuestion());
+        }
+
+        return questions;
     }
 }

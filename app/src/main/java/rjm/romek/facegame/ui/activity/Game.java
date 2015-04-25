@@ -24,6 +24,7 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -52,12 +53,10 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
     private FlagService flagService;
     private PhotoService photoService;
     private Set<Question> questions;
-    private Iterator<Question> questionsIterator;
     private Question currentQuestion;
     private List<Button> buttonList;
     private ImageView portrait;
     private SelfAwareSurfaceView timerSurface;
-    private int questionIndex;
     private int clickedIndex;
     private GamePhase gamePhase;
     private TimerThread timerThread;
@@ -74,7 +73,6 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
         if (questions == null) {
             init();
             gamePhase = GamePhase.WAITING_FOR_ANSWER;
-            questionIndex = 0;
         }
 
         switch (gamePhase) {
@@ -133,8 +131,7 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
             photoService = new PhotoServiceImpl(getAssets());
             flagService = new FlagServiceImpl();
             questionService = createQuestionService();
-            questions = questionService.generateQuestions();
-            questionsIterator = questions.iterator();
+            questions = new LinkedHashSet<>();
         } catch (IOException e) {
         }
 
@@ -177,9 +174,8 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
     }
 
     void runLogic() {
-        if (questionsIterator.hasNext()) {
-            currentQuestion = questionsIterator.next();
-        }
+        currentQuestion = questionService.generateQuestion();
+        questions.add(currentQuestion);
     }
 
     void paintQuestion() {
@@ -302,10 +298,9 @@ public class Game extends Activity implements OnClickListener, TimerThreadListen
     }
 
     public void goToNextQuestion() {
-        ++questionIndex;
         Long totalScore = scoreManager.getScoreService().getTotalScore();
 
-        if (questionIndex >= questions.size()) {
+        if (questions.size() >= 12) {
             List<String> unlockedAchievementsNames =
                     AchievementManager.checkAchievementsForUpdates(questions, getBaseContext());
             unlockedAchievementsNames.addAll(
