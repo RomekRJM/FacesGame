@@ -5,6 +5,7 @@ import android.content.res.AssetManager;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -12,6 +13,7 @@ import rjm.romek.facegame.common.Parameters;
 import rjm.romek.facegame.model.Difficulty;
 import rjm.romek.facegame.model.Question;
 import rjm.romek.source.model.Country;
+import rjm.romek.source.model.Person;
 import rjm.romek.source.randomizer.CountryRandomizer;
 
 public class QuestionServiceImpl implements QuestionService {
@@ -28,14 +30,18 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question generateQuestion(Set<Question> previous) {
-        Difficulty difficulty = getDifficultyForQuestion(previous);
-        Country country = randomizer.randomCountry();
-        List<Country> countries = generateCountries(difficulty, country);
-        Question question = new Question();
-        question.setCountries(countries);
-        question.setCorrectAnswer(country);
-        question.setPerson(personRandomizer.readRandomInhabitant(country));
-        question.setDifficulty(difficulty);
+        Question question;
+
+        do {
+            Difficulty difficulty = getDifficultyForQuestion(previous);
+            Country country = randomizer.randomCountry();
+            List<Country> countries = generateCountries(difficulty, country);
+            question = new Question();
+            question.setCountries(countries);
+            question.setCorrectAnswer(country);
+            question.setPerson(personRandomizer.readRandomInhabitant(country));
+            question.setDifficulty(difficulty);
+        } while (personAlreadyInSet(question.getPerson(), previous));
 
         return question;
     }
@@ -74,5 +80,15 @@ public class QuestionServiceImpl implements QuestionService {
             default:
                 return Difficulty.HARDCORE;
         }
+    }
+
+    private boolean personAlreadyInSet(Person person, Set<Question> previous) {
+        for (Question question : previous) {
+            if (question.getPerson().equals(person)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
