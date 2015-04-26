@@ -40,6 +40,7 @@ import rjm.romek.facegame.service.QuestionService;
 import rjm.romek.facegame.service.QuestionServiceImpl;
 import rjm.romek.facegame.ui.global.Global;
 import rjm.romek.facegame.ui.intent.EndGameIntent;
+import rjm.romek.facegame.ui.intent.MainMenuIntent;
 import rjm.romek.facegame.ui.listener.SurfaceLayoutChangeListener;
 import rjm.romek.facegame.ui.loader.LoadQuestionTask;
 import rjm.romek.facegame.ui.loader.LoadQuestionTaskListener;
@@ -142,6 +143,11 @@ public class Game extends Activity implements OnClickListener,
         setNextQuestion(question);
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new MainMenuIntent(this));
+    }
+
     private synchronized Question getNextQuestion() {
         return nextQuestion;
     }
@@ -156,7 +162,7 @@ public class Game extends Activity implements OnClickListener,
             flagService = new FlagServiceImpl();
             questionService = createQuestionService();
             questions = new LinkedHashSet<>();
-            setNextQuestion(questionService.generateQuestion(questions));
+            setNextQuestion(Global.firstQuestion);
         } catch (IOException e) {
         }
 

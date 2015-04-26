@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.widget.ProgressBar;
 
 import rjm.romek.facegame.R;
 import rjm.romek.facegame.ui.global.Global;
@@ -15,8 +14,8 @@ import rjm.romek.facegame.ui.loader.LoadDataTaskListener;
 import rjm.romek.facegame.ui.loader.LoadDataTaskResultCorrect;
 import rjm.romek.facegame.ui.loader.LoadDataTaskResultException;
 
-public class LoadingScreen extends Activity implements LoadDataTaskListener {
-    private LoadingScreen _this;
+public class StartupLoadingScreen extends Activity implements LoadDataTaskListener {
+    private StartupLoadingScreen _this;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

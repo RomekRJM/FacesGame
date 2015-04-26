@@ -8,8 +8,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.Date;
 
 import rjm.romek.facegame.R;
@@ -19,7 +17,7 @@ import rjm.romek.facegame.model.Achievement;
 import rjm.romek.facegame.model.Score;
 import rjm.romek.facegame.ui.adapter.NewAchievementsAdapter;
 import rjm.romek.facegame.ui.intent.EndGameIntent;
-import rjm.romek.facegame.ui.intent.GameIntent;
+import rjm.romek.facegame.ui.intent.GameLoadingIntent;
 import rjm.romek.facegame.ui.intent.MainMenuIntent;
 
 public class EndGame extends Activity implements OnClickListener {
@@ -80,7 +78,7 @@ public class EndGame extends Activity implements OnClickListener {
         if (v == buttonBack) {
             startActivity(new MainMenuIntent(this));
         } else if (v == buttonAgain) {
-            startActivity(new GameIntent(this));
+            startActivity(new GameLoadingIntent(this));
         }
     }
 

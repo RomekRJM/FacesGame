@@ -27,7 +27,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".ui.activity.LoadingScreen"
+            android:name=".ui.activity.StartupLoadingScreen"
             android:configChanges="orientation|screenSize" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,6 +35,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.activity.GameLoadingScreen"
+            android:configChanges="orientation|screenSize" />
         <activity
             android:name=".ui.activity.Game"
             android:configChanges="orientation|screenSize" />

@@ -7,7 +7,7 @@ import android.view.View.OnClickListener;
 
 import rjm.romek.facegame.R;
 import rjm.romek.facegame.ui.intent.CollectableIntent;
-import rjm.romek.facegame.ui.intent.GameIntent;
+import rjm.romek.facegame.ui.intent.GameLoadingIntent;
 import rjm.romek.facegame.ui.intent.QuitIntent;
 import rjm.romek.facegame.ui.intent.TopScoreIntent;
 
@@ -29,7 +29,7 @@ public class MainMenu extends Activity implements OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.new_game_button:
-                startActivity(new GameIntent(this));
+                startActivity(new GameLoadingIntent(this));
                 break;
 
             case R.id.records_button:
