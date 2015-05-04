@@ -1,21 +1,28 @@
 package rjm.romek.facegame.ui.manager;
 
+import android.content.Context;
 import android.widget.TextView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.nineoldandroids.animation.Animator;
 
+import rjm.romek.facegame.R;
 import rjm.romek.facegame.model.Question;
 import rjm.romek.facegame.service.ScoreService;
 import rjm.romek.facegame.service.ScoreServiceImpl;
 
-public class ScoreManager {
-    private TextView scoreTextView;
-    private ScoreService scoreService;
+public class ScoreManager implements Animator.AnimatorListener {
+    private final TextView scoreTextView;
+    private final ScoreService scoreService;
+    private final Context context;
+    private final int defaultColor;
 
-    public ScoreManager(TextView scoreTextView) {
+    public ScoreManager(TextView scoreTextView, Context context) {
         this.scoreTextView = scoreTextView;
         this.scoreService = new ScoreServiceImpl();
+        this.context = context;
+        this.defaultColor = scoreTextView.getCurrentTextColor();
     }
 
     public void updateScore(Question question) {
@@ -39,19 +46,43 @@ public class ScoreManager {
         }
 
         scoreTextView.setText(sb.toString());
+        Techniques techniques;
 
         if(question.isCorrectlyAnswered()){
-            YoYo.with(Techniques.FlipInX)
-                    .duration(700)
-                    .playOn(scoreTextView);
+            scoreTextView.setTextColor(context.getResources().getColor(R.color.green_correct));
+            techniques = Techniques.FlipInX;
         } else {
-            YoYo.with(Techniques.Shake)
-                    .duration(700)
-                    .playOn(scoreTextView);
+            scoreTextView.setTextColor(context.getResources().getColor(R.color.red_wrong));
+            techniques = Techniques.Shake;
         }
+
+        YoYo.with(techniques)
+                .withListener(this)
+                .duration(700)
+                .playOn(scoreTextView);
     }
 
     public ScoreService getScoreService() {
         return scoreService;
+    }
+
+    @Override
+    public void onAnimationStart(Animator animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animator animation) {
+        scoreTextView.setTextColor(defaultColor);
+    }
+
+    @Override
+    public void onAnimationCancel(Animator animation) {
+
+    }
+
+    @Override
+    public void onAnimationRepeat(Animator animation) {
+
     }
 }

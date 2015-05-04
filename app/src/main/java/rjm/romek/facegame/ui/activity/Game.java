@@ -3,7 +3,6 @@ package rjm.romek.facegame.ui.activity;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -168,7 +167,7 @@ public class Game extends Activity implements OnClickListener,
 
         portrait = createImageView();
         timerSurface = createSurfaceView();
-        scoreManager = new ScoreManager(createScoreTextView());
+        scoreManager = new ScoreManager(createScoreTextView(), getBaseContext());
     }
 
     QuestionService createQuestionService() throws IOException {
@@ -233,8 +232,8 @@ public class Game extends Activity implements OnClickListener,
 
     void paintAfterAnswer() {
         final ImageView blinkingView = portrait;
-        final int green = Color.parseColor("#11FF11");
-        final int red = Color.parseColor("#FF1111");
+        final int green = getResources().getColor(R.color.green_correct);
+        final int red = getResources().getColor(R.color.red_wrong);
 
         Animation animation = new AlphaAnimation(1, 0);
         animation.setDuration(700);
@@ -244,7 +243,7 @@ public class Game extends Activity implements OnClickListener,
 
         if (!currentQuestion.isTimedOut()) {
             buttonList.get(clickedIndex).getBackground()
-                    .setColorFilter(new LightingColorFilter(0xFFFFFFFF, 0x6495ED));
+                    .setColorFilter(new LightingColorFilter(0xFFFFFFFF, getResources().getColor(R.color.blue_marked)));
         }
 
         animation.setAnimationListener(

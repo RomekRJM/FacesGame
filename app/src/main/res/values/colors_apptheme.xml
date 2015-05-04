@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="apptheme_color">#33b5e5</color>
+    <color name="green_correct">#11FF11</color>
+    <color name="red_wrong">#FF1111</color>
+    <color name="blue_marked">#6495ED</color>
 </resources>
