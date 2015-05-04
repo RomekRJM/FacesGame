@@ -2,6 +2,9 @@ package rjm.romek.facegame.ui.manager;
 
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+
 import rjm.romek.facegame.model.Question;
 import rjm.romek.facegame.service.ScoreService;
 import rjm.romek.facegame.service.ScoreServiceImpl;
@@ -36,6 +39,16 @@ public class ScoreManager {
         }
 
         scoreTextView.setText(sb.toString());
+
+        if(question.isCorrectlyAnswered()){
+            YoYo.with(Techniques.FlipInX)
+                    .duration(700)
+                    .playOn(scoreTextView);
+        } else {
+            YoYo.with(Techniques.Shake)
+                    .duration(700)
+                    .playOn(scoreTextView);
+        }
     }
 
     public ScoreService getScoreService() {
