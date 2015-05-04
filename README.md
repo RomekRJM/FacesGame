@@ -48,3 +48,12 @@ Enhancements:
 **v0.1 - 16.03.2015**
 
 * Initial, somehow playable version.
+
+
+## Special thanks to:
+
+1. Wikimedia Commons, for beeing great source of free images. All photos in game are CC licensed and downloaded from wikipedia.org.
+2. http://artdesigncat.com/ - for creating great blue faces icons, that I used for achievements.
+3. Creator and all contributors of https://github.com/daimajia/AndroidViewAnimations library, for their awesome work. 
+Game uses it to animate scores.
+4. My wife Sabina, for understanding and support :D
