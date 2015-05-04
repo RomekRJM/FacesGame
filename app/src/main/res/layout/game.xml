@@ -13,7 +13,6 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textStyle="bold"
         android:gravity="right"
-        android:paddingRight="12dp"
         android:layout_gravity="center" />
 
     <ImageView
