@@ -43,6 +43,7 @@ import rjm.romek.facegame.ui.intent.MainMenuIntent;
 import rjm.romek.facegame.ui.listener.SurfaceLayoutChangeListener;
 import rjm.romek.facegame.ui.loader.LoadQuestionTask;
 import rjm.romek.facegame.ui.loader.LoadQuestionTaskListener;
+import rjm.romek.facegame.ui.manager.LivesManager;
 import rjm.romek.facegame.ui.manager.ScoreManager;
 import rjm.romek.facegame.ui.timer.TimerThread;
 import rjm.romek.facegame.ui.timer.TimerThreadListener;
@@ -65,6 +66,7 @@ public class Game extends Activity implements OnClickListener,
     private GamePhase gamePhase;
     private TimerThread timerThread;
     private ScoreManager scoreManager;
+    private LivesManager livesManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,6 +170,7 @@ public class Game extends Activity implements OnClickListener,
         portrait = createImageView();
         timerSurface = createSurfaceView();
         scoreManager = new ScoreManager(createScoreTextView(), getBaseContext());
+        livesManager = new LivesManager(this);
     }
 
     QuestionService createQuestionService() throws IOException {
@@ -265,6 +268,7 @@ public class Game extends Activity implements OnClickListener,
                         blinkingView.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
                         blinkingView.invalidate();
                         paintScore();
+                        paintLives();
                         paintNextQuestionButton(blinkingView);
                     }
 
@@ -325,6 +329,10 @@ public class Game extends Activity implements OnClickListener,
 
     public void paintScore() {
         scoreManager.updateScore(currentQuestion);
+    }
+
+    private void paintLives() {
+        livesManager.update(currentQuestion);
     }
 
     public void goToNextQuestion() {
