@@ -1,7 +1,7 @@
 package rjm.romek.facegame.service;
 
 public interface TranslatorService {
-    public String translateToName(String fileName);
+    String translateToName(String fileName);
 
-    public String translateToFileName(String name);
+    String translateToFileName(String name);
 }

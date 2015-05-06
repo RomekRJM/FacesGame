@@ -3,13 +3,13 @@ package rjm.romek.facegame.service;
 import rjm.romek.facegame.model.Question;
 
 public interface ScoreService {
-    public void addQuestion(Question question);
+    void addQuestion(Question question);
 
-    public long getTotalScore();
+    long getTotalScore();
 
-    public long getCurrentScore();
+    long getCurrentScore();
 
-    public int getMultiplier();
+    int getMultiplier();
 
-    public long getMultiplicand();
+    long getMultiplicand();
 }
