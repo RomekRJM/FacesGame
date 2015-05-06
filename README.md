@@ -9,6 +9,18 @@ For best game experience, always checkout most recent tag. Master will compile, 
 
 ## Changes history
 
+**v0.5 - 06.05.2015**
+
+Enhancements:
+
+* Added lives. Game is over, when 3 wrong answers given.
+* Question generation is now done on separate thread, one by one upon answering, instead of
+generating all at the beginning. This results in 7x shorter waiting time, when game loads.
+* Prettified scores. They are now animated upon change.
+Different animation for correct and wrong answer.
+* Loading screen appears after choosing New Game.
+* The same person will not be shown again in single game.
+
 **v0.4 - 22.04.2015**
 
 Enhancements:
