@@ -3,7 +3,7 @@ package rjm.romek.facegame.service;
 import android.test.AndroidTestCase;
 
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,8 +30,8 @@ public class QuestionServiceImplTest extends AndroidTestCase {
             assertNotNull(q.getGameUUID());
             assertNotNull(q.getPerson());
             assertNotNull(q.getCorrectAnswer());
-            assertNull(q.getDate());
-            assertNull(q.getGivenAnswer());
+            assertNotNull(q.getDate());
+            assertNotNull(q.getGivenAnswer());
             assertTrue(q.getCountries().contains(q.getCorrectAnswer()));
         }
     }
@@ -47,7 +47,7 @@ public class QuestionServiceImplTest extends AndroidTestCase {
             }
         }
     }
-    /*
+
     public void testReturnsQuestionsWithGrowingDifficulty() throws Exception {
         Set<Question> questions = generate12();
         Iterator<Question> iterator = questions.iterator();
@@ -62,7 +62,7 @@ public class QuestionServiceImplTest extends AndroidTestCase {
             lastQuestion = question;
         }
     }
-    */
+
     private void assertCountriesHaveValidFields(List<Country> countries) {
         for (Country country : countries) {
             assertNotNull(country.getName());
@@ -73,9 +73,11 @@ public class QuestionServiceImplTest extends AndroidTestCase {
 
     private Set<Question> generate12() throws IOException {
         QuestionService questionService = new QuestionServiceImpl(getContext().getAssets(), countries);
-        Set<Question> questions = new HashSet<>();
+        Set<Question> questions = new LinkedHashSet<>();
         for(int i=0; i<12; ++i) {
-            questions.add(questionService.generateQuestion(new LinkedHashSet<Question>()));
+            Question question = questionService.generateQuestion(questions);
+            question.answer(question.getCorrectAnswer(), 0);
+            questions.add(question);
         }
 
         return questions;

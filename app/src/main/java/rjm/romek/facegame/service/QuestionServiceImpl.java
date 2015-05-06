@@ -70,7 +70,17 @@ public class QuestionServiceImpl implements QuestionService {
 
     private Difficulty getDifficultyForQuestion(Set<Question> prevoius) {
 
-        switch (prevoius.size() / parameters.getChangeDifficultyEvery()) {
+        int spree=0;
+
+        for(Question question : prevoius) {
+            if(question.isCorrectlyAnswered()) {
+                ++spree;
+            } else {
+                spree = 0;
+            }
+        }
+
+        switch (spree / parameters.getChangeDifficultyEvery()) {
             case 0:
                 return Difficulty.EASY;
             case 1:

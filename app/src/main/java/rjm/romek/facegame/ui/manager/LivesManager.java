@@ -18,7 +18,7 @@ public class LivesManager {
         this.activity = activity;
     }
 
-    boolean isGameOver() {
+    public boolean isGameOver() {
         return lives <= 0;
     }
 

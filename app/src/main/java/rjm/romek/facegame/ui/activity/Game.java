@@ -338,7 +338,7 @@ public class Game extends Activity implements OnClickListener,
     public void goToNextQuestion() {
         Long totalScore = scoreManager.getScoreService().getTotalScore();
 
-        if (questions.size() >= 12) {
+        if (livesManager.isGameOver()) {
             List<String> unlockedAchievementsNames =
                     AchievementManager.checkAchievementsForUpdates(questions, getBaseContext());
             unlockedAchievementsNames.addAll(
