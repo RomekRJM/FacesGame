@@ -76,7 +76,7 @@ public class QuestionServiceImpl implements QuestionService {
             if(question.isCorrectlyAnswered()) {
                 ++spree;
             } else {
-                spree = 0;
+                spree = spree > 0 ? --spree : 0;
             }
         }
 
