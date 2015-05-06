@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/topGameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,35 +16,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/ball0"
-            android:gravity="left"
             android:background="@drawable/blueball" />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/ball1"
-            android:gravity="left"
-            android:background="@drawable/blueball" />
+            android:background="@drawable/blueball"
+            android:layout_toRightOf="@+id/ball0"
+            />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/ball2"
-            android:gravity="left"
-            android:background="@drawable/blueball" />
+            android:background="@drawable/blueball"
+            android:layout_toRightOf="@+id/ball1"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/ball3"
-            android:gravity="left"
             android:background="@drawable/blueball"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            android:layout_toRightOf="@+id/ball2"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/ball4"
-            android:gravity="left"
             android:background="@drawable/blueball"
-            android:visibility="invisible" />
-
+            android:visibility="invisible"
+            android:layout_toRightOf="@+id/ball3"/>
         <TextView
             android:id="@+id/scoreTextView"
             android:layout_width="wrap_content"
@@ -52,9 +51,9 @@
             android:text="@string/game_default_score"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold"
-            android:gravity="left"/>
+            android:layout_alignParentRight="true" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/imageViewPortrait"
