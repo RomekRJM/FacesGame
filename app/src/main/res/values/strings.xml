@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Face game</string>
     <string name="main_menu_new_game">New Game</string>
-    <string name="main_menu_about_the_game">About the game</string>
+    <string name="main_menu_about_the_game">About</string>
     <string name="main_menu_records">Records</string>
     <string name="main_menu_quit">Quit</string>
     <string name="main_menu_title">Faces Game</string>
