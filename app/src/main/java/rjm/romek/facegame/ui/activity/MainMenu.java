@@ -1,9 +1,11 @@
 package rjm.romek.facegame.ui.activity;
 
 import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.TextView;
 
 import rjm.romek.facegame.R;
 import rjm.romek.facegame.ui.intent.CollectableIntent;
@@ -23,6 +25,9 @@ public class MainMenu extends Activity implements OnClickListener {
         findViewById(R.id.collectable_button).setOnClickListener(this);
         findViewById(R.id.about_the_game_button).setOnClickListener(this);
         findViewById(R.id.quit_button).setOnClickListener(this);
+
+        showVersion();
+
     }
 
     @Override
@@ -48,6 +53,16 @@ public class MainMenu extends Activity implements OnClickListener {
                 break;
         }
 
+    }
+
+    private void showVersion() {
+        TextView versionText = (TextView) findViewById(R.id.versionText);
+        try {
+            versionText.setText(getPackageManager()
+                    .getPackageInfo(getPackageName(), 0).versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            versionText.setText("");
+        }
     }
 
     @Override
