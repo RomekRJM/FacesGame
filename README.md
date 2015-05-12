@@ -65,8 +65,9 @@ Enhancements:
 ## Special thanks to:
 
 1. Wikimedia Commons, for beeing great source of free images. All photos in game are CC licensed and downloaded from wikipedia.org.
-2. http://artdesigncat.com/ - for creating great blue faces icons, that I used for achievements.
+2. http://artdesigncat.com/ - for creating great blue faces icons and free 128x128 set, that I used for achievements.
 3. http://sekkyumu.deviantart.com/ - for additional icons.
-4. Creator and all contributors of https://github.com/daimajia/AndroidViewAnimations library, for their awesome work.
+4. https://icons8.com/ - for medal icon, that I put on play store.
+5. Creator and all contributors of https://github.com/daimajia/AndroidViewAnimations library, for their awesome work.
 Game uses it to animate scores.
-5. My wife Sabina, for understanding and support :D
+6. My wife Sabina, for understanding and support :D
