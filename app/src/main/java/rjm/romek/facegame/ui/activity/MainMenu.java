@@ -8,6 +8,7 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import rjm.romek.facegame.R;
+import rjm.romek.facegame.ui.intent.AboutIntent;
 import rjm.romek.facegame.ui.intent.CollectableIntent;
 import rjm.romek.facegame.ui.intent.GameLoadingIntent;
 import rjm.romek.facegame.ui.intent.QuitIntent;
@@ -46,6 +47,7 @@ public class MainMenu extends Activity implements OnClickListener {
                 break;
 
             case R.id.about_the_game_button:
+                startActivity(new AboutIntent(this));
                 break;
 
             case R.id.quit_button:

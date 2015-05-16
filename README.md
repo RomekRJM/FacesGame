@@ -68,6 +68,7 @@ Enhancements:
 2. http://artdesigncat.com/ - for creating great blue faces icons and free 128x128 set, that I used for achievements.
 3. http://sekkyumu.deviantart.com/ - for additional icons.
 4. https://icons8.com/ - for medal icon, that I put on play store.
-5. Creator and all contributors of https://github.com/daimajia/AndroidViewAnimations library, for their awesome work.
+5. http://www.icojam.com/ - for main game icon.
+6. Creator and all contributors of https://github.com/daimajia/AndroidViewAnimations library, for their awesome work.
 Game uses it to animate scores.
-6. My wife Sabina, for understanding and support :D
+7. My wife Sabina, for understanding and support :D

@@ -58,7 +58,11 @@
         </activity>
         <activity
             android:name=".ui.activity.Collectable"
-            android:label="@string/title_activity_top_score" >
+            android:label="@string/title_activity_collectables" >
+        </activity>
+        <activity
+            android:name=".ui.activity.About"
+            android:label="@string/title_activity_about" >
         </activity>
     </application>
 

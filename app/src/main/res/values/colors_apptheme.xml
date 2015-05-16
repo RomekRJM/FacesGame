@@ -4,4 +4,5 @@
     <color name="green_correct">#11FF11</color>
     <color name="red_wrong">#FF1111</color>
     <color name="blue_marked">#6495ED</color>
+    <color name="gold">#FBBD2C</color>
 </resources>

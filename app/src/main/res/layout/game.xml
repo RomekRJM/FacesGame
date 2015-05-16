@@ -60,7 +60,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="0.82"
-        android:src="@drawable/coolicon" />
+        android:src="@drawable/globe128" />
 
     <rjm.romek.facegame.ui.views.SelfAwareSurfaceView
         android:id="@+id/timerSurface"
