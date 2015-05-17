@@ -8,11 +8,12 @@ import android.util.Log;
 import rjm.romek.facegame.ui.global.Global;
 
 import static rjm.romek.facegame.data.AchievementContract.*;
+import static rjm.romek.facegame.data.QuestionContract.*;
 import static rjm.romek.facegame.data.ScoreContract.*;
 
 public class DbHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = Global.isRunningTests ? "testfaces.db" : "faces.db";
-    public static final int DB_VERSION = 6;
+    public static final int DB_VERSION = 7;
     static final String TAG = "DbHelper";
     private static DbHelper instance;
 
@@ -35,6 +36,8 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_ACHIEVEMENT_TABLE);
         Log.d(TAG, "onCreate, populating achievements: ");
         populateAchievements(db);
+        Log.d(TAG, "onCreate with SQL: " + CREATE_QUESTION_TABLE);
+        db.execSQL(CREATE_QUESTION_TABLE);
     }
 
     @Override
