@@ -1,12 +1,15 @@
 apply plugin: 'com.android.application'
 
+Properties props = new Properties()
+props.load(new FileInputStream(System.properties['user.home'] + '/secret.properties'))
+
 android {
     signingConfigs {
         config {
-            keyAlias 'android'
-            keyPassword 'TODO: change me to env variable'
-            storeFile file('/home/roman/workspace/android.jks')
-            storePassword 'TODO: change me to env variable'
+            keyAlias props.getProperty('keyAlias')
+            keyPassword props.getProperty('keyPassword')
+            storeFile file(props.getProperty('storeFile'))
+            storePassword props.getProperty('storePassword')
         }
     }
     compileSdkVersion 21
@@ -25,10 +28,13 @@ android {
     buildTypes {
         debug {
             debuggable true
+            signingConfig signingConfigs.config
         }
         release {
             minifyEnabled false
+            // will it work with proguard ?
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
 }
