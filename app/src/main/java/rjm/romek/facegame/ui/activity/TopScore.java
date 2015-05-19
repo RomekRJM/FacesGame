@@ -16,9 +16,12 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.BaseGameUtils;
 
+import java.util.List;
+
 import rjm.romek.facegame.R;
 import rjm.romek.facegame.common.Parameters;
 import rjm.romek.facegame.data.ScoreContract;
+import rjm.romek.facegame.model.Score;
 
 import static rjm.romek.facegame.data.ScoreContract.ScoreEntry;
 
@@ -26,6 +29,7 @@ public class TopScore extends ListActivity
         implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private Parameters parameters;
+    private ScoreContract scoreContract;
     private SimpleCursorAdapter adapter;
     static final String TAG = "TopScore";
     private GoogleApiClient mGoogleApiClient;
@@ -75,7 +79,6 @@ public class TopScore extends ListActivity
         try {
             mGoogleApiClient.connect();
         } catch (Exception exc) {
-            return;
         }
     }
 
@@ -106,12 +109,13 @@ public class TopScore extends ListActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.parameters = new Parameters();
+        this.scoreContract = new ScoreContract(this);
         init();
     }
 
     public void init() {
         positionCounter = 1;
-        Cursor cursor = new ScoreContract(this).getTopScoresCursor(parameters.getLimitTopScore());
+        Cursor cursor = scoreContract.getTopScoresCursor(parameters.getLimitTopScore());
 
         adapter = new SimpleCursorAdapter(this, R.layout.top_score_row, cursor, FROM, TO);
         adapter.setViewBinder(VIEW_BINDER);
@@ -127,13 +131,20 @@ public class TopScore extends ListActivity
                     .build();
 
         } catch (Exception exc) {
-            return;
         }
     }
 
     @Override
     public void onConnected(Bundle bundle) {
-        return;
+        List<Score> topScores = scoreContract.getTopScores(10);
+
+        for(Score score : topScores) {
+            Games.Leaderboards.submitScore(mGoogleApiClient,
+                    getString(R.string.leaderboard_world_top_scores), score.getScore());
+        }
+
+        startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
+                getString(R.string.leaderboard_world_top_scores)), 10);
     }
 
     @Override

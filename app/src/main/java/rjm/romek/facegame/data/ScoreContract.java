@@ -6,6 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import rjm.romek.facegame.model.Score;
 
 public class ScoreContract {
@@ -44,6 +48,28 @@ public class ScoreContract {
                 null,                                     // don't filter by row groups
                 sortOrder                                 // The sort order
         );
+    }
+
+    public List<Score> getTopScores(int limit) {
+        Cursor cursor = getTopScoresCursor(limit);
+        List<Score> scores = new ArrayList<>();
+
+        if (!cursor.moveToFirst()){
+            cursor.close();
+            return scores;
+        }
+
+        do {
+            Score score = new Score();
+            score.setCorrectAnswers(cursor.getInt(cursor.getColumnIndex(ScoreEntry.CORRECT_ANSWERS)));
+            score.setDate(new Date(cursor.getLong(cursor.getColumnIndex(ScoreEntry.DATE))));
+            score.setPlayer(cursor.getString(cursor.getColumnIndex(ScoreEntry.PLAYER)));
+            score.setScore(cursor.getLong(cursor.getColumnIndex(ScoreEntry.SCORE)));
+            scores.add(score);
+        } while (cursor.moveToNext());
+
+        cursor.close();
+        return scores;
     }
 
     public void saveScore(Score score) {
