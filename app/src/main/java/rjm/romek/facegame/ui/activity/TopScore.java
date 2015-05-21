@@ -7,13 +7,16 @@ import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.games.Games;
+import com.google.android.gms.games.leaderboard.Leaderboards.SubmitScoreResult;
 import com.google.example.games.basegameutils.BaseGameUtils;
 
 import java.util.List;
@@ -26,28 +29,51 @@ import rjm.romek.facegame.model.Score;
 import static rjm.romek.facegame.data.ScoreContract.ScoreEntry;
 
 public class TopScore extends ListActivity
-        implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+        implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
+        View.OnClickListener {
 
     private Parameters parameters;
     private ScoreContract scoreContract;
     private SimpleCursorAdapter adapter;
+    private Button shareButton;
+    private Score currentScore;
+    private LeaderBoardSubmitScoreCallback leaderBoardSubmitScoreCallback;
     static final String TAG = "TopScore";
     private GoogleApiClient mGoogleApiClient;
     private static int RC_SIGN_IN = 9001;
     private boolean mResolvingConnectionFailure = false;
     private boolean mAutoStartSignInFlow = true;
-    private boolean mSignInClicked = false;
+    private boolean shareButtonActive = false;
+    private boolean connectionFailed = false;
     private static final int RC_UNUSED = 5001;
-    static final String[] FROM = { ScoreEntry.PLAYER, ScoreEntry.SCORE,
-            ScoreEntry.CORRECT_ANSWERS, ScoreEntry.DATE, ScoreEntry._ID };
-    static final int[] TO = { R.id.text_player, R.id.text_score, R.id.text_correct,
-            R.id.text_date, R.id.text_position };
-    private static int positionCounter;
+    static final String[] FROM = {ScoreEntry.PLAYER, ScoreEntry.SCORE,
+            ScoreEntry.CORRECT_ANSWERS, ScoreEntry.DATE, ScoreEntry._ID};
+    static final int[] TO = {R.id.text_player, R.id.text_score, R.id.text_correct,
+            R.id.text_date, R.id.text_position};
+
+    private class LeaderBoardSubmitScoreCallback implements ResultCallback<SubmitScoreResult> {
+        @Override
+        public void onResult(SubmitScoreResult res) {
+            if (res.getStatus().getStatusCode() == 0) {
+                currentScore.setPublished(true);
+                scoreContract.updateScore(currentScore);
+            } else {
+                // problem sharing
+            }
+        }
+    }
 
     static final ViewBinder VIEW_BINDER = new ViewBinder() {
 
+        private int positionCounter;
+
         @Override
         public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
+
+            if(cursor.isFirst()) {
+                positionCounter = 1;
+            }
+
             if (view.getId() == R.id.text_date) {
                 long time = cursor.getLong(cursor
                         .getColumnIndex(ScoreEntry.DATE));
@@ -108,18 +134,23 @@ public class TopScore extends ListActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.top_scores);
         this.parameters = new Parameters();
         this.scoreContract = new ScoreContract(this);
         init();
     }
 
     public void init() {
-        positionCounter = 1;
         Cursor cursor = scoreContract.getTopScoresCursor(parameters.getLimitTopScore());
 
         adapter = new SimpleCursorAdapter(this, R.layout.top_score_row, cursor, FROM, TO);
         adapter.setViewBinder(VIEW_BINDER);
         setListAdapter(adapter);
+        leaderBoardSubmitScoreCallback = new LeaderBoardSubmitScoreCallback();
+        shareButton = (Button) findViewById(R.id.shareScoreButton);
+        shareButton.setOnClickListener(this);
+        updateShareButton();
+
 
         // Create the Google API Client with access to Plus and Games
         try {
@@ -131,24 +162,19 @@ public class TopScore extends ListActivity
                     .build();
 
         } catch (Exception exc) {
+            connectionFailed = true;
         }
     }
 
     @Override
     public void onConnected(Bundle bundle) {
-        List<Score> topScores = scoreContract.getTopScores(10);
-
-        for(Score score : topScores) {
-            Games.Leaderboards.submitScore(mGoogleApiClient,
-                    getString(R.string.leaderboard_world_top_scores), score.getScore());
-        }
-
-        startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
-                getString(R.string.leaderboard_world_top_scores)), 10);
+        updateShareButton();
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
+        connectionFailed = true;
+
         if (mResolvingConnectionFailure) {
             // already resolving
             return;
@@ -156,9 +182,8 @@ public class TopScore extends ListActivity
 
         // if the sign-in button was clicked or if auto sign-in is enabled,
         // launch the sign-in flow
-        if (mSignInClicked || mAutoStartSignInFlow) {
+        if (mAutoStartSignInFlow) {
             mAutoStartSignInFlow = false;
-            mSignInClicked = false;
             mResolvingConnectionFailure = true;
 
             // Attempt to resolve the connection failure using BaseGameUtils.
@@ -172,6 +197,7 @@ public class TopScore extends ListActivity
             }
         }
 
+        updateShareButton();
         // Put code here to display the sign-in button
     }
 
@@ -184,7 +210,6 @@ public class TopScore extends ListActivity
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent intent) {
         if (requestCode == RC_SIGN_IN) {
-            mSignInClicked = false;
             mResolvingConnectionFailure = false;
             if (resultCode == RESULT_OK) {
                 mGoogleApiClient.connect();
@@ -195,21 +220,73 @@ public class TopScore extends ListActivity
                 // could not be signed in, such as "Unable to sign in."
                 BaseGameUtils.showActivityResultError(this,
                         requestCode, resultCode, R.string.signin_failure);
+                connectionFailed = true;
             }
+        }
+        updateShareButton();
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        connectionFailed = false;
+
+        if (!shareButtonActive) return;
+
+        List<Score> topScores = scoreContract.getTopScores(10);
+
+        for (Score score : topScores) {
+            if (score.isPublished()) continue;
+
+            currentScore = score;
+
+            Games.Leaderboards.submitScoreImmediate(mGoogleApiClient,
+                    getString(R.string.leaderboard_world_top_scores), currentScore.getScore())
+                    .setResultCallback(leaderBoardSubmitScoreCallback);
+
+
+        }
+
+        startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
+                getString(R.string.leaderboard_world_top_scores)), RESULT_OK);
+
+    }
+
+    private void updateShareButton() {
+        if (!containsScores()) {
+            shareButton.setText(getText(R.string.top_score_share_button_nothing_to_publish));
+            shareButtonActive = false;
+        } else if(connectionFailed) {
+            shareButtonActive = true;
+            shareButton.setText(getText(R.string.top_score_share_button_retry_connection));
+        }
+        else if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+
+            shareButtonActive = true;
+            if (needsPublishing()) {
+                shareButton.setText(getText(R.string.top_score_share_button_connected));
+            } else {
+                shareButton.setText(getText(R.string.top_score_share_button_all_published));
+            }
+        } else {
+            shareButton.setText(getText(R.string.top_score_share_button_connecting));
+            shareButtonActive = false;
         }
     }
 
-    // Call when the sign-in button is clicked
-    private void signInClicked() {
-        mSignInClicked = true;
-        mGoogleApiClient.connect();
+    private boolean needsPublishing() {
+        List<Score> topScores = scoreContract.getTopScores(parameters.getLimitTopScore());
+
+        for (Score score : topScores) {
+            if (!score.isPublished()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    // Call when the sign-out button is clicked
-    private void signOutclicked() {
-        mSignInClicked = false;
-        Games.signOut(mGoogleApiClient);
+    private boolean containsScores() {
+        return scoreContract.getTopScores(1).size() > 0;
     }
-
-
 }

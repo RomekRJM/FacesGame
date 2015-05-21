@@ -19,12 +19,12 @@
     <string name="game_default_score">0</string>
 
     <string name="title_activity_top_score">TopScore</string>
-    <string name="title_activity_collectables">Collectables</string>
+    <string name="title_activity_collectables">Achievements</string>
     <string name="title_activity_about">About</string>
 
     <string name="action_settings">Settings</string>
     <string name="top_score_title">Top Scores</string>
-    <string name="main_menu_collectable">Collectable</string>
+    <string name="main_menu_collectable">Achievements</string>
     <string name="collectable_test">Grucho: award for answering spree of 5!</string>
     <string name="end_game_achievements_unlocked">Achievements unlocked: </string>
     <string name="collectable_no_selection">Select a face</string>
@@ -52,4 +52,11 @@
     <string name="about_library_actor">https://github.com/daimajia/AndroidViewAnimations</string>
     <string name="about_special_thx">Special thanks</string>
     <string name="about_special_thx_actor">.. goes to my wife Sabina and son Eryk, for their understanding and support.</string>
+
+    <string name="top_score_share_button_connected">Share</string>
+    <string name="top_score_share_button_nothing_to_publish">Nothing to show yet...</string>
+    <string name="top_score_share_button_all_published">World Leaderboard</string>
+    <string name="top_score_share_button_connecting">Connecting ...</string>
+    <string name="top_score_share_button_retry_connection">Retry connecting</string>
+
 </resources>
