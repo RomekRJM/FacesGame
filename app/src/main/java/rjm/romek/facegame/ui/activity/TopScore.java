@@ -41,6 +41,7 @@ public class TopScore extends ListActivity
     static final String TAG = "TopScore";
     private GoogleApiClient mGoogleApiClient;
     private static int RC_SIGN_IN = 9001;
+    private static int CODE_OK = 1;
     private boolean mResolvingConnectionFailure = false;
     private boolean mAutoStartSignInFlow = true;
     private boolean shareButtonActive = false;
@@ -54,11 +55,9 @@ public class TopScore extends ListActivity
     private class LeaderBoardSubmitScoreCallback implements ResultCallback<SubmitScoreResult> {
         @Override
         public void onResult(SubmitScoreResult res) {
-            if (res.getStatus().getStatusCode() == 0) {
+            if (res.getStatus().isSuccess()) {
                 currentScore.setPublished(true);
                 scoreContract.updateScore(currentScore);
-            } else {
-                // problem sharing
             }
         }
     }
@@ -70,7 +69,7 @@ public class TopScore extends ListActivity
         @Override
         public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
 
-            if(cursor.isFirst()) {
+            if (cursor.isFirst()) {
                 positionCounter = 1;
             }
 
@@ -211,7 +210,7 @@ public class TopScore extends ListActivity
                                     Intent intent) {
         if (requestCode == RC_SIGN_IN) {
             mResolvingConnectionFailure = false;
-            if (resultCode == RESULT_OK) {
+            if (resultCode == CODE_OK) {
                 mGoogleApiClient.connect();
             } else {
                 // Bring up an error dialog to alert the user that sign-in
@@ -231,24 +230,19 @@ public class TopScore extends ListActivity
 
         connectionFailed = false;
 
-        if (!shareButtonActive) return;
+        if (!shareButtonActive || !isSignedIn()) return;
 
-        List<Score> topScores = scoreContract.getTopScores(10);
+        List<Score> topScores = scoreContract.getTopScores(1);
+        currentScore = topScores.get(0);
 
-        for (Score score : topScores) {
-            if (score.isPublished()) continue;
-
-            currentScore = score;
-
+        if (!currentScore.isPublished()) {
             Games.Leaderboards.submitScoreImmediate(mGoogleApiClient,
                     getString(R.string.leaderboard_world_top_scores), currentScore.getScore())
                     .setResultCallback(leaderBoardSubmitScoreCallback);
-
-
         }
 
         startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
-                getString(R.string.leaderboard_world_top_scores)), RESULT_OK);
+                getString(R.string.leaderboard_world_top_scores)), CODE_OK);
 
     }
 
@@ -256,11 +250,10 @@ public class TopScore extends ListActivity
         if (!containsScores()) {
             shareButton.setText(getText(R.string.top_score_share_button_nothing_to_publish));
             shareButtonActive = false;
-        } else if(connectionFailed) {
+        } else if (connectionFailed) {
             shareButtonActive = true;
             shareButton.setText(getText(R.string.top_score_share_button_retry_connection));
-        }
-        else if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+        } else if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
 
             shareButtonActive = true;
             if (needsPublishing()) {
@@ -275,15 +268,8 @@ public class TopScore extends ListActivity
     }
 
     private boolean needsPublishing() {
-        List<Score> topScores = scoreContract.getTopScores(parameters.getLimitTopScore());
-
-        for (Score score : topScores) {
-            if (!score.isPublished()) {
-                return true;
-            }
-        }
-
-        return false;
+        List<Score> topScores = scoreContract.getTopScores(1);
+        return !topScores.get(0).isPublished();
     }
 
     private boolean containsScores() {
