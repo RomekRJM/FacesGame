@@ -9,6 +9,16 @@ For best game experience, always checkout most recent tag. Master will compile, 
 
 ## Changes history
 
+**v0.6 - 24.05.2015**
+
+Enhancements:
+
+* Google Game API integration.
+* Leaderboards support: player scores are now saved in google cloud and matched against others from around the world.
+* Redesigned main menu screen, to be more eye-catchy and show game version.
+* Added about screen, displaying credits and backlinks.
+* Dedicated game icon.
+
 **v0.5 - 06.05.2015**
 
 Enhancements:
