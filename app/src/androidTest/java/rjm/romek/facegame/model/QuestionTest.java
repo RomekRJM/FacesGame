@@ -24,7 +24,7 @@ public class QuestionTest extends TestCase {
         list.add(correct);
         list.add(wrong);
 
-        question = new Question();
+        question = new Question("abcd");
         question.setCountries(list);
         question.setCorrectAnswer(correct);
     }

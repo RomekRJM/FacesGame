@@ -23,7 +23,7 @@ public class TestUtils {
         country.setName("Poland");
         Country countryWrong = new Country();
         countryWrong.setName("CCCP");
-        Question question = new Question();
+        Question question = new Question("abcd");
         question.setDifficulty(difficulty);
         question.setCorrectAnswer(country);
         if (correct) {

@@ -72,7 +72,8 @@ public class QuestionServiceImplTest extends AndroidTestCase {
     }
 
     private Set<Question> generate12() throws IOException {
-        QuestionService questionService = new QuestionServiceImpl(getContext().getAssets(), countries);
+        QuestionService questionService = new QuestionServiceImpl(
+                getContext().getAssets(), getContext(), countries);
         Set<Question> questions = new LinkedHashSet<>();
         for(int i=0; i<12; ++i) {
             Question question = questionService.generateQuestion(questions);
