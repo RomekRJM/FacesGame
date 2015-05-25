@@ -23,7 +23,8 @@ public class GameLoadingScreen extends Activity implements LoadQuestionTaskListe
         super.onCreate(savedInstanceState);
 
         try {
-            questionService = new QuestionServiceImpl(getAssets(), Global.countries);
+            questionService = new QuestionServiceImpl(getAssets(), getBaseContext(),
+                    Global.countries);
         } catch (IOException e) {
         }
 

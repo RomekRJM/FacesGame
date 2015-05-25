@@ -174,7 +174,7 @@ public class Game extends Activity implements OnClickListener,
     }
 
     QuestionService createQuestionService() throws IOException {
-        return new QuestionServiceImpl(getAssets(),
+        return new QuestionServiceImpl(getAssets(), getBaseContext(),
                 Global.countries);
     }
 
@@ -339,6 +339,9 @@ public class Game extends Activity implements OnClickListener,
         Long totalScore = scoreManager.getScoreService().getTotalScore();
 
         if (livesManager.isGameOver()) {
+
+            questionService.saveQuestions(questions);
+
             List<String> unlockedAchievementsNames =
                     AchievementManager.checkAchievementsForUpdates(questions, getBaseContext());
             unlockedAchievementsNames.addAll(

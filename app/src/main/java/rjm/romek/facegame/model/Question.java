@@ -19,12 +19,23 @@ public class Question {
     private long answerTime;
     private boolean timedOut;
 
-    public Question() {
-        this.gameUUID = UUID.randomUUID().toString();
+    public Question(String gameUUID) {
+        this.gameUUID = gameUUID;
     }
 
     public List<Country> getCountries() {
         return countries;
+    }
+
+    public String getCountriesCSV() {
+        StringBuilder sb = new StringBuilder();
+
+        for(Country c : countries) {
+            sb.append(c.getName());
+            sb.append(",");
+        }
+
+        return sb.substring(0,sb.length()-1);
     }
 
     public void setCountries(List<Country> countries) {

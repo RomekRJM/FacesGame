@@ -45,7 +45,7 @@ public class QuestionContract {
             ContentValues values = new ContentValues();
             values.put(QuestionEntry.GAME_UUID, question.getGameUUID());
             values.put(QuestionEntry.PERSON, question.getPerson().getName());
-            values.put(QuestionEntry.COUNTRIES, question.getCountries().toString());
+            values.put(QuestionEntry.COUNTRIES, question.getCountriesCSV());
             values.put(QuestionEntry.DATE, question.getDate().getTime());
             values.put(QuestionEntry.CORRECT_ANSWER, question.getCorrectAnswer().getName());
             values.put(QuestionEntry.GIVEN_ANSWER, question.getGivenAnswer().getName());

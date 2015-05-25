@@ -1,5 +1,6 @@
 package rjm.romek.facegame.service;
 
+import android.content.Context;
 import android.content.res.AssetManager;
 
 import java.io.IOException;
@@ -8,8 +9,10 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import rjm.romek.facegame.common.Parameters;
+import rjm.romek.facegame.data.QuestionContract;
 import rjm.romek.facegame.model.Difficulty;
 import rjm.romek.facegame.model.Question;
 import rjm.romek.source.model.Country;
@@ -21,11 +24,14 @@ public class QuestionServiceImpl implements QuestionService {
     private final CountryRandomizer randomizer;
     private final Parameters parameters;
     private final PersonRandomizerService personRandomizer;
+    private final QuestionContract questionContract;
 
-    public QuestionServiceImpl(AssetManager assetManager, Set<Country> countries) throws IOException {
+    public QuestionServiceImpl(AssetManager assetManager,
+                               Context context, Set<Country> countries) throws IOException {
         this.randomizer = new CountryRandomizer(countries);
         this.parameters = new Parameters();
         personRandomizer = new PersonRandomizerServiceImpl(assetManager);
+        questionContract = new QuestionContract(context);
     }
 
     @Override
@@ -36,7 +42,7 @@ public class QuestionServiceImpl implements QuestionService {
             Difficulty difficulty = getDifficultyForQuestion(previous);
             Country country = randomizer.randomCountry();
             List<Country> countries = generateCountries(difficulty, country);
-            question = new Question();
+            question = new Question(getUUID(previous));
             question.setCountries(countries);
             question.setCorrectAnswer(country);
             question.setPerson(personRandomizer.readRandomInhabitant(country));
@@ -56,6 +62,11 @@ public class QuestionServiceImpl implements QuestionService {
             }
         }
         return correct;
+    }
+
+    @Override
+    public void saveQuestions(Set<Question> questions) {
+        questionContract.saveQuestions(questions);
     }
 
     private List<Country> generateCountries(Difficulty difficulty, Country validCountry) {
@@ -100,5 +111,14 @@ public class QuestionServiceImpl implements QuestionService {
         }
 
         return false;
+    }
+
+    private String getUUID(Set<Question> previous) {
+
+        if(previous.size() > 0) {
+            return previous.iterator().next().getGameUUID();
+        }
+
+        return UUID.randomUUID().toString();
     }
 }

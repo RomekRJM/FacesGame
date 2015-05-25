@@ -8,4 +8,6 @@ public interface QuestionService {
     Question generateQuestion(Set<Question> previous);
 
     int countCorrectAnswered(Set<Question> questions);
+
+    void saveQuestions(Set<Question> questions);
 }

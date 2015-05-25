@@ -40,6 +40,7 @@ public class AchievementManager {
         for (Achievement achievement : achievements) {
             if (achievement.updateAchievement(update, context)) {
                 unlockedAchievements.add(achievement.getName());
+                //Games.Achievements.unlock(mGoogleApiClient, "my_achievement_id");
             }
         }
 
