@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.util.Date;
 
+import rjm.romek.facegame.achievement.activator.Activate;
 import rjm.romek.facegame.achievement.condition.Condition;
 import rjm.romek.facegame.achievement.updater.Update;
 import rjm.romek.facegame.data.AchievementContract;
@@ -13,14 +14,16 @@ public abstract class AchievementUpdater<C, U> {
 
     protected Condition condition;
     protected Update update;
+    protected Activate activate;
 
-    public AchievementUpdater(Condition condition, Update update) {
+    public AchievementUpdater(Condition condition, Update update, Activate activate) {
         this.condition = condition;
         this.update = update;
+        this.activate = activate;
     }
 
     public boolean updateAchievement(Achievement achievement, C change, Context context) {
-        if (!changeAffectsAchievement(change)) return false;
+        if (!activate.changeAffectsAchievement(change)) return false;
 
         AchievementContract achievementContract = new AchievementContract(context);
         Achievement dbAchievement = achievementContract.findByName(achievement.getName());
@@ -42,8 +45,6 @@ public abstract class AchievementUpdater<C, U> {
 
         return justUnlocked;
     }
-
-    protected abstract boolean changeAffectsAchievement(Object change);
 
     protected abstract U transform(C change);
 

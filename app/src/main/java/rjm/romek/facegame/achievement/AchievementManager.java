@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rjm.romek.facegame.model.Achievement;
+import rjm.romek.facegame.model.Difficulty;
 
 public class AchievementManager {
     public static final Achievement[] achievements = new Achievement[]{
@@ -31,7 +32,10 @@ public class AchievementManager {
             new Achievement(20, "Ohmydo", "Gather 2000 points in any number of games", "face_20.png", "0", new TotalScoreAchievementUpdater(2000)),
             new Achievement(21, "Karminia", "Gather 5000 points in any number of games", "face_21.png", "0", new TotalScoreAchievementUpdater(5000)),
             new Achievement(22, "Rosario", "Gather 10000 points in any number of games", "face_22.png", "0", new TotalScoreAchievementUpdater(10000)),
-            new Achievement(23, "Amphetamo", "Gather 20000 points in any number of games", "face_23.png", "0", new TotalScoreAchievementUpdater(20000))
+            new Achievement(23, "Amphetamo", "Gather 20000 points in any number of games", "face_23.png", "0", new TotalScoreAchievementUpdater(20000)),
+            new Achievement(24, "Coolejandro", "Reach normal difficulty.", "face_24.png", "EASY", new DifficultyAchievementUpdaterImpl(Difficulty.NORMAL)),
+            new Achievement(25, "Wack", "Reach hard difficulty.", "face_25.png", "EASY", new DifficultyAchievementUpdaterImpl(Difficulty.HARD)),
+            new Achievement(26, "Piranhers", "Reach hardcore difficulty.", "face_26.png", "EASY", new DifficultyAchievementUpdaterImpl(Difficulty.HARDCORE))
     };
 
     public static List<String> checkAchievementsForUpdates(Object update, Context context) {
