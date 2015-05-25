@@ -31,9 +31,6 @@
     <string name="signin_other_error">There was an issue with sign-in, please try again later.</string>
     <string name="signin_failure">Unable to sign in.</string>
 
-    <string name="app_id">514454159883</string>
-    <string name="leaderboard_world_top_scores">CgkIi4TuvvwOEAIQAg</string>
-
     <string name="about_concept">Concept</string>
     <string name="about_concept_actor">Roman Subik</string>
     <string name="about_programming">Programming</string>

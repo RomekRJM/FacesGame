@@ -237,12 +237,12 @@ public class TopScore extends ListActivity
 
         if (!currentScore.isPublished()) {
             Games.Leaderboards.submitScoreImmediate(mGoogleApiClient,
-                    getString(R.string.leaderboard_world_top_scores), currentScore.getScore())
+                    getString(R.string.leaderboard_best_players), currentScore.getScore())
                     .setResultCallback(leaderBoardSubmitScoreCallback);
         }
 
         startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient,
-                getString(R.string.leaderboard_world_top_scores)), CODE_OK);
+                getString(R.string.leaderboard_best_players)), CODE_OK);
 
     }
 

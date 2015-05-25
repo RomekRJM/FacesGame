@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Google Play game services IDs.
+Save this file as res/values/games-ids.xml in your project.
+-->
+<resources>
+    <string name="app_id">514454159883</string>
+    <string name="achievement_grucho">CgkIi4TuvvwOEAIQAw</string>
+    <string name="achievement_teether">CgkIi4TuvvwOEAIQBA</string>
+    <string name="achievement_grumpo">CgkIi4TuvvwOEAIQBQ</string>
+    <string name="achievement_huggy">CgkIi4TuvvwOEAIQBg</string>
+    <string name="achievement_shamo">CgkIi4TuvvwOEAIQBw</string>
+    <string name="achievement_kissulla">CgkIi4TuvvwOEAIQCA</string>
+    <string name="achievement_silencio">CgkIi4TuvvwOEAIQCQ</string>
+    <string name="achievement_yawner">CgkIi4TuvvwOEAIQCg</string>
+    <string name="achievement_blusho">CgkIi4TuvvwOEAIQCw</string>
+    <string name="achievement_positivo">CgkIi4TuvvwOEAIQDA</string>
+    <string name="achievement_prayen">CgkIi4TuvvwOEAIQDQ</string>
+    <string name="achievement_cooka">CgkIi4TuvvwOEAIQDg</string>
+    <string name="achievement_weeper">CgkIi4TuvvwOEAIQDw</string>
+    <string name="achievement_zigzag">CgkIi4TuvvwOEAIQEA</string>
+    <string name="achievement_afraido">CgkIi4TuvvwOEAIQEQ</string>
+    <string name="achievement_yuppz">CgkIi4TuvvwOEAIQEg</string>
+    <string name="achievement_unlucko">CgkIi4TuvvwOEAIQEw</string>
+    <string name="achievement_watchy">CgkIi4TuvvwOEAIQFA</string>
+    <string name="achievement_onetimo">CgkIi4TuvvwOEAIQFQ</string>
+    <string name="achievement_ohmydo">CgkIi4TuvvwOEAIQFg</string>
+    <string name="achievement_karminia">CgkIi4TuvvwOEAIQFw</string>
+    <string name="achievement_rosario">CgkIi4TuvvwOEAIQGA</string>
+    <string name="achievement_amphetamo">CgkIi4TuvvwOEAIQGQ</string>
+    <string name="leaderboard_best_players">CgkIi4TuvvwOEAIQAg</string>
+</resources>
