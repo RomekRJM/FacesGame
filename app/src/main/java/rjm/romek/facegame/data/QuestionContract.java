@@ -2,6 +2,7 @@ package rjm.romek.facegame.data;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
@@ -55,5 +56,21 @@ public class QuestionContract {
             db.insertWithOnConflict(QuestionEntry.TABLE_NAME, null, values,
                     SQLiteDatabase.CONFLICT_IGNORE);
         }
+    }
+
+    public long countUniqueRightGuessesForCountry(String country) {
+        SQLiteDatabase db = DbHelper.getInstance(context).getReadableDatabase();
+
+        String sql =
+                "SELECT COUNT(DISTINCT person) " +
+                "FROM questions " +
+                "WHERE correct_answer = given_answer AND correct_answer LIKE ?";
+
+        Cursor cursor = db.rawQuery(sql, new String[]{country});
+        cursor.moveToFirst();
+        long count = cursor.getLong(0);
+        cursor.close();
+
+        return count;
     }
 }

@@ -346,6 +346,8 @@ public class Game extends Activity implements OnClickListener,
                     AchievementManager.checkAchievementsForUpdates(questions, getBaseContext());
             unlockedAchievementsNames.addAll(
                     AchievementManager.checkAchievementsForUpdates(totalScore, getBaseContext()));
+            unlockedAchievementsNames.addAll(
+                    AchievementManager.checkAchievementsForUpdates(questionService, getBaseContext()));
             startActivity(new EndGameIntent(this,
                     questionService.countCorrectAnswered(questions),
                     totalScore,

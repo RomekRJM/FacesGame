@@ -10,4 +10,6 @@ public interface QuestionService {
     int countCorrectAnswered(Set<Question> questions);
 
     void saveQuestions(Set<Question> questions);
+
+    long countUniqueRightGuessesForCountry(String country);
 }

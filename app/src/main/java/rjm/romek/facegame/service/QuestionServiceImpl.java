@@ -69,6 +69,11 @@ public class QuestionServiceImpl implements QuestionService {
         questionContract.saveQuestions(questions);
     }
 
+    @Override
+    public long countUniqueRightGuessesForCountry(String country) {
+        return questionContract.countUniqueRightGuessesForCountry(country);
+    }
+
     private List<Country> generateCountries(Difficulty difficulty, Country validCountry) {
         List<Country> countries = new ArrayList<>(difficulty.getAvailableAnswers());
         countries.addAll(randomizer.randomNeighbours(validCountry,

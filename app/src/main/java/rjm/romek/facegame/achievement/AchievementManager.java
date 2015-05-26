@@ -35,7 +35,11 @@ public class AchievementManager {
             new Achievement(23, "Amphetamo", "Gather 20000 points in any number of games", "face_23.png", "0", new TotalScoreAchievementUpdater(20000)),
             new Achievement(24, "Coolejandro", "Reach normal difficulty.", "face_24.png", "EASY", new DifficultyAchievementUpdaterImpl(Difficulty.NORMAL)),
             new Achievement(25, "Wack", "Reach hard difficulty.", "face_25.png", "EASY", new DifficultyAchievementUpdaterImpl(Difficulty.HARD)),
-            new Achievement(26, "Piranhers", "Reach hardcore difficulty.", "face_26.png", "EASY", new DifficultyAchievementUpdaterImpl(Difficulty.HARDCORE))
+            new Achievement(26, "Piranhers", "Reach hardcore difficulty.", "face_26.png", "EASY", new DifficultyAchievementUpdaterImpl(Difficulty.HARDCORE)),
+            new Achievement(28, "Volodia", "Guess 3 different people from Russia.", "face_28.png", "0", new GuessPeopleFromCountryUpdater(3, "Russia")),
+            new Achievement(29, "Hangovery", "Guess 3 different people from Netherlands.", "face_29.png", "0", new GuessPeopleFromCountryUpdater(3, "Netherlands")),
+            new Achievement(42, "Fabulo", "Guess 3 different people from USA.", "face_42.png", "0", new GuessPeopleFromCountryUpdater(3, "United States")),
+            new Achievement(43, "Huzar", "Guess 3 different people from Poland.", "face_43.png", "0", new GuessPeopleFromCountryUpdater(3, "Poland"))
     };
 
     public static List<String> checkAchievementsForUpdates(Object update, Context context) {
