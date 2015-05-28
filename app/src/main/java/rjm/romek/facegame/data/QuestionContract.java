@@ -62,13 +62,44 @@ public class QuestionContract {
         SQLiteDatabase db = DbHelper.getInstance(context).getReadableDatabase();
 
         String sql =
-                "SELECT COUNT(DISTINCT person) " +
-                "FROM questions " +
-                "WHERE correct_answer = given_answer AND correct_answer LIKE ?";
+                "SELECT COUNT(DISTINCT " + QuestionEntry.PERSON + ") " +
+                        "FROM " + QuestionEntry.TABLE_NAME + " " +
+                        "WHERE " + QuestionEntry.CORRECT_ANSWER + " = " + QuestionEntry.GIVEN_ANSWER +
+                        " AND " + QuestionEntry.CORRECT_ANSWER + " LIKE ?";
 
         Cursor cursor = db.rawQuery(sql, new String[]{country});
         cursor.moveToFirst();
         long count = cursor.getLong(0);
+        cursor.close();
+
+        return count;
+    }
+
+    public int countConsecutiveDaysPlaying(int target) {
+        String inClause = "0";
+
+        if (target <= 0) {
+            target = 1;
+        }
+
+        for (int i = 1; i < target; ++i) {
+            inClause += ",";
+            inClause += i;
+        }
+
+        SQLiteDatabase db = DbHelper.getInstance(context).getReadableDatabase();
+
+        String sql =
+                "SELECT COUNT(*) " +
+                        "FROM ( " +
+                        "SELECT DISTINCT julianday(date('now')) - julianday(" + QuestionEntry.DATE + ") AS x " +
+                        "FROM " + QuestionEntry.TABLE_NAME + " " +
+                        "WHERE x IN (" + inClause + ")" +
+                        ")";
+
+        Cursor cursor = db.rawQuery(sql, null);
+        cursor.moveToFirst();
+        int count = cursor.getInt(0);
         cursor.close();
 
         return count;

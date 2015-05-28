@@ -39,7 +39,11 @@ public class AchievementManager {
             new Achievement(27, "Volodia", "Guess 3 different people from Russia.", "face_28.png", "0", new GuessPeopleFromCountryUpdater(3, "Russia")),
             new Achievement(28, "Hangovery", "Guess 3 different people from Netherlands.", "face_29.png", "0", new GuessPeopleFromCountryUpdater(3, "Netherlands")),
             new Achievement(29, "Fabulo", "Guess 3 different people from USA.", "face_42.png", "0", new GuessPeopleFromCountryUpdater(3, "United States")),
-            new Achievement(30, "Huzar", "Guess 3 different people from Poland.", "face_43.png", "0", new GuessPeopleFromCountryUpdater(3, "Poland"))
+            new Achievement(30, "Huzar", "Guess 3 different people from Poland.", "face_43.png", "0", new GuessPeopleFromCountryUpdater(3, "Poland")),
+            new Achievement(31, "Gimper", "Play two days in a row.", "face_41.png", "0", new ConsecutiveDaysPlayingAchievementUpdater(2)),
+            new Achievement(32, "Septiceye", "Play three days in a row.", "face_68.png", "0", new ConsecutiveDaysPlayingAchievementUpdater(3)),
+            new Achievement(33, "Pewds", "Play four days in a row.", "face_69.png", "0", new ConsecutiveDaysPlayingAchievementUpdater(4)),
+            new Achievement(34, "Danil", "Play five days in a row.", "face_39.png", "0", new ConsecutiveDaysPlayingAchievementUpdater(5))
     };
 
     public static List<String> checkAchievementsForUpdates(Object update, Context context) {

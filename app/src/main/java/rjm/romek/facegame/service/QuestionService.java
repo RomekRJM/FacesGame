@@ -12,4 +12,6 @@ public interface QuestionService {
     void saveQuestions(Set<Question> questions);
 
     long countUniqueRightGuessesForCountry(String country);
+
+    int countConsecutiveDaysPlaying(int target);
 }

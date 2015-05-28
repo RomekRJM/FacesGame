@@ -74,6 +74,11 @@ public class QuestionServiceImpl implements QuestionService {
         return questionContract.countUniqueRightGuessesForCountry(country);
     }
 
+    @Override
+    public int countConsecutiveDaysPlaying(int target) {
+        return questionContract.countConsecutiveDaysPlaying(target);
+    }
+
     private List<Country> generateCountries(Difficulty difficulty, Country validCountry) {
         List<Country> countries = new ArrayList<>(difficulty.getAvailableAnswers());
         countries.addAll(randomizer.randomNeighbours(validCountry,
