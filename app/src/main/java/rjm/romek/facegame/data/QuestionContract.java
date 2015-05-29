@@ -92,7 +92,8 @@ public class QuestionContract {
         String sql =
                 "SELECT COUNT(*) " +
                         "FROM ( " +
-                        "SELECT DISTINCT julianday(date('now')) - julianday(" + QuestionEntry.DATE + ") AS x " +
+                        "SELECT DISTINCT (strftime('%s','now') * 1000 - " + QuestionEntry.DATE +
+                        ")/86400000 AS x " +
                         "FROM " + QuestionEntry.TABLE_NAME + " " +
                         "WHERE x IN (" + inClause + ")" +
                         ")";
