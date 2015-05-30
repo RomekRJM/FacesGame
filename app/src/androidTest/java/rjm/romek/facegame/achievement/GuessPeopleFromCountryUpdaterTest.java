@@ -1,5 +1,6 @@
 package rjm.romek.facegame.achievement;
 
+import java.util.Date;
 import java.util.List;
 
 import rjm.romek.facegame.model.Achievement;
@@ -28,7 +29,7 @@ public class GuessPeopleFromCountryUpdaterTest extends AchievementTest {
 
     private void checkPeopleFromCountryUnlocked(String country, Achievement achievement) {
         for(int i=0; i<3; ++i) {
-            createAndSaveQuestion(getContext(), country, country);
+            createAndSaveQuestion(getContext(), country, country, new Date());
         }
 
         List<String> unlockedAchievementsNames = checkAchievementsForUpdates(

@@ -8,6 +8,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -58,7 +59,9 @@ public class TestUtils {
         return createQuestionSet(correct);
     }
 
-    public static Question createAndSaveQuestion(Context context, String correctAnswer, String givenAnswer) {
+    public static Question createAndSaveQuestion(Context context,
+                                                 String correctAnswer, String givenAnswer,
+                                                 Date date) {
         QuestionContract questionContract = new QuestionContract(context);
         Country country1 = new Country();
         country1.setName(correctAnswer);
@@ -73,6 +76,7 @@ public class TestUtils {
         countries.add(country2);
         question.setCountries(countries);
         question.setDifficulty(Difficulty.NORMAL);
+        question.setDate(date);
         Set<Question> questions = new LinkedHashSet<>();
         questions.add(question);
 
