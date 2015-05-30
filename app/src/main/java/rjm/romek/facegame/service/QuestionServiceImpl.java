@@ -26,11 +26,10 @@ public class QuestionServiceImpl implements QuestionService {
     private final PersonRandomizerService personRandomizer;
     private final QuestionContract questionContract;
 
-    public QuestionServiceImpl(AssetManager assetManager,
-                               Context context, Set<Country> countries) throws IOException {
+    public QuestionServiceImpl(Context context, Set<Country> countries) throws IOException {
         this.randomizer = new CountryRandomizer(countries);
         this.parameters = new Parameters();
-        personRandomizer = new PersonRandomizerServiceImpl(assetManager);
+        personRandomizer = new PersonRandomizerServiceImpl(context.getAssets());
         questionContract = new QuestionContract(context);
     }
 

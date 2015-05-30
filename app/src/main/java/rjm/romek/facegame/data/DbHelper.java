@@ -62,5 +62,8 @@ public class DbHelper extends SQLiteOpenHelper {
         sql = String.format("DROP TABLE IF EXISTS %s", AchievementEntry.TABLE_NAME);
         Log.d(TAG, "delete with SQL: " + sql);
         db.execSQL(sql);
+        sql = String.format("DROP TABLE IF EXISTS %s", QuestionEntry.TABLE_NAME);
+        Log.d(TAG, "delete with SQL: " + sql);
+        db.execSQL(sql);
     }
 }

@@ -174,8 +174,7 @@ public class Game extends Activity implements OnClickListener,
     }
 
     QuestionService createQuestionService() throws IOException {
-        return new QuestionServiceImpl(getAssets(), getBaseContext(),
-                Global.countries);
+        return new QuestionServiceImpl(getBaseContext(), Global.countries);
     }
 
     List<Button> createButtons() {
