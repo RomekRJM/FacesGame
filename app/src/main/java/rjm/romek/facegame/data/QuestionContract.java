@@ -59,23 +59,16 @@ public class QuestionContract {
     }
 
     public long countUniqueRightGuessesForCountry(String country) {
-        SQLiteDatabase db = DbHelper.getInstance(context).getReadableDatabase();
-
         String sql =
                 "SELECT COUNT(DISTINCT " + QuestionEntry.PERSON + ") " +
                         "FROM " + QuestionEntry.TABLE_NAME + " " +
                         "WHERE " + QuestionEntry.CORRECT_ANSWER + " = " + QuestionEntry.GIVEN_ANSWER +
                         " AND " + QuestionEntry.CORRECT_ANSWER + " LIKE ?";
 
-        Cursor cursor = db.rawQuery(sql, new String[]{country});
-        cursor.moveToFirst();
-        long count = cursor.getLong(0);
-        cursor.close();
-
-        return count;
+        return performRawQuery(sql, country);
     }
 
-    public int countConsecutiveDaysPlaying(int target) {
+    public long countConsecutiveDaysPlaying(int target) {
         String inClause = "0";
 
         if (target <= 0) {
@@ -87,8 +80,6 @@ public class QuestionContract {
             inClause += i;
         }
 
-        SQLiteDatabase db = DbHelper.getInstance(context).getReadableDatabase();
-
         String sql =
                 "SELECT COUNT(*) " +
                         "FROM ( " +
@@ -98,9 +89,41 @@ public class QuestionContract {
                         "WHERE x IN (" + inClause + ")" +
                         ")";
 
-        Cursor cursor = db.rawQuery(sql, null);
-        cursor.moveToFirst();
-        int count = cursor.getInt(0);
+        return performRawQuery(sql);
+    }
+
+    public long countRightGuessesThatWerePreviouslyWrong() {
+        String sql =
+                "SELECT count(DISTINCT qo." + QuestionEntry.PERSON + ") " +
+                        "FROM " + QuestionEntry.TABLE_NAME + " qo " +
+                        "WHERE " + QuestionEntry.CORRECT_ANSWER + " LIKE " + QuestionEntry.GIVEN_ANSWER + " " +
+                        "AND qo." + QuestionEntry.DATE + " > ( " +
+                        "    SELECT MIN(qi." + QuestionEntry.DATE + ") " +
+                        "    FROM " + QuestionEntry.TABLE_NAME + " qi " +
+                        "    WHERE " + QuestionEntry.CORRECT_ANSWER + " NOT LIKE given_answer " +
+                        "    AND qo." + QuestionEntry.PERSON + " = qi." + QuestionEntry.PERSON + " " +
+                        ")";
+
+        return performRawQuery(sql);
+    }
+
+    public long countCountriesCorrectlyGuessed() {
+        String sql =
+                "SELECT count(DISTINCT " + QuestionEntry.CORRECT_ANSWER + ") " +
+                        "FROM " + QuestionEntry.TABLE_NAME + " " +
+                        "WHERE " + QuestionEntry.CORRECT_ANSWER + " LIKE " + QuestionEntry.GIVEN_ANSWER;
+
+        return performRawQuery(sql);
+    }
+
+    private long performRawQuery(String sql, String ... params) {
+        SQLiteDatabase db = DbHelper.getInstance(context).getReadableDatabase();
+        Cursor cursor = db.rawQuery(sql, params);
+        long count = 0l;
+
+        if (cursor.moveToFirst()) {
+            count = cursor.getLong(0);
+        }
         cursor.close();
 
         return count;

@@ -12,6 +12,6 @@ public class ConsecutiveDaysPlayingAchievementUpdater extends SqlPoweredUpdater 
 
     @Override
     protected Long transform(QuestionService change) {
-        return (long) change.countConsecutiveDaysPlaying(numberOfDaysToUnlock);
+        return change.countConsecutiveDaysPlaying(numberOfDaysToUnlock);
     }
 }

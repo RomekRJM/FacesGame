@@ -13,5 +13,9 @@ public interface QuestionService {
 
     long countUniqueRightGuessesForCountry(String country);
 
-    int countConsecutiveDaysPlaying(int target);
+    long countConsecutiveDaysPlaying(int target);
+
+    long countRightGuessesThatWerePreviouslyWrong();
+
+    long countCountriesCorrectlyGuessed();
 }

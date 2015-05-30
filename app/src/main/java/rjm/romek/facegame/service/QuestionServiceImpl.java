@@ -75,8 +75,18 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public int countConsecutiveDaysPlaying(int target) {
+    public long countConsecutiveDaysPlaying(int target) {
         return questionContract.countConsecutiveDaysPlaying(target);
+    }
+
+    @Override
+    public long countRightGuessesThatWerePreviouslyWrong() {
+        return questionContract.countRightGuessesThatWerePreviouslyWrong();
+    }
+
+    @Override
+    public long countCountriesCorrectlyGuessed() {
+        return questionContract.countCountriesCorrectlyGuessed();
     }
 
     private List<Country> generateCountries(Difficulty difficulty, Country validCountry) {
