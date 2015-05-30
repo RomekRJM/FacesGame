@@ -54,4 +54,7 @@ public abstract class AchievementUpdater<C, U> {
         destination.setLastModified(source.getLastModified());
     }
 
+    public String getAchievementFamily() {
+        return getClass().getSimpleName();
+    }
 }

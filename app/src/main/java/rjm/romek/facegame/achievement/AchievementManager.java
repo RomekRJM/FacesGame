@@ -2,6 +2,8 @@ package rjm.romek.facegame.achievement;
 
 import android.content.Context;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,11 +64,22 @@ public class AchievementManager {
     public static List<String> checkAchievementsForUpdates(Object update, Context context) {
 
         List<String> unlockedAchievements = new ArrayList<>();
+        String lastAchievementFamily = null;
+        boolean lastUnlocked = false;
+
         for (Achievement achievement : achievements) {
+            if(StringUtils.equals(lastAchievementFamily, achievement.getAchievementFamily())
+                    && ! lastUnlocked) {
+                continue;
+            }
+
             if (achievement.updateAchievement(update, context)) {
                 unlockedAchievements.add(achievement.getName());
                 //Games.Achievements.unlock(mGoogleApiClient, "my_achievement_id");
             }
+
+            lastUnlocked = achievement.isUnlocked();
+            lastAchievementFamily = achievement.getAchievementFamily();
         }
 
         return unlockedAchievements;
