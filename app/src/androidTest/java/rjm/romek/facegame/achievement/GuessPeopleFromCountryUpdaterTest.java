@@ -29,7 +29,7 @@ public class GuessPeopleFromCountryUpdaterTest extends AchievementTest {
 
     private void checkPeopleFromCountryUnlocked(String country, Achievement achievement) {
         for(int i=0; i<3; ++i) {
-            createAndSaveQuestion(getContext(), country, country, new Date());
+            createAndSaveQuestion(getContext(), country, country, null, new Date());
         }
 
         List<String> unlockedAchievementsNames = checkAchievementsForUpdates(

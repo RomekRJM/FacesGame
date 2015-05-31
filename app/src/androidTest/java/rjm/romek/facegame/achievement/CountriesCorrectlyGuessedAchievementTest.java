@@ -9,9 +9,9 @@ import static rjm.romek.facegame.utils.TestUtils.createAndSaveQuestion;
 
 public class CountriesCorrectlyGuessedAchievementTest extends AchievementTest {
     public void testNone() {
-        createAndSaveQuestion(getContext(), "Poland", "Finland", new Date());
-        createAndSaveQuestion(getContext(), "Cyprus", "Monako", new Date());
-        createAndSaveQuestion(getContext(), "Poland", "Monako", new Date());
+        createAndSaveQuestion(getContext(), "Poland", "Finland", null, new Date());
+        createAndSaveQuestion(getContext(), "Cyprus", "Monako", null, new Date());
+        createAndSaveQuestion(getContext(), "Poland", "Monako", null, new Date());
 
         List<String> unlockedAchievementsNames = checkAchievementsForUpdates(questionService, getContext());
         doesNotContainGivenAchievements(unlockedAchievementsNames,
@@ -19,18 +19,18 @@ public class CountriesCorrectlyGuessedAchievementTest extends AchievementTest {
     }
 
     public void testOne() {
-        createAndSaveQuestion(getContext(), "Poland", "Poland", new Date());
-        createAndSaveQuestion(getContext(), "Poland", "Monako", new Date());
-        createAndSaveQuestion(getContext(), "Monako", "Monako", new Date());
-        createAndSaveQuestion(getContext(), "France", "France", new Date());
-        createAndSaveQuestion(getContext(), "Slovenia", "Slovenia", new Date());
-        createAndSaveQuestion(getContext(), "Slovakia", "Slovakia", new Date());
-        createAndSaveQuestion(getContext(), "Czech Republic", "Czech Republic", new Date());
-        createAndSaveQuestion(getContext(), "Hungary", "Hungary", new Date());
-        createAndSaveQuestion(getContext(), "Romania", "Romania", new Date());
-        createAndSaveQuestion(getContext(), "Italy", "Italy", new Date());
-        createAndSaveQuestion(getContext(), "Spain", "Spain", new Date());
-        createAndSaveQuestion(getContext(), "Serbia", "Serbia", new Date());
+        createAndSaveQuestion(getContext(), "Poland", "Poland", null, new Date());
+        createAndSaveQuestion(getContext(), "Poland", "Monako", null, new Date());
+        createAndSaveQuestion(getContext(), "Monako", "Monako", null, new Date());
+        createAndSaveQuestion(getContext(), "France", "France", null, new Date());
+        createAndSaveQuestion(getContext(), "Slovenia", "Slovenia", null, new Date());
+        createAndSaveQuestion(getContext(), "Slovakia", "Slovakia", null, new Date());
+        createAndSaveQuestion(getContext(), "Czech Republic", "Czech Republic", null, new Date());
+        createAndSaveQuestion(getContext(), "Hungary", "Hungary", null, new Date());
+        createAndSaveQuestion(getContext(), "Romania", "Romania", null, new Date());
+        createAndSaveQuestion(getContext(), "Italy", "Italy", null, new Date());
+        createAndSaveQuestion(getContext(), "Spain", "Spain", null, new Date());
+        createAndSaveQuestion(getContext(), "Serbia", "Serbia", null, new Date());
 
         List<String> unlockedAchievementsNames = checkAchievementsForUpdates(questionService, getContext());
         containsAllAchievement(unlockedAchievementsNames, achievements[39]);

@@ -13,7 +13,8 @@ public class ConsecutiveDaysPlayingAchievementUpdaterTest extends AchievementTes
         long dayInMillis = 86400000;
 
         for(int i=0; i<7; ++i) {
-            createAndSaveQuestion(getContext(), "Poland", "Finland", new Date(now - i*dayInMillis));
+            createAndSaveQuestion(getContext(), "Poland", "Finland", null,
+                    new Date(now - i*dayInMillis));
         }
 
         List<String> unlockedAchievementsNames = checkAchievementsForUpdates(

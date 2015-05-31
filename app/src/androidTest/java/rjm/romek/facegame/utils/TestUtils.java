@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,14 +62,15 @@ public class TestUtils {
 
     public static Question createAndSaveQuestion(Context context,
                                                  String correctAnswer, String givenAnswer,
-                                                 Date date) {
+                                                 String person, Date date) {
         QuestionContract questionContract = new QuestionContract(context);
         Country country1 = new Country();
         country1.setName(correctAnswer);
         Country country2 = new Country();
         country2.setName(givenAnswer);
         Question question = new Question("abcd");
-        question.setPerson(new Person(RandomStringUtils.randomAlphabetic(8)));
+        person = StringUtils.defaultString(person, RandomStringUtils.randomAlphabetic(8));
+        question.setPerson(new Person(person));
         question.setCorrectAnswer(country1);
         question.answer(country2, 0);
         List<Country> countries = new ArrayList<>();
