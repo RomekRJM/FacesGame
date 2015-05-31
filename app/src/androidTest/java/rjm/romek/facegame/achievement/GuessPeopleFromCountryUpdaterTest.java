@@ -12,19 +12,23 @@ import static rjm.romek.facegame.utils.TestUtils.createAndSaveQuestion;
 public class GuessPeopleFromCountryUpdaterTest extends AchievementTest {
 
     public void testPoland() {
-        checkPeopleFromCountryUnlocked("Poland", achievements[34]);
+        checkPeopleFromCountryUnlocked("Poland", achievements[36]);
     }
 
     public void testUSA() {
-        checkPeopleFromCountryUnlocked("United States", achievements[33]);
+        checkPeopleFromCountryUnlocked("United States", achievements[35]);
     }
 
     public void testNetherlands() {
-        checkPeopleFromCountryUnlocked("Netherlands", achievements[32]);
+        checkPeopleFromCountryUnlocked("Netherlands", achievements[34]);
     }
 
     public void testRussia() {
-        checkPeopleFromCountryUnlocked("Russia", achievements[31]);
+        checkPeopleFromCountryUnlocked("Russia", achievements[33]);
+    }
+
+    public void testMongolia() {
+        checkPeopleFromCountryUnlocked("Mongolia", achievements[37]);
     }
 
     private void checkPeopleFromCountryUnlocked(String country, Achievement achievement) {

@@ -15,7 +15,7 @@ public class CountriesCorrectlyGuessedAchievementTest extends AchievementTest {
 
         List<String> unlockedAchievementsNames = checkAchievementsForUpdates(questionService, getContext());
         doesNotContainGivenAchievements(unlockedAchievementsNames,
-                achievements[39], achievements[40], achievements[41], achievements[42]);
+                achievements[42], achievements[43], achievements[44], achievements[45]);
     }
 
     public void testOne() {
@@ -33,8 +33,8 @@ public class CountriesCorrectlyGuessedAchievementTest extends AchievementTest {
         createAndSaveQuestion(getContext(), "Serbia", "Serbia", null, new Date());
 
         List<String> unlockedAchievementsNames = checkAchievementsForUpdates(questionService, getContext());
-        containsAllAchievement(unlockedAchievementsNames, achievements[39]);
+        containsAllAchievement(unlockedAchievementsNames, achievements[42]);
         doesNotContainGivenAchievements(unlockedAchievementsNames,
-                achievements[40], achievements[41], achievements[42]);
+                achievements[43], achievements[44], achievements[45]);
     }
 }

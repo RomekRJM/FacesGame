@@ -21,6 +21,6 @@ public class ConsecutiveDaysPlayingAchievementUpdaterTest extends AchievementTes
                 questionService, getContext());
 
         containsAllAchievement(unlockedAchievementsNames,
-                achievements[35], achievements[36], achievements[37], achievements[38]);
+                achievements[38], achievements[39], achievements[40], achievements[41]);
     }
 }

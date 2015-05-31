@@ -91,8 +91,4 @@ public class Achievement<C> {
     public boolean updateAchievement(C change, Context context) {
         return updater.updateAchievement(this, change, context);
     }
-
-    public String getAchievementFamily() {
-        return updater.getAchievementFamily();
-    }
 }

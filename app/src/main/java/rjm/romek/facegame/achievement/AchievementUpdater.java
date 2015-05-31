@@ -53,8 +53,4 @@ public abstract class AchievementUpdater<C, U> {
         destination.setUnlocked(source.isUnlocked());
         destination.setLastModified(source.getLastModified());
     }
-
-    public String getAchievementFamily() {
-        return getClass().getSimpleName();
-    }
 }

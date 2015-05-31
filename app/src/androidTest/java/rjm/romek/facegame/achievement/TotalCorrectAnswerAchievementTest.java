@@ -10,18 +10,18 @@ public class TotalCorrectAnswerAchievementTest extends AchievementTest {
     public void testUnlockedFirstOnly() {
         List<String> unlockedAchievementsNames = checkAchievementsForUpdates(
                 createCorrectQuestions(99), getContext());
-        containsAllAchievement(unlockedAchievementsNames, achievements[4]);
-        doesNotContainGivenAchievements(unlockedAchievementsNames, achievements[5]);
+        containsAllAchievement(unlockedAchievementsNames, achievements[5]);
+        doesNotContainGivenAchievements(unlockedAchievementsNames, achievements[6]);
     }
 
     public void testUnlockedFirstThenSecond() {
         List<String> unlockedAchievementsNames = checkAchievementsForUpdates(
                 createCorrectQuestions(30), getContext());
-        containsAllAchievement(unlockedAchievementsNames, achievements[4]);
+        containsAllAchievement(unlockedAchievementsNames, achievements[5]);
 
         unlockedAchievementsNames = checkAchievementsForUpdates(
                 createCorrectQuestions(70), getContext());
-        containsAllAchievement(unlockedAchievementsNames, achievements[5]);
+        containsAllAchievement(unlockedAchievementsNames, achievements[6]);
     }
 
     public void testUnlockedAll() {

@@ -30,8 +30,8 @@ public class RightGuessesThatWerePreviouslyWrongAchievementTest extends Achievem
         createAndSaveQuestion(getContext(), "Spain", "Spain", "i", new Date(++now)); // 5
 
         List<String> unlockedAchievementsNames = checkAchievementsForUpdates(questionService, getContext());
-        containsAllAchievement(unlockedAchievementsNames, achievements[43]);
+        containsAllAchievement(unlockedAchievementsNames, achievements[46]);
         doesNotContainGivenAchievements(unlockedAchievementsNames,
-                achievements[44], achievements[45], achievements[46]);
+                achievements[47], achievements[48], achievements[49]);
     }
 }

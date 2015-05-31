@@ -12,19 +12,23 @@ public class TotalScoreAchievementUpdaterTest extends AchievementTest {
 
         for (int i = 0; i <= 20; ++i) {
             unlockedAchievementsNames = checkAchievementsForUpdates(
-                    Long.valueOf(i), getContext());
+                    i, getContext());
             sum += i;
 
             if(sum >= 500 && sum < 2000) {
-                containsAllAchievement(unlockedAchievementsNames, achievements[18]);
+                containsAllAchievement(unlockedAchievementsNames, achievements[23]);
             } else if (sum >= 2000 && sum < 5000) {
-                containsAllAchievement(unlockedAchievementsNames, achievements[19]);
+                containsAllAchievement(unlockedAchievementsNames, achievements[24]);
             } else if (sum >= 5000 && sum < 10000) {
-                containsAllAchievement(unlockedAchievementsNames, achievements[20]);
+                containsAllAchievement(unlockedAchievementsNames, achievements[25]);
             } else if (sum >= 10000 && sum < 20000) {
-                containsAllAchievement(unlockedAchievementsNames, achievements[21]);
-            } else if (sum >= 20000) {
-                containsAllAchievement(unlockedAchievementsNames, achievements[22]);
+                containsAllAchievement(unlockedAchievementsNames, achievements[26]);
+            } else if (sum >= 20000 && sum < 50000) {
+                containsAllAchievement(unlockedAchievementsNames, achievements[27]);
+            } else if (sum >= 50000 && sum < 100000) {
+                containsAllAchievement(unlockedAchievementsNames, achievements[28]);
+            } else if (sum >= 100000) {
+                containsAllAchievement(unlockedAchievementsNames, achievements[29]);
             }
         }
     }

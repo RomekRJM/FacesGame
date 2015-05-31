@@ -18,7 +18,7 @@ public class DifficultyAchievementTest extends AchievementTest {
         questions.add(createQuestion(true, 1000, Difficulty.HARDCORE));
         List<String> unlockedAchievementsNames = checkAchievementsForUpdates(questions, getContext());
 
-        containsAllAchievement(unlockedAchievementsNames, achievements[30]);
+        containsAllAchievement(unlockedAchievementsNames, achievements[32]);
     }
 
     public void testNormalAndHard() {
@@ -27,8 +27,8 @@ public class DifficultyAchievementTest extends AchievementTest {
         questions.add(createQuestion(true, 1000, Difficulty.HARD));
         List<String> unlockedAchievementsNames = checkAchievementsForUpdates(questions, getContext());
 
-        containsAllAchievement(unlockedAchievementsNames, achievements[28], achievements[29]);
-        doesNotContainGivenAchievements(unlockedAchievementsNames, achievements[30]);
+        containsAllAchievement(unlockedAchievementsNames, achievements[30], achievements[31]);
+        doesNotContainGivenAchievements(unlockedAchievementsNames, achievements[32]);
     }
 
 }
