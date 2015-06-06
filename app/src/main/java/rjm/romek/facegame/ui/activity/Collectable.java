@@ -79,7 +79,7 @@ public class Collectable extends Activity {
 
                 if (selected.isUnlocked()) {
                     collectableRowPopulator.populate(selected,
-                            findViewById(R.id.collectable_row_bottom), _this);
+                            findViewById(R.id.collectable_row_top), _this);
                 }
 
                 if (lastSelected != null) {
