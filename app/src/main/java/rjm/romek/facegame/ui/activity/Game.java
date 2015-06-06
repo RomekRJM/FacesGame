@@ -37,7 +37,7 @@ import rjm.romek.facegame.service.PhotoService;
 import rjm.romek.facegame.service.PhotoServiceImpl;
 import rjm.romek.facegame.service.QuestionService;
 import rjm.romek.facegame.service.QuestionServiceImpl;
-import rjm.romek.facegame.ui.global.Global;
+import rjm.romek.facegame.common.Global;
 import rjm.romek.facegame.ui.intent.EndGameIntent;
 import rjm.romek.facegame.ui.intent.MainMenuIntent;
 import rjm.romek.facegame.ui.listener.SurfaceLayoutChangeListener;

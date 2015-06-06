@@ -9,7 +9,7 @@ import rjm.romek.facegame.data.DbHelper;
 import rjm.romek.facegame.model.Achievement;
 import rjm.romek.facegame.service.QuestionService;
 import rjm.romek.facegame.service.QuestionServiceImpl;
-import rjm.romek.facegame.ui.global.Global;
+import rjm.romek.facegame.common.Global;
 import rjm.romek.facegame.utils.TestUtils;
 
 import static rjm.romek.facegame.achievement.AchievementManager.achievements;

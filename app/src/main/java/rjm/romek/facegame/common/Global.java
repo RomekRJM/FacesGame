@@ -1,4 +1,4 @@
-package rjm.romek.facegame.ui.global;
+package rjm.romek.facegame.common;
 
 import android.app.Application;
 

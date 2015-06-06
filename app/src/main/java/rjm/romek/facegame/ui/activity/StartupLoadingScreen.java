@@ -6,7 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 
 import rjm.romek.facegame.R;
-import rjm.romek.facegame.ui.global.Global;
+import rjm.romek.facegame.common.Global;
 import rjm.romek.facegame.ui.intent.MainMenuIntent;
 import rjm.romek.facegame.ui.intent.QuitIntent;
 import rjm.romek.facegame.ui.loader.LoadDataTask;

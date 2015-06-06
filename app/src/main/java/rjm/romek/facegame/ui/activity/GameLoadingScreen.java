@@ -10,7 +10,7 @@ import rjm.romek.facegame.R;
 import rjm.romek.facegame.model.Question;
 import rjm.romek.facegame.service.QuestionService;
 import rjm.romek.facegame.service.QuestionServiceImpl;
-import rjm.romek.facegame.ui.global.Global;
+import rjm.romek.facegame.common.Global;
 import rjm.romek.facegame.ui.intent.GameIntent;
 import rjm.romek.facegame.ui.loader.LoadQuestionTask;
 import rjm.romek.facegame.ui.loader.LoadQuestionTaskListener;

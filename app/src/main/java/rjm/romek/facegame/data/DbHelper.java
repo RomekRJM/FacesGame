@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import rjm.romek.facegame.ui.global.Global;
+import rjm.romek.facegame.common.Global;
 
 import static rjm.romek.facegame.data.AchievementContract.*;
 import static rjm.romek.facegame.data.QuestionContract.*;
