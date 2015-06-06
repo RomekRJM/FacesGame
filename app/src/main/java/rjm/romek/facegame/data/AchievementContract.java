@@ -20,10 +20,11 @@ public class AchievementContract {
 
     public static final String CREATE_ACHIEVEMENT_TABLE =
             String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY NOT NULL," +
-                            " %s text, %s text, %s text, %s text, %s int, %s int)",
+                            " %s text, %s text, %s text, %s text, %s int, %s int, %s int)",
                     AchievementEntry.TABLE_NAME, AchievementEntry._ID, AchievementEntry.NAME,
                     AchievementEntry.DESCRIPTION, AchievementEntry.DATA, AchievementEntry.PRIZE,
-                    AchievementEntry.UNLOCKED, AchievementEntry.LAST_UPDATED);
+                    AchievementEntry.UNLOCKED, AchievementEntry.LAST_UPDATED,
+                    AchievementEntry.PUBLISHED);
 
     public static abstract class AchievementEntry implements BaseColumns {
         public static final String TABLE_NAME = "achievements";
@@ -33,11 +34,12 @@ public class AchievementContract {
         public static final String PRIZE = "prize";
         public static final String UNLOCKED = "unlocked";
         public static final String LAST_UPDATED = "last_updated";
+        public static final String PUBLISHED = "published";
     }
 
     private final String [] FULL_PROJECTION = {AchievementEntry._ID, AchievementEntry.NAME,
             AchievementEntry.DESCRIPTION, AchievementEntry.DATA, AchievementEntry.PRIZE,
-            AchievementEntry.UNLOCKED, AchievementEntry.LAST_UPDATED};
+            AchievementEntry.UNLOCKED, AchievementEntry.LAST_UPDATED, AchievementEntry.PUBLISHED};
 
     public static void populateAchievements(SQLiteDatabase db) {
         for(Achievement a : AchievementManager.achievements) {
@@ -103,6 +105,7 @@ public class AchievementContract {
         values.put(AchievementEntry.PRIZE, achievement.getPrize());
         values.put(AchievementEntry.UNLOCKED, achievement.isUnlocked());
         values.put(AchievementEntry.LAST_UPDATED, achievement.getLastModified().getTime());
+        values.put(AchievementEntry.PUBLISHED, achievement.isPublished());
         db.insertWithOnConflict(AchievementEntry.TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_IGNORE);
     }
 
@@ -113,6 +116,7 @@ public class AchievementContract {
         values.put(AchievementEntry.DATA, achievement.getData());
         values.put(AchievementEntry.LAST_UPDATED, achievement.getLastModified().getTime());
         values.put(AchievementEntry.UNLOCKED, achievement.isUnlocked());
+        values.put(AchievementEntry.PUBLISHED, achievement.isPublished());
         db.updateWithOnConflict(AchievementEntry.TABLE_NAME, values,
                 AchievementEntry.NAME + " LIKE ? ", new String[]{ achievement.getName() },
                 SQLiteDatabase.CONFLICT_IGNORE);
@@ -127,6 +131,7 @@ public class AchievementContract {
         achievement.setUnlocked(cursor.getInt(cursor.getColumnIndex(AchievementEntry.UNLOCKED)) != 0);
         achievement.setPrize(cursor.getString(cursor.getColumnIndex(AchievementEntry.PRIZE)));
         achievement.setLastModified(new Date(cursor.getLong(cursor.getColumnIndex(AchievementEntry.LAST_UPDATED))));
+        achievement.setPublished(cursor.getInt(cursor.getColumnIndex(AchievementEntry.PUBLISHED)) != 0);
         return achievement;
     }
 }

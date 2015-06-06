@@ -14,6 +14,7 @@ public class Achievement<C> {
     private String data;
     private Boolean unlocked;
     private Date lastModified;
+    private boolean published;
 
     private AchievementUpdater updater;
 
@@ -28,6 +29,7 @@ public class Achievement<C> {
         this.prize = prize;
         this.data = data;
         this.unlocked = false;
+        this.published = false;
         this.lastModified = new Date();
         this.updater = updater;
     }
@@ -86,6 +88,14 @@ public class Achievement<C> {
 
     public void setLastModified(Date lastModified) {
         this.lastModified = lastModified;
+    }
+
+    public boolean isPublished() {
+        return published;
+    }
+
+    public void setPublished(boolean published) {
+        this.published = published;
     }
 
     public boolean updateAchievement(C change, Context context) {

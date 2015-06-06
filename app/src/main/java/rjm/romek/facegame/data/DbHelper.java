@@ -13,7 +13,7 @@ import static rjm.romek.facegame.data.ScoreContract.*;
 
 public class DbHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = Global.isRunningTests ? "testfaces.db" : "faces.db";
-    public static final int DB_VERSION = 8;
+    public static final int DB_VERSION = 9;
     static final String TAG = "DbHelper";
     private static DbHelper instance;
 
