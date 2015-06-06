@@ -113,12 +113,14 @@ public class TopScore extends ListActivity implements View.OnClickListener, Goog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.top_scores);
-        this.parameters = new Parameters();
-        this.scoreContract = new ScoreContract(this);
+
         init();
     }
 
     public void init() {
+        this.parameters = new Parameters();
+        this.scoreContract = new ScoreContract(this);
+
         Cursor cursor = scoreContract.getTopScoresCursor(parameters.getLimitTopScore());
 
         adapter = new SimpleCursorAdapter(this, R.layout.top_score_row, cursor, FROM, TO);

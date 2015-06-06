@@ -6,7 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import rjm.romek.facegame.achievement.AchievementManager;
 import rjm.romek.facegame.model.Achievement;
@@ -45,6 +47,18 @@ public class AchievementContract {
         for(Achievement a : AchievementManager.achievements) {
             createAchievement(a, db);
         }
+    }
+
+    public List<Achievement> getAchievements() {
+        List<Achievement> achievements = new ArrayList<>();
+        Cursor cursor = getAchievementsCursor();
+
+        while(cursor.moveToNext()) {
+            achievements.add(toAchievement(cursor));
+        }
+
+        cursor.close();
+        return achievements;
     }
 
     public Cursor getAchievementsCursor() {

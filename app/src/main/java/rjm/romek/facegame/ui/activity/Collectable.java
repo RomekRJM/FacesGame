@@ -7,25 +7,53 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.games.Games;
+import com.google.android.gms.games.achievement.Achievements;
+
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import rjm.romek.facegame.R;
+import rjm.romek.facegame.common.GooglePlayable;
 import rjm.romek.facegame.data.AchievementContract;
 import rjm.romek.facegame.model.Achievement;
+import rjm.romek.facegame.ui.manager.GooglePlayManager;
 import rjm.romek.facegame.ui.views.CollectableRowPopulator;
 
 import static rjm.romek.facegame.data.AchievementContract.AchievementEntry;
 
-public class Collectable extends Activity {
+public class Collectable extends Activity implements View.OnClickListener, GooglePlayable {
+
     private SimpleCursorAdapter adapter;
     private static final String[] FROM = new String[]{AchievementEntry.PRIZE};
     private static final int[] TO = new int[]{R.id.imageViewCollectable};
     private final Activity _this = this;
+    private GooglePlayManager googlePlayManager;
+    private AchievementUpdateCallback achievementUpdateCallback;
+    private Button shareButton;
+    private AchievementContract achievementContract;
+    private Map<String, Achievement> achievementCache;
+
+    private class AchievementUpdateCallback implements ResultCallback<Achievements.UpdateAchievementResult> {
+        @Override
+        public void onResult(Achievements.UpdateAchievementResult res) {
+            if (res.getAchievementId() != null) {
+                Achievement achievement = achievementCache.get(res.getAchievementId());
+                achievement.setPublished(true);
+                achievementContract.updateAchievement(achievement);
+            }
+        }
+    }
 
     private class CollectableViewBinder implements ViewBinder {
 
@@ -52,6 +80,7 @@ public class Collectable extends Activity {
             ((ImageView) view).setImageResource(imageResource);
             return true;
         }
+
     }
 
     public void onCreate(Bundle savedInstanceState) {
@@ -91,6 +120,82 @@ public class Collectable extends Activity {
                 lastSelected = v;
             }
         });
+
+        init();
     }
 
+    public void init() {
+        achievementContract = new AchievementContract(this);
+        shareButton = (Button) findViewById(R.id.shareScoreButton);
+        shareButton.setOnClickListener(this);
+
+        googlePlayManager = new GooglePlayManager(this);
+        googlePlayManager.init();
+        googlePlayManager.updateShareButton();
+
+        achievementUpdateCallback = new AchievementUpdateCallback();
+        achievementCache = new HashMap<>();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        googlePlayManager.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        googlePlayManager.stop();
+    }
+
+    @Override
+    public void onClick(View v) {
+        googlePlayManager.setConnectionFailed(false);
+
+        if (!googlePlayManager.isShareButtonActive() || !googlePlayManager.isSignedIn()) return;
+
+        List<Achievement> achievements = achievementContract.getAchievements();
+
+        for(Achievement achievement : achievements) {
+            if(achievement.isUnlocked() && !achievement.isPublished()) {
+                String playAchievementCode = getPlayAchievementCode(achievement);
+                achievementCache.put(playAchievementCode, achievement);
+
+                Games.Achievements.unlockImmediate(googlePlayManager.getGoogleApiClient(),
+                        playAchievementCode).setResultCallback(achievementUpdateCallback);
+            }
+        }
+    }
+
+    @Override
+    public Activity getActivity() {
+        return this;
+    }
+
+    @Override
+    public Button getShareButton() {
+        return shareButton;
+    }
+
+    @Override
+    public boolean needsPublishing() {
+        return true;
+    }
+
+    @Override
+    public boolean containsScores() {
+        return true;
+    }
+
+    private String getPlayAchievementName(Achievement achievement) {
+        return "achievement_" + achievement.getName().toLowerCase();
+    }
+
+    private String getPlayAchievementCode(Achievement achievement) {
+        String packageName = getPackageName();
+        int resId = getResources().getIdentifier(getPlayAchievementName(achievement),
+                "string", packageName);
+        return getString(resId);
+    }
 }
