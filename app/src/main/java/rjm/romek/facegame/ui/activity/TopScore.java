@@ -174,7 +174,7 @@ public class TopScore extends ListActivity implements View.OnClickListener, Goog
     }
 
     @Override
-    public boolean containsScores() {
-        return scoreContract.getTopScores(1).size() > 0;
+    public boolean isEmpty() {
+        return scoreContract.getTopScores(1).isEmpty();
     }
 }

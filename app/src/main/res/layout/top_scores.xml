@@ -12,6 +12,6 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/top_score_share_button_connected"
+        android:text="@string/share_button_connected"
         android:id="@+id/shareScoreButton" />
 </LinearLayout>

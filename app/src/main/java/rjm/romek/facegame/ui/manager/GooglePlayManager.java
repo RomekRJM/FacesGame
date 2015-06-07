@@ -133,27 +133,27 @@ public class GooglePlayManager implements GoogleApiClient.ConnectionCallbacks,
         Button shareButton = googlePlayable.getShareButton();
         Activity activity = googlePlayable.getActivity();
 
-        if (!googlePlayable.containsScores()) {
+        if (googlePlayable.isEmpty()) {
             shareButton.setText(activity
-                    .getText(R.string.top_score_share_button_nothing_to_publish));
+                    .getText(R.string.share_button_nothing_to_publish));
             shareButtonActive = false;
         } else if (connectionFailed) {
             shareButtonActive = true;
             shareButton.setText(activity
-                    .getText(R.string.top_score_share_button_retry_connection));
+                    .getText(R.string.share_button_retry_connection));
         } else if (googleApiClient != null && googleApiClient.isConnected()) {
 
             shareButtonActive = true;
             if (googlePlayable.needsPublishing()) {
                 shareButton.setText(activity
-                        .getText(R.string.top_score_share_button_connected));
+                        .getText(R.string.share_button_connected));
             } else {
                 shareButton.setText(activity
-                        .getText(R.string.top_score_share_button_all_published));
+                        .getText(R.string.share_button_all_published));
             }
         } else {
             shareButton.setText(activity
-                    .getText(R.string.top_score_share_button_connecting));
+                    .getText(R.string.share_button_connecting));
             shareButtonActive = false;
         }
     }

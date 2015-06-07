@@ -166,6 +166,10 @@ public class Collectable extends Activity implements View.OnClickListener, Googl
                         playAchievementCode).setResultCallback(achievementUpdateCallback);
             }
         }
+
+        startActivityForResult(Games.Achievements.getAchievementsIntent(
+                        googlePlayManager.getGoogleApiClient()),
+                GooglePlayManager.CODE_OK);
     }
 
     @Override
@@ -180,12 +184,20 @@ public class Collectable extends Activity implements View.OnClickListener, Googl
 
     @Override
     public boolean needsPublishing() {
-        return true;
+        List<Achievement> achievements = achievementContract.getAchievements();
+
+        for(Achievement achievement : achievements) {
+            if(achievement.isUnlocked() && !achievement.isPublished()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override
-    public boolean containsScores() {
-        return true;
+    public boolean isEmpty() {
+        return false;
     }
 
     private String getPlayAchievementName(Achievement achievement) {

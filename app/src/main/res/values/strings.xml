@@ -35,6 +35,8 @@
     <string name="about_concept_actor">Roman Subik</string>
     <string name="about_programming">Programming</string>
     <string name="about_programming_actor">Roman Subik</string>
+    <string name="about_testing">Testing</string>
+    <string name="about_testing_actor">Sabina Subik, Tomasz Subik</string>
     <string name="about_additional_scripting">Gathering resources</string>
     <string name="about_additional_scripting_actor">Roman Subik</string>
     <string name="about_faces">Achievement gfx</string>
@@ -50,10 +52,10 @@
     <string name="about_special_thx">Special thanks</string>
     <string name="about_special_thx_actor">.. goes to my wife Sabina and son Eryk, for their understanding and support.</string>
 
-    <string name="top_score_share_button_connected">Share</string>
-    <string name="top_score_share_button_nothing_to_publish">Nothing to show yet...</string>
-    <string name="top_score_share_button_all_published">World Leaderboard</string>
-    <string name="top_score_share_button_connecting">Connecting ...</string>
-    <string name="top_score_share_button_retry_connection">Retry connecting</string>
+    <string name="share_button_connected">Share</string>
+    <string name="share_button_nothing_to_publish">Nothing to show yet...</string>
+    <string name="share_button_all_published">My progress</string>
+    <string name="share_button_connecting">Connecting ...</string>
+    <string name="share_button_retry_connection">Retry connecting</string>
 
 </resources>

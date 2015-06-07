@@ -7,5 +7,5 @@ public interface GooglePlayable {
     Activity getActivity();
     Button getShareButton();
     boolean needsPublishing();
-    boolean containsScores();
+    boolean isEmpty();
 }

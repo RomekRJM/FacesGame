@@ -9,6 +9,15 @@ For best game experience, always checkout most recent tag. Master will compile, 
 
 ## Changes history
 
+**v0.7 - 07.06.2015**
+
+Enhancements:
+
+* Connected in game achievements to Google Play API achievements.
+* Set up the project and api in Google Play.
+* Added new achievements: guess n people from country x, play game n days in a row, guess n people, you haven't guessed previously, reach difficulty x.
+* Rebalanced achievements.
+
 **v0.6 - 24.05.2015**
 
 Enhancements:
