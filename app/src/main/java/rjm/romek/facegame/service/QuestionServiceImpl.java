@@ -1,18 +1,17 @@
 package rjm.romek.facegame.service;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 import rjm.romek.facegame.common.Parameters;
 import rjm.romek.facegame.data.QuestionContract;
+import rjm.romek.facegame.model.CountryAlgorithm;
 import rjm.romek.facegame.model.Difficulty;
 import rjm.romek.facegame.model.Question;
 import rjm.romek.source.model.Country;
@@ -90,8 +89,15 @@ public class QuestionServiceImpl implements QuestionService {
 
     private List<Country> generateCountries(Difficulty difficulty, Country validCountry) {
         List<Country> countries = new ArrayList<>(difficulty.getAvailableAnswers());
-        countries.addAll(randomizer.randomNeighbours(validCountry,
-                difficulty.getRadius(), difficulty.getAvailableAnswers() - 1));
+
+        if (difficulty.getCountryAlgorithm() == CountryAlgorithm.RANDOM_COUNTRY_IN_RADIUS) {
+            countries.addAll(randomizer.randomNeighbours(validCountry,
+                    difficulty.getRadius(), difficulty.getAvailableAnswers() - 1));
+        } else if (difficulty.getCountryAlgorithm() == CountryAlgorithm.RANDOM_COUNTRY_FROM_DIFFERENT_CONTINENT) {
+            countries.addAll(randomizer.randomCountriesFromDifferentContinents(validCountry,
+                    difficulty.getAvailableAnswers() - 1));
+        }
+
         countries.add(validCountry);
         Collections.shuffle(countries);
 
@@ -100,10 +106,10 @@ public class QuestionServiceImpl implements QuestionService {
 
     private Difficulty getDifficultyForQuestion(Set<Question> prevoius) {
 
-        int spree=0;
+        int spree = 0;
 
-        for(Question question : prevoius) {
-            if(question.isCorrectlyAnswered()) {
+        for (Question question : prevoius) {
+            if (question.isCorrectlyAnswered()) {
                 ++spree;
             } else {
                 spree = spree > 0 ? --spree : 0;
@@ -111,14 +117,16 @@ public class QuestionServiceImpl implements QuestionService {
         }
 
         switch (spree / parameters.getChangeDifficultyEvery()) {
-            case 0:
-                return Difficulty.EASY;
             case 1:
-                return Difficulty.NORMAL;
+                return Difficulty.EASY;
             case 2:
+                return Difficulty.NORMAL;
+            case 3:
                 return Difficulty.HARD;
-            default:
+            case 4:
                 return Difficulty.HARDCORE;
+            default:
+                return Difficulty.NOOB;
         }
     }
 
@@ -134,10 +142,10 @@ public class QuestionServiceImpl implements QuestionService {
 
     private String getUUID(Set<Question> previous) {
 
-        if(previous.size() > 0) {
+        if (previous.size() > 0) {
             return previous.iterator().next().getGameUUID();
         }
 
-        return UUID.randomUUID().toString().substring(0,8);
+        return UUID.randomUUID().toString().substring(0, 8);
     }
 }

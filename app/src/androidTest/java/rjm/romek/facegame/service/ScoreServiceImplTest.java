@@ -15,13 +15,13 @@ public class ScoreServiceImplTest extends TestCase {
         scoreService = new ScoreServiceImpl();
     }
 
-    public void test1CorrectAnswerOnEasy() {
-        scoreService.addQuestion(createQuestion(true, 0l, Difficulty.EASY));
+    public void test1CorrectAnswerOnNoob() {
+        scoreService.addQuestion(createQuestion(true, 0l, Difficulty.NOOB));
         assertParamsCorrect(1, 10l, 10l, 0l);
     }
 
-    public void test1WrongAnswerOnEasy() {
-        scoreService.addQuestion(createQuestion(false, 0l, Difficulty.EASY));
+    public void test1WrongAnswerOnNoob() {
+        scoreService.addQuestion(createQuestion(false, 0l, Difficulty.NOOB));
         assertParamsCorrect(0, 0l, 0l, 0l);
     }
 
@@ -30,40 +30,40 @@ public class ScoreServiceImplTest extends TestCase {
         assertParamsCorrect(1, 3l, 3l, 0l);
     }
 
-    public void test2CorrectAnswersOnEasySecondTookLonger() {
-        scoreService.addQuestion(createQuestion(true, 0l, Difficulty.EASY));
-        scoreService.addQuestion(createQuestion(true, Difficulty.EASY.getTime() / 2, Difficulty.EASY));
+    public void test2CorrectAnswersOnNoobSecondTookLonger() {
+        scoreService.addQuestion(createQuestion(true, 0l, Difficulty.NOOB));
+        scoreService.addQuestion(createQuestion(true, Difficulty.NOOB.getTime() / 2, Difficulty.NOOB));
         assertParamsCorrect(2, 15l, 30l, 0l);
     }
 
-    public void test4CorrectAnswersAnd1WrongOnEasy() {
+    public void test4CorrectAnswersAnd1WrongOnNoob() {
         for (int i = 0; i < 4; ++i) {
-            scoreService.addQuestion(createQuestion(true, 0l, Difficulty.EASY));
+            scoreService.addQuestion(createQuestion(true, 0l, Difficulty.NOOB));
         }
-        scoreService.addQuestion(createQuestion(false, 0l, Difficulty.EASY));
+        scoreService.addQuestion(createQuestion(false, 0l, Difficulty.NOOB));
 
         assertParamsCorrect(0, 0l, 160l, 160l);
     }
 
-    public void test2CorrectAnswersAnd1WrongAnd1CorrectAnd1WrongOnEasy() {
+    public void test2CorrectAnswersAnd1WrongAnd1CorrectAnd1WrongOnNoob() {
         for (int i = 0; i < 2; ++i) {
-            scoreService.addQuestion(createQuestion(true, 0l, Difficulty.EASY));
+            scoreService.addQuestion(createQuestion(true, 0l, Difficulty.NOOB));
         }
-        scoreService.addQuestion(createQuestion(false, 0l, Difficulty.EASY));
-        scoreService.addQuestion(createQuestion(true, 0l, Difficulty.EASY));
-        scoreService.addQuestion(createQuestion(false, 0l, Difficulty.EASY));
+        scoreService.addQuestion(createQuestion(false, 0l, Difficulty.NOOB));
+        scoreService.addQuestion(createQuestion(true, 0l, Difficulty.NOOB));
+        scoreService.addQuestion(createQuestion(false, 0l, Difficulty.NOOB));
 
         assertParamsCorrect(0, 0l, 50l, 50l);
     }
 
-    public void test5CorrectAnswersOnEasy2CorrectAnd1WrongOnNormal() {
+    public void test5CorrectAnswersOnNoob2CorrectAnd1WrongOnEasy() {
         for (int i = 0; i < 5; ++i) {
-            scoreService.addQuestion(createQuestion(true, 0l, Difficulty.EASY));
+            scoreService.addQuestion(createQuestion(true, 0l, Difficulty.NOOB));
         }
         for (int i = 0; i < 2; ++i) {
-            scoreService.addQuestion(createQuestion(true, 0l, Difficulty.NORMAL));
+            scoreService.addQuestion(createQuestion(true, 0l, Difficulty.EASY));
         }
-        scoreService.addQuestion(createQuestion(false, 0l, Difficulty.NORMAL));
+        scoreService.addQuestion(createQuestion(false, 0l, Difficulty.EASY));
 
         assertParamsCorrect(0, 0l, 560l, 560l);
     }

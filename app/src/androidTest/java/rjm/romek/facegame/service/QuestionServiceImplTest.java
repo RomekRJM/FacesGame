@@ -24,7 +24,7 @@ public class QuestionServiceImplTest extends AndroidTestCase {
     }
 
     public void testReturnsValidQuestions() throws Exception {
-        Set<Question> questions = generate12();
+        Set<Question> questions = generate15();
 
         for (Question q : questions) {
             assertNotNull(q.getGameUUID());
@@ -38,7 +38,7 @@ public class QuestionServiceImplTest extends AndroidTestCase {
 
     public void testReturnsValidQuestionsWithProperCountries() throws Exception {
         for (int i = 0; i < 100; ++i) {
-            Set<Question> questions = generate12();
+            Set<Question> questions = generate15();
 
             for (Question q : questions) {
                 assertEquals(q.getDifficulty().getAvailableAnswers().intValue(), q.getCountries().size());
@@ -49,7 +49,7 @@ public class QuestionServiceImplTest extends AndroidTestCase {
     }
 
     public void testReturnsQuestionsWithGrowingDifficulty() throws Exception {
-        Set<Question> questions = generate12();
+        Set<Question> questions = generate15();
         Iterator<Question> iterator = questions.iterator();
         Question lastQuestion = iterator.next();
 
@@ -71,11 +71,11 @@ public class QuestionServiceImplTest extends AndroidTestCase {
         }
     }
 
-    private Set<Question> generate12() throws IOException {
+    private Set<Question> generate15() throws IOException {
         QuestionService questionService = new QuestionServiceImpl(
                 getContext(), countries);
         Set<Question> questions = new LinkedHashSet<>();
-        for(int i=0; i<12; ++i) {
+        for(int i=0; i<15; ++i) {
             Question question = questionService.generateQuestion(questions);
             question.answer(question.getCorrectAnswer(), 0);
             questions.add(question);

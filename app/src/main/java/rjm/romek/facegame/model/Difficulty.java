@@ -1,8 +1,10 @@
 package rjm.romek.facegame.model;
 
 public enum Difficulty {
-    EASY(2, 7, 40000l, 0.1f), NORMAL(2, 5, 20000l, 0.15f), HARD(4, 4, 15000l, 0.2f), HARDCORE(4, 2, 10000l, 0.3f);
+    NOOB(2, 40000l, 0.1f), EASY(2, 20000l, 0.15f), NORMAL(4, 20000l, 0.2f),
+    HARD(4, 5, 15000l, 0.25f), HARDCORE(4, 3, 10000l, 0.3f);
 
+    private CountryAlgorithm countryAlgorithm;
     private Integer availableAnswers;
     private Integer radius;
     private Long time;
@@ -13,6 +15,14 @@ public enum Difficulty {
         this.radius = radius;
         this.time = time;
         this.levelPointMultiplier = levelPointMultiplier;
+        this.countryAlgorithm = CountryAlgorithm.RANDOM_COUNTRY_IN_RADIUS;
+    }
+
+    Difficulty(Integer availableAnswers, Long time, Float levelPointMultiplier) {
+        this.availableAnswers = availableAnswers;
+        this.time = time;
+        this.levelPointMultiplier = levelPointMultiplier;
+        this.countryAlgorithm = CountryAlgorithm.RANDOM_COUNTRY_FROM_DIFFERENT_CONTINENT;
     }
 
     public Integer getAvailableAnswers() {
@@ -29,5 +39,9 @@ public enum Difficulty {
 
     public Float getLevelPointMultiplier() {
         return levelPointMultiplier;
+    }
+
+    public CountryAlgorithm getCountryAlgorithm() {
+        return countryAlgorithm;
     }
 }
