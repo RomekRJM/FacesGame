@@ -23,7 +23,7 @@ android {
         minSdkVersion 10
         targetSdkVersion 21
         versionCode 1
-        versionName "v0.7"
+        versionName "v0.71"
     }
     buildTypes {
         debug {
@@ -47,7 +47,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile 'junit:junit:3.8.1'
     androidTestCompile 'org.mockito:mockito-all:1.9.5'
-    compile 'rjm.romek:faces_algorithms:0.0.6'
+    compile 'rjm.romek:faces_algorithms:0.0.7'
     compile 'commons-io:commons-io:2.4'
     compile 'com.google.android:android-test:2.3.3'
     compile 'com.google.android:android:2.3.3'
