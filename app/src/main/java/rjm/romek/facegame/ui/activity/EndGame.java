@@ -25,6 +25,7 @@ public class EndGame extends Activity implements OnClickListener {
     private Button buttonBack;
     private Button buttonAgain;
     private TextView scoreTextView;
+    private TextView achievementsTextView;
     private AchievementContract achievementContract;
 
     @Override
@@ -38,15 +39,23 @@ public class EndGame extends Activity implements OnClickListener {
         buttonAgain.setOnClickListener(this);
 
         scoreTextView = (TextView) findViewById(R.id.scoreTextView);
+        achievementsTextView = (TextView) findViewById(R.id.achievementsTextView);
         long score = getIntent().getLongExtra(EndGameIntent.SCORE, 0);
         int correct = getIntent().getIntExtra(EndGameIntent.CORRECT_ANSWERS, 0);
-        scoreTextView.setText(getString(R.string.end_game_score) + score + " (" + correct + ")");
+        scoreTextView.setText(getString(R.string.end_game_score) + " " + score
+                + " (" + correct + " " + getString(R.string.end_game_correct_answers) + ")");
         saveScore(score, correct);
 
         String [] unlockedAchievements = getIntent().getStringArrayExtra(
                 EndGameIntent.UNLOCKED_ACHIEVEMENTS);
         achievementContract = new AchievementContract(getBaseContext());
         Achievement [] newAchievements = new Achievement[unlockedAchievements.length];
+
+        if(newAchievements.length > 0) {
+            achievementsTextView.setText(getString(R.string.end_game_achievements_unlocked));
+        } else {
+            achievementsTextView.setText(getString(R.string.end_game_no_achievements));
+        }
 
         int i=0;
         for(String achievementName : unlockedAchievements) {

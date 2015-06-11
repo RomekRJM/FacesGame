@@ -13,8 +13,11 @@
 
     <string name="end_game_game_over">GAME OVER</string>
     <string name="end_game_score">Score: </string>
+    <string name="end_game_correct_answers">correct</string>
     <string name="end_game_main_menu">Back</string>
     <string name="end_game_again">Again!</string>
+    <string name="end_game_achievements_unlocked">Achievements unlocked: </string>
+    <string name="end_game_no_achievements">No new achievements. Keep on playing!</string>
 
     <string name="game_default_score">0</string>
 
@@ -26,7 +29,6 @@
     <string name="top_score_title">Top Scores</string>
     <string name="main_menu_collectable">Achievements</string>
     <string name="collectable_test">Grucho: award for answering spree of 5!</string>
-    <string name="end_game_achievements_unlocked">Achievements unlocked: </string>
     <string name="collectable_no_selection">Select a face</string>
     <string name="signin_other_error">There was an issue with sign-in, please try again later.</string>
     <string name="signin_failure">Unable to sign in.</string>
