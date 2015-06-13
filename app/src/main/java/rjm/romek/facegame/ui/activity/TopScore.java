@@ -195,7 +195,7 @@ public class TopScore extends ListActivity implements View.OnClickListener, Goog
     }
 
     public void repaintList() {
-        adapter.swapCursor(getTopScoresCursor());
+        adapter.changeCursorAndColumns(getTopScoresCursor(), FROM, TO);
     }
 
     private Cursor getTopScoresCursor() {
