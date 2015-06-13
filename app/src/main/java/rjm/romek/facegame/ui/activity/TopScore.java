@@ -14,7 +14,12 @@ import android.widget.TextView;
 
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.games.Games;
+import com.google.android.gms.games.leaderboard.LeaderboardScore;
+import com.google.android.gms.games.leaderboard.LeaderboardVariant;
+import com.google.android.gms.games.leaderboard.Leaderboards;
 import com.google.android.gms.games.leaderboard.Leaderboards.SubmitScoreResult;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -35,6 +40,7 @@ public class TopScore extends ListActivity implements View.OnClickListener, Goog
     private Button shareButton;
     private Score currentScore;
     private LeaderBoardSubmitScoreCallback leaderBoardSubmitScoreCallback;
+    private LeaderBoardLoadPlayerScoreCallback leaderBoardLoadPlayerScoreCallback;
     private GooglePlayManager googlePlayManager;
     static final String[] FROM = {ScoreEntry.PLAYER, ScoreEntry.SCORE,
             ScoreEntry.CORRECT_ANSWERS, ScoreEntry.DATE, ScoreEntry._ID};
@@ -48,7 +54,33 @@ public class TopScore extends ListActivity implements View.OnClickListener, Goog
             if (res.getStatus().isSuccess()) {
                 currentScore.setPublished(true);
                 scoreContract.updateScore(currentScore);
+
+                Games.Leaderboards.loadCurrentPlayerLeaderboardScore(
+                        googlePlayManager.getGoogleApiClient(),
+                        getString(R.string.leaderboard_best_players),
+                        LeaderboardVariant.TIME_SPAN_ALL_TIME,
+                        LeaderboardVariant.COLLECTION_PUBLIC)
+                        .setResultCallback(leaderBoardLoadPlayerScoreCallback);
             }
+        }
+    }
+
+    private class LeaderBoardLoadPlayerScoreCallback implements ResultCallback<Leaderboards.LoadPlayerScoreResult> {
+        @Override
+        public void onResult(Leaderboards.LoadPlayerScoreResult result) {
+            LeaderboardScore score = result.getScore();
+            String name = score.getScoreHolder().getDisplayName();
+
+            List<Score> topScores = scoreContract.getTopScores(parameters.getLimitTopScore());
+
+            for(Score s : topScores) {
+                if(s.getPlayer() == null) {
+                    s.setPlayer(name);
+                    scoreContract.updateScore(s);
+                }
+            }
+
+            repaintList();
         }
     }
 
@@ -82,6 +114,11 @@ public class TopScore extends ListActivity implements View.OnClickListener, Goog
                 String scoreText = "" + cursor.getLong(cursor
                         .getColumnIndex(ScoreEntry.SCORE));
                 ((TextView) view).setText(scoreText);
+            } else if (view.getId() == R.id.text_player) {
+                String playerText = cursor.getString(cursor
+                        .getColumnIndex(ScoreEntry.PLAYER));
+                playerText = StringUtils.defaultString(playerText, "You");
+                ((TextView) view).setText(playerText);
             }
             return true;
         }
@@ -103,7 +140,7 @@ public class TopScore extends ListActivity implements View.OnClickListener, Goog
     public void showLeaderboardsRequested() {
         if (googlePlayManager.isSignedIn()) {
             startActivityForResult(Games.Leaderboards.getAllLeaderboardsIntent(
-                            googlePlayManager.getGoogleApiClient()), GooglePlayManager.RC_UNUSED);
+                    googlePlayManager.getGoogleApiClient()), GooglePlayManager.RC_UNUSED);
         } else {
             Log.d(TAG, "Leaderboards not available!");
         }
@@ -121,12 +158,12 @@ public class TopScore extends ListActivity implements View.OnClickListener, Goog
         this.parameters = new Parameters();
         this.scoreContract = new ScoreContract(this);
 
-        Cursor cursor = scoreContract.getTopScoresCursor(parameters.getLimitTopScore());
-
-        adapter = new SimpleCursorAdapter(this, R.layout.top_score_row, cursor, FROM, TO);
+        adapter = new SimpleCursorAdapter(this, R.layout.top_score_row,
+                getTopScoresCursor(), FROM, TO);
         adapter.setViewBinder(VIEW_BINDER);
         setListAdapter(adapter);
         leaderBoardSubmitScoreCallback = new LeaderBoardSubmitScoreCallback();
+        leaderBoardLoadPlayerScoreCallback = new LeaderBoardLoadPlayerScoreCallback();
         shareButton = (Button) findViewById(R.id.shareScoreButton);
         shareButton.setOnClickListener(this);
 
@@ -152,9 +189,17 @@ public class TopScore extends ListActivity implements View.OnClickListener, Goog
         }
 
         startActivityForResult(Games.Leaderboards.getLeaderboardIntent(
-                googlePlayManager.getGoogleApiClient(), getString(R.string.leaderboard_best_players)),
+                        googlePlayManager.getGoogleApiClient(), getString(R.string.leaderboard_best_players)),
                 GooglePlayManager.CODE_OK);
 
+    }
+
+    public void repaintList() {
+        adapter.swapCursor(getTopScoresCursor());
+    }
+
+    private Cursor getTopScoresCursor() {
+        return scoreContract.getTopScoresCursor(parameters.getLimitTopScore());
     }
 
     @Override

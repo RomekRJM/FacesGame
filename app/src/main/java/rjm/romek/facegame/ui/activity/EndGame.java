@@ -74,7 +74,6 @@ public class EndGame extends Activity implements OnClickListener {
         score.setDate(new Date());
         score.setScore(scoreValue);
         score.setCorrectAnswers(correctAnswers);
-        score.setPlayer("Player");
         new ScoreContract(this).saveScore(score);
     }
 

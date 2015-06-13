@@ -97,6 +97,7 @@ public class ScoreContract {
         String [] whereArg = new String[]{score.getId().toString()};
 
         ContentValues values = new ContentValues();
+        values.put(ScoreEntry.PLAYER, score.getPlayer());
         values.put(ScoreEntry.PUBLISHED, score.isPublished());
         db.updateWithOnConflict(ScoreEntry.TABLE_NAME, values, whereClause,
                 whereArg, SQLiteDatabase.CONFLICT_IGNORE);
