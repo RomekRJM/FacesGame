@@ -9,6 +9,7 @@ import android.provider.BaseColumns;
 import java.util.Set;
 
 import rjm.romek.facegame.model.Question;
+import rjm.romek.source.model.Country;
 
 public class QuestionContract {
     private final Context context;
@@ -49,7 +50,8 @@ public class QuestionContract {
             values.put(QuestionEntry.COUNTRIES, question.getCountriesCSV());
             values.put(QuestionEntry.DATE, question.getDate().getTime());
             values.put(QuestionEntry.CORRECT_ANSWER, question.getCorrectAnswer().getName());
-            values.put(QuestionEntry.GIVEN_ANSWER, question.getGivenAnswer().getName());
+            Country givenAnswer = question.getGivenAnswer();
+            values.put(QuestionEntry.GIVEN_ANSWER, givenAnswer != null ? givenAnswer.getName() : null);
             values.put(QuestionEntry.DIFFICULTY, question.getDifficulty().name());
             values.put(QuestionEntry.ANSWER_TIME, question.getAnswerTime());
             values.put(QuestionEntry.TIMED_OUT, question.isTimedOut());

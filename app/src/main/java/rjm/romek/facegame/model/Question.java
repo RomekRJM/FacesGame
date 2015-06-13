@@ -95,6 +95,7 @@ public class Question {
 
         if (difficulty != null) {
             setAnswerTime(difficulty.getTime());
+            setDate(new Date());
         }
     }
 
