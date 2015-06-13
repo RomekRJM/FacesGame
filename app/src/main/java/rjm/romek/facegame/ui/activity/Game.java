@@ -10,6 +10,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AlphaAnimation;
@@ -29,6 +30,7 @@ import java.util.Set;
 
 import rjm.romek.facegame.R;
 import rjm.romek.facegame.achievement.AchievementManager;
+import rjm.romek.facegame.common.Global;
 import rjm.romek.facegame.model.GamePhase;
 import rjm.romek.facegame.model.Question;
 import rjm.romek.facegame.service.FlagService;
@@ -37,7 +39,6 @@ import rjm.romek.facegame.service.PhotoService;
 import rjm.romek.facegame.service.PhotoServiceImpl;
 import rjm.romek.facegame.service.QuestionService;
 import rjm.romek.facegame.service.QuestionServiceImpl;
-import rjm.romek.facegame.common.Global;
 import rjm.romek.facegame.ui.intent.EndGameIntent;
 import rjm.romek.facegame.ui.intent.MainMenuIntent;
 import rjm.romek.facegame.ui.listener.SurfaceLayoutChangeListener;
@@ -110,13 +111,13 @@ public class Game extends Activity implements OnClickListener,
     }
 
     private void redrawTimer() {
-        if (timerThread != null || !timerThread.isAlive()) {
+        if (timerThread != null && !timerThread.isAlive()) {
             timerThread.redrawCanvas();
         }
     }
 
     private void stopTimer() {
-        if (timerThread != null || timerThread.isAlive()) {
+        if (timerThread != null && timerThread.isAlive()) {
             timerThread.setRunning(false);
         }
     }
@@ -268,7 +269,12 @@ public class Game extends Activity implements OnClickListener,
                         blinkingView.invalidate();
                         paintScore();
                         paintLives();
-                        paintNextQuestionButton(blinkingView);
+
+                        if (livesManager.isGameOver()) {
+                            goToEndGame();
+                        } else {
+                            paintNextQuestionButton(blinkingView);
+                        }
                     }
 
                     @Override
@@ -317,7 +323,7 @@ public class Game extends Activity implements OnClickListener,
             public void onClick(View v) {
                 blinkingView.clearColorFilter();
                 nextButton.setVisibility(View.GONE);
-                goToNextQuestion();
+                gamePhase = GamePhase.WAITING_FOR_ANSWER;
                 mainGameLoop();
             }
         });
@@ -334,26 +340,31 @@ public class Game extends Activity implements OnClickListener,
         livesManager.update(currentQuestion);
     }
 
-    public void goToNextQuestion() {
-        Long totalScore = scoreManager.getScoreService().getTotalScore();
+    public void goToEndGame() {
+        final Activity _this = this;
+        final Long totalScore = scoreManager.getScoreService().getTotalScore();
 
-        if (livesManager.isGameOver()) {
+        questionService.saveQuestions(questions);
 
-            questionService.saveQuestions(questions);
+        final List<String> unlockedAchievementsNames =
+                AchievementManager.checkAchievementsForUpdates(questions, getBaseContext());
+        unlockedAchievementsNames.addAll(
+                AchievementManager.checkAchievementsForUpdates(totalScore, getBaseContext()));
+        unlockedAchievementsNames.addAll(
+                AchievementManager.checkAchievementsForUpdates(questionService, getBaseContext()));
 
-            List<String> unlockedAchievementsNames =
-                    AchievementManager.checkAchievementsForUpdates(questions, getBaseContext());
-            unlockedAchievementsNames.addAll(
-                    AchievementManager.checkAchievementsForUpdates(totalScore, getBaseContext()));
-            unlockedAchievementsNames.addAll(
-                    AchievementManager.checkAchievementsForUpdates(questionService, getBaseContext()));
-            startActivity(new EndGameIntent(this,
-                    questionService.countCorrectAnswered(questions),
-                    totalScore,
-                    unlockedAchievementsNames.toArray(new String[unlockedAchievementsNames.size()])));
-        } else {
-            gamePhase = GamePhase.WAITING_FOR_ANSWER;
-        }
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                startActivity(new EndGameIntent(_this,
+                        questionService.countCorrectAnswered(questions),
+                        totalScore,
+                        unlockedAchievementsNames.toArray(
+                                new String[unlockedAchievementsNames.size()])));
+            }
+        }, 700);
+
     }
 
     @Override
