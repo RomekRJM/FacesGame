@@ -16,7 +16,7 @@ public class DifficultyAchievementUpdaterImpl extends AchievementUpdater<Set<Que
 
     @Override
     protected Difficulty transform(Set<Question> change) {
-        Difficulty difficulty = Difficulty.EASY;
+        Difficulty difficulty = Difficulty.NOOB;
 
         for(Question question : change) {
             Difficulty currentDifficulty = question.getDifficulty();

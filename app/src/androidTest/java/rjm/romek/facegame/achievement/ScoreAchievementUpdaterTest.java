@@ -11,7 +11,7 @@ public class ScoreAchievementUpdaterTest extends AchievementTest {
 
         for (int i = 0; i <= 12000; i+=250) {
             unlockedAchievementsNames = checkAchievementsForUpdates(
-                    i, getContext());
+                    Long.valueOf(i), getContext());
 
             switch (i) {
                 case 250:

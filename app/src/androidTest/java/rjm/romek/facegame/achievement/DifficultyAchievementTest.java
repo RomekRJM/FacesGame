@@ -13,19 +13,20 @@ import static rjm.romek.facegame.utils.TestUtils.createQuestion;
 
 public class DifficultyAchievementTest extends AchievementTest {
 
-    public void testHardcore() {
+    public void testNormal() {
         Set<Question> questions = new LinkedHashSet<>();
-        questions.add(createQuestion(true, 1000, Difficulty.HARDCORE));
+        questions.add(createQuestion(true, 1000, Difficulty.NORMAL));
         List<String> unlockedAchievementsNames = checkAchievementsForUpdates(questions, getContext());
 
-        containsAllAchievement(unlockedAchievementsNames, achievements[32]);
+        containsAllAchievement(unlockedAchievementsNames, achievements[30]);
     }
 
     public void testNormalAndHard() {
         Set<Question> questions = new LinkedHashSet<>();
         questions.add(createQuestion(true, 1000, Difficulty.NORMAL));
-        questions.add(createQuestion(true, 1000, Difficulty.HARD));
         List<String> unlockedAchievementsNames = checkAchievementsForUpdates(questions, getContext());
+        questions.add(createQuestion(true, 1000, Difficulty.HARD));
+        unlockedAchievementsNames.addAll(checkAchievementsForUpdates(questions, getContext()));
 
         containsAllAchievement(unlockedAchievementsNames, achievements[30], achievements[31]);
         doesNotContainGivenAchievements(unlockedAchievementsNames, achievements[32]);

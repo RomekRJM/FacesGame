@@ -66,11 +66,23 @@ public class AchievementManager {
 
     public static List<String> checkAchievementsForUpdates(Object update, Context context) {
         List<String> unlockedAchievements = new ArrayList<>();
+        String lastAchievementFamily = null;
+        boolean lastUnlocked = false;
 
         for (Achievement achievement : achievements) {
+            if(StringUtils.equals(lastAchievementFamily, achievement.getAchievementFamily())
+                    && lastUnlocked) {
+                continue;
+            }
+
             if (achievement.updateAchievement(update, context)) {
                 unlockedAchievements.add(achievement.getName());
+                lastUnlocked = true;
+            } else {
+                lastUnlocked = false;
             }
+
+            lastAchievementFamily = achievement.getAchievementFamily();
         }
 
         return unlockedAchievements;

@@ -15,4 +15,9 @@ public class GuessPeopleFromCountryUpdater extends SqlPoweredUpdater {
     protected Long transform(QuestionService change) {
         return change.countUniqueRightGuessesForCountry(country);
     }
+
+    @Override
+    public String getAchievementFamily() {
+        return super.getAchievementFamily() + country;
+    }
 }

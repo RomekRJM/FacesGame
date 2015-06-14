@@ -2,10 +2,13 @@ package rjm.romek.facegame.achievement;
 
 import android.content.Context;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 import java.util.Date;
 
 import rjm.romek.facegame.achievement.activator.Activate;
 import rjm.romek.facegame.achievement.condition.Condition;
+import rjm.romek.facegame.achievement.updater.SumUpdate;
 import rjm.romek.facegame.achievement.updater.Update;
 import rjm.romek.facegame.data.AchievementContract;
 import rjm.romek.facegame.model.Achievement;
@@ -52,5 +55,15 @@ public abstract class AchievementUpdater<C, U> {
         destination.setData(source.getData());
         destination.setUnlocked(source.isUnlocked());
         destination.setLastModified(source.getLastModified());
+    }
+
+    public String getAchievementFamily() {
+        String postfix = "";
+
+        if(update instanceof SumUpdate) {
+            postfix = RandomStringUtils.random(6);
+        }
+
+        return getClass().getSimpleName() + postfix;
     }
 }
