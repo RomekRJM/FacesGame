@@ -9,6 +9,21 @@ For best game experience, always checkout most recent tag. Master will compile, 
 
 ## Changes history
 
+**v0.8 - 15.06.2015**
+
+Enhancements:
+
+* Redesigned question generation, to make game easier. Added extra difficulty level. First three levels will display countries from different continents. Last two will get country from given radius, around correct country.
+* Rebalanced achievements (again): it is now impossible to unlock 2 achievements from the same group in one game.
+* Added difficulty bar above portrait.
+* Display text, when no achievements unlocked.
+* After last question game automatically goes to end game screen. No need to press the button.
+
+Bug fixes:
+
+* Wrong player name on top scores.
+* Error when saving timed out question in db.
+
 **v0.7 - 07.06.2015**
 
 Enhancements:
