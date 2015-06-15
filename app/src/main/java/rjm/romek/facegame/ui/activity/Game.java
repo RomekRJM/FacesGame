@@ -44,6 +44,7 @@ import rjm.romek.facegame.ui.intent.MainMenuIntent;
 import rjm.romek.facegame.ui.listener.SurfaceLayoutChangeListener;
 import rjm.romek.facegame.ui.loader.LoadQuestionTask;
 import rjm.romek.facegame.ui.loader.LoadQuestionTaskListener;
+import rjm.romek.facegame.ui.manager.DifficultyManager;
 import rjm.romek.facegame.ui.manager.LivesManager;
 import rjm.romek.facegame.ui.manager.ScoreManager;
 import rjm.romek.facegame.ui.timer.TimerThread;
@@ -68,6 +69,7 @@ public class Game extends Activity implements OnClickListener,
     private TimerThread timerThread;
     private ScoreManager scoreManager;
     private LivesManager livesManager;
+    private DifficultyManager difficultyManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,6 +140,13 @@ public class Game extends Activity implements OnClickListener,
     @Override
     public void layoutChanged() {
         redrawTimer();
+        difficultyManager.update(currentQuestion.getDifficulty());
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
     }
 
     @Override
@@ -172,6 +181,7 @@ public class Game extends Activity implements OnClickListener,
         timerSurface = createSurfaceView();
         scoreManager = new ScoreManager(createScoreTextView(), getBaseContext());
         livesManager = new LivesManager(this);
+        difficultyManager = new DifficultyManager(createTopGameLayout(), createTopBackground());
     }
 
     QuestionService createQuestionService() throws IOException {
@@ -200,6 +210,14 @@ public class Game extends Activity implements OnClickListener,
 
     ImageView createImageView() {
         return (ImageView) findViewById(R.id.imageViewPortrait);
+    }
+
+    View createTopGameLayout() {
+        return findViewById(R.id.topGameLayout);
+    }
+
+    View createTopBackground() {
+        return findViewById(R.id.topBackground);
     }
 
     TextView createScoreTextView() {
@@ -231,6 +249,8 @@ public class Game extends Activity implements OnClickListener,
                 button.setVisibility(View.GONE);
             }
         }
+
+        difficultyManager.update(currentQuestion.getDifficulty());
     }
 
     void paintAfterAnswer() {

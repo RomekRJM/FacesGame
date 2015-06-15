@@ -104,29 +104,30 @@ public class QuestionServiceImpl implements QuestionService {
         return countries;
     }
 
-    private Difficulty getDifficultyForQuestion(Set<Question> prevoius) {
+    private Difficulty getDifficultyForQuestion(Set<Question> previous) {
 
         int spree = 0;
+        int maxSpree = (Difficulty.values().length - 1) * parameters.getChangeDifficultyEvery();
 
-        for (Question question : prevoius) {
+        for (Question question : previous) {
             if (question.isCorrectlyAnswered()) {
-                ++spree;
+                spree = spree < maxSpree ? ++spree : maxSpree;
             } else {
                 spree = spree > 0 ? --spree : 0;
             }
         }
 
         switch (spree / parameters.getChangeDifficultyEvery()) {
+            case 0:
+                return Difficulty.NOOB;
             case 1:
                 return Difficulty.EASY;
             case 2:
                 return Difficulty.NORMAL;
             case 3:
                 return Difficulty.HARD;
-            case 4:
-                return Difficulty.HARDCORE;
             default:
-                return Difficulty.NOOB;
+                return Difficulty.HARDCORE;
         }
     }
 

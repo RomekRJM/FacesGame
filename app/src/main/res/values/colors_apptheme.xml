@@ -5,4 +5,6 @@
     <color name="red_wrong">#FF1111</color>
     <color name="blue_marked">#6495ED</color>
     <color name="gold">#FBBD2C</color>
+    <color name="black">#000000</color>
+    <color name="blue_diff">#4f33b5e5</color>
 </resources>

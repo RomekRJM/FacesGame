@@ -15,6 +15,12 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/topBackground"
+            android:layout_alignBottom="@+id/ball0" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/ball0"
             android:background="@drawable/blueball" />
         <ImageView
@@ -51,7 +57,9 @@
             android:text="@string/game_default_score"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/ball0"
+            android:includeFontPadding="false"/>
 
     </RelativeLayout>
 
