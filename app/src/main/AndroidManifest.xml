@@ -47,8 +47,7 @@
             android:name=".ui.activity.Game"
             android:configChanges="orientation|screenSize" />
         <activity
-            android:name=".ui.activity.MainMenu"
-            android:configChanges="orientation|screenSize" />
+            android:name=".ui.activity.MainMenu"/>
         <activity
             android:name=".ui.activity.EndGame"
             android:configChanges="orientation|screenSize" />
