@@ -14,10 +14,12 @@ public class TimerThread extends Thread {
     private final long INTERVAL = 20;
     private SurfaceView surfaceView;
     private boolean running;
+    private boolean pause;
     private long timePassed;
     private Paint paint;
     private ColorService colorService;
     private TimerThreadListener listener;
+    private final Object lock;
 
     public TimerThread(SurfaceView surfaceView, long time) {
         this.time = time;
@@ -25,6 +27,8 @@ public class TimerThread extends Thread {
         this.paint = new Paint();
         this.colorService = new GreenRedGamma();
         this.timePassed = 0;
+        this.pause = false;
+        this.lock = new Object();
     }
 
     public void setTimerThreadListener(TimerThreadListener listener) {
@@ -35,13 +39,39 @@ public class TimerThread extends Thread {
         running = run;
     }
 
+    public void pause() {
+        synchronized (lock) {
+            pause = true;
+        }
+    }
+
+    public void unpause() {
+        synchronized (lock) {
+            pause = false;
+            lock.notifyAll();
+        }
+    }
+
+    private void waitIfPaused() {
+        synchronized (lock) {
+            while (pause) {
+                try {
+                    lock.wait();
+                } catch (InterruptedException e) {
+                }
+            }
+        }
+    }
+
     @Override
     public void run() {
         setRunning(true);
 
         while (running) {
-            long startTime = System.currentTimeMillis();
 
+            waitIfPaused();
+
+            long startTime = System.currentTimeMillis();
             redrawCanvas();
 
             try {

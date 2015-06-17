@@ -398,4 +398,20 @@ public class Game extends Activity implements OnClickListener,
             }
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(timerThread != null && timerThread.isAlive()) {
+            timerThread.unpause();
+        }
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(timerThread != null && timerThread.isAlive()) {
+            timerThread.pause();
+        }
+    }
+
 }
