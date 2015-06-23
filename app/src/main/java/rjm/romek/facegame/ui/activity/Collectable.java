@@ -10,6 +10,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 
@@ -87,7 +88,7 @@ public class Collectable extends Activity implements View.OnClickListener, Googl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.collectables);
 
-        GridView gridview = (GridView) findViewById(R.id.gridview);
+        final GridView gridview = (GridView) findViewById(R.id.gridview);
 
         final AchievementContract achievementContract = new AchievementContract(this);
         final CollectableRowPopulator collectableRowPopulator = new CollectableRowPopulator();
@@ -99,7 +100,6 @@ public class Collectable extends Activity implements View.OnClickListener, Googl
         gridview.setAdapter(adapter);
 
         gridview.setOnItemClickListener(new OnItemClickListener() {
-            private View lastSelected;
 
             @Override
             public void onItemClick(AdapterView<?> parent, View v,
@@ -111,13 +111,10 @@ public class Collectable extends Activity implements View.OnClickListener, Googl
                             findViewById(R.id.collectable_row_top), _this);
                 }
 
-                if (lastSelected != null) {
-                    lastSelected.setBackgroundResource(R.drawable.grid_border);
+                if (v instanceof RelativeLayout) {
+                    gridview.requestFocusFromTouch();
+                    gridview.setSelection(position);
                 }
-
-                v.setSelected(true);
-                v.setBackgroundResource(R.drawable.grid_border_selected);
-                lastSelected = v;
             }
         });
 

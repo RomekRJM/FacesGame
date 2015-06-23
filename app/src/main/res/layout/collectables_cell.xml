@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/relativeLayout1"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/grid_border"
-    >
+    android:background="@drawable/grid_selector">
 
     <ImageView
-        android:layout_height="64dp"
         android:id="@+id/imageViewCollectable"
         android:layout_width="64dp"
+        android:layout_height="64dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true">
-    </ImageView>
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
