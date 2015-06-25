@@ -28,19 +28,22 @@
             android:id="@+id/new_game_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/main_menu_new_game" />
+            android:text="@string/main_menu_new_game"
+            android:focusable="false" />
 
         <Button
             android:id="@+id/records_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/main_menu_records" />
+            android:text="@string/main_menu_records"
+            android:focusable="false" />
 
         <Button
             android:id="@+id/collectable_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/main_menu_collectable" />
+            android:text="@string/main_menu_collectable"
+            android:focusable="false" />
 
 
     </LinearLayout>
@@ -68,7 +71,8 @@
             android:text="@string/main_menu_quit"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:focusable="false" />
 
         <Button
             android:id="@+id/about_the_game_button"
@@ -77,7 +81,8 @@
             android:text="@string/main_menu_about_the_game"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:focusable="false" />
     </RelativeLayout>
 
 </RelativeLayout>
