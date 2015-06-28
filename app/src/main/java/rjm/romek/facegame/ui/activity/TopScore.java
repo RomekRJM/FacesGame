@@ -2,15 +2,11 @@ package rjm.romek.facegame.ui.activity;
 
 import android.app.Activity;
 import android.app.ListActivity;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.SimpleCursorAdapter;
-import android.widget.SimpleCursorAdapter.ViewBinder;
-import android.widget.TextView;
 
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.games.Games;
@@ -28,6 +24,7 @@ import rjm.romek.facegame.common.GooglePlayable;
 import rjm.romek.facegame.common.Parameters;
 import rjm.romek.facegame.data.ScoreContract;
 import rjm.romek.facegame.model.Score;
+import rjm.romek.facegame.ui.adapter.TopScoreAdapter;
 import rjm.romek.facegame.ui.manager.GooglePlayManager;
 
 import static rjm.romek.facegame.data.ScoreContract.ScoreEntry;
@@ -36,16 +33,12 @@ public class TopScore extends ListActivity implements View.OnClickListener, Goog
 
     private Parameters parameters;
     private ScoreContract scoreContract;
-    private SimpleCursorAdapter adapter;
+    private ArrayAdapter<Score> adapter;
     private Button shareButton;
     private Score currentScore;
     private LeaderBoardSubmitScoreCallback leaderBoardSubmitScoreCallback;
     private LeaderBoardLoadPlayerScoreCallback leaderBoardLoadPlayerScoreCallback;
     private GooglePlayManager googlePlayManager;
-    static final String[] FROM = {ScoreEntry.PLAYER, ScoreEntry.SCORE,
-            ScoreEntry.CORRECT_ANSWERS, ScoreEntry.DATE, ScoreEntry._ID};
-    static final int[] TO = {R.id.text_player, R.id.text_score, R.id.text_correct,
-            R.id.text_date, R.id.text_position};
     static final String TAG = "TopScore";
 
     private class LeaderBoardSubmitScoreCallback implements ResultCallback<SubmitScoreResult> {
@@ -84,46 +77,6 @@ public class TopScore extends ListActivity implements View.OnClickListener, Goog
         }
     }
 
-    static final ViewBinder VIEW_BINDER = new ViewBinder() {
-
-        private int positionCounter;
-
-        @Override
-        public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-
-            if (cursor.isFirst()) {
-                positionCounter = 1;
-            }
-
-            if (view.getId() == R.id.text_date) {
-                long time = cursor.getLong(cursor
-                        .getColumnIndex(ScoreEntry.DATE));
-                CharSequence relativeTime = DateUtils
-                        .getRelativeTimeSpanString(time);
-                ((TextView) view).setText(relativeTime);
-            } else if (view.getId() == R.id.text_correct) {
-                int correct = cursor.getInt(cursor
-                        .getColumnIndex(ScoreEntry.CORRECT_ANSWERS));
-                String correctText = correct + " correct answers";
-                ((TextView) view).setText(correctText);
-            } else if (view.getId() == R.id.text_position) {
-                String positionText = positionCounter + ".";
-                ((TextView) view).setText(positionText);
-                ++positionCounter;
-            } else if (view.getId() == R.id.text_score) {
-                String scoreText = "" + cursor.getLong(cursor
-                        .getColumnIndex(ScoreEntry.SCORE));
-                ((TextView) view).setText(scoreText);
-            } else if (view.getId() == R.id.text_player) {
-                String playerText = cursor.getString(cursor
-                        .getColumnIndex(ScoreEntry.PLAYER));
-                playerText = StringUtils.defaultString(playerText, "You");
-                ((TextView) view).setText(playerText);
-            }
-            return true;
-        }
-    };
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -158,9 +111,7 @@ public class TopScore extends ListActivity implements View.OnClickListener, Goog
         this.parameters = new Parameters();
         this.scoreContract = new ScoreContract(this);
 
-        adapter = new SimpleCursorAdapter(this, R.layout.top_score_row,
-                getTopScoresCursor(), FROM, TO);
-        adapter.setViewBinder(VIEW_BINDER);
+        adapter = new TopScoreAdapter(this, R.layout.top_score_row, getTopScoresArray());
         setListAdapter(adapter);
         leaderBoardSubmitScoreCallback = new LeaderBoardSubmitScoreCallback();
         leaderBoardLoadPlayerScoreCallback = new LeaderBoardLoadPlayerScoreCallback();
@@ -195,11 +146,23 @@ public class TopScore extends ListActivity implements View.OnClickListener, Goog
     }
 
     public void repaintList() {
-        adapter.changeCursorAndColumns(getTopScoresCursor(), FROM, TO);
+        adapter.clear();
+        Score [] scores = getTopScoresArray();
+
+        for (Score score : scores) {
+            adapter.add(score);
+        }
+
+        adapter.notifyDataSetChanged();
     }
 
-    private Cursor getTopScoresCursor() {
-        return scoreContract.getTopScoresCursor(parameters.getLimitTopScore());
+    private List<Score> getTopScores() {
+        return scoreContract.getTopScores(parameters.getLimitTopScore());
+    }
+
+    private Score[] getTopScoresArray() {
+        List<Score> topScores = getTopScores();
+        return topScores.toArray(new Score[topScores.size()]);
     }
 
     @Override
