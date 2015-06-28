@@ -32,7 +32,7 @@ public class TopScoreAdapter extends ArrayAdapter<Score> {
             convertView = vi.inflate(R.layout.top_score_row, null);
         }
 
-        topScoreRowPopulator.populate(position, getItem(position), convertView);
+        topScoreRowPopulator.populate(position, getItem(position), convertView, getContext());
         return convertView;
 
     }

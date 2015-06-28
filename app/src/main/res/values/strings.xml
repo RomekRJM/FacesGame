@@ -27,6 +27,8 @@
 
     <string name="action_settings">Settings</string>
     <string name="top_score_title">Top Scores</string>
+    <string name="top_score_default_player">You</string>
+    <string name="top_score_correct_answers">correct answers</string>
     <string name="main_menu_collectable">Achievements</string>
     <string name="collectable_test">Grucho: award for answering spree of 5!</string>
     <string name="collectable_no_selection">Select a face</string>
