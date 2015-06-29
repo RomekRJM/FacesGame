@@ -1,7 +1,7 @@
 package rjm.romek.facegame.model;
 
 public enum Difficulty {
-    NOOB(2, 40000l, 0.1f), EASY(2, 20000l, 0.15f), NORMAL(4, 20000l, 0.2f),
+    NOOB(2, 40000l, 0.1f), EASY(2, 7, 20000l, 0.15f), NORMAL(4, 20000l, 0.2f),
     HARD(4, 5, 15000l, 0.25f), HARDCORE(4, 3, 10000l, 0.3f);
 
     private CountryAlgorithm countryAlgorithm;

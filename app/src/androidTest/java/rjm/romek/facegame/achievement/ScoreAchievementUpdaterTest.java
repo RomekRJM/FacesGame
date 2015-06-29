@@ -9,33 +9,33 @@ public class ScoreAchievementUpdaterTest extends AchievementTest {
     public void testUnlockedAllInRightOrder() {
         List<String> unlockedAchievementsNames;
 
-        for (int i = 0; i <= 12000; i+=250) {
+        for (int i = 0; i <= 12000; i+=500) {
             unlockedAchievementsNames = checkAchievementsForUpdates(
                     Long.valueOf(i), getContext());
 
             switch (i) {
-                case 250:
+                case 500:
                     containsAllAchievement(unlockedAchievementsNames, achievements[14]);
                     break;
-                case 500:
+                case 1000:
                     containsAllAchievement(unlockedAchievementsNames, achievements[15]);
                     break;
-                case 750:
+                case 1500:
                     containsAllAchievement(unlockedAchievementsNames, achievements[16]);
                     break;
-                case 1000:
+                case 2000:
                     containsAllAchievement(unlockedAchievementsNames, achievements[17]);
                     break;
-                case 2000:
+                case 3000:
                     containsAllAchievement(unlockedAchievementsNames, achievements[18]);
                     break;
-                case 3000:
+                case 5000:
                     containsAllAchievement(unlockedAchievementsNames, achievements[19]);
                     break;
-                case 5000:
+                case 7500:
                     containsAllAchievement(unlockedAchievementsNames, achievements[20]);
                     break;
-                case 8000:
+                case 10000:
                     containsAllAchievement(unlockedAchievementsNames, achievements[21]);
                     break;
                 case 12000:
