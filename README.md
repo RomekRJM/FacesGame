@@ -9,6 +9,21 @@ For best game experience, always checkout most recent tag. Master will compile, 
 
 ## Changes history
 
+**v1.0 - 02.07.2015**
+
+Enhancements:
+
+* First version officially published on Google Play Store!!!
+* 3x more pictures.
+* Rebalanced achievements (yet again, as logic has changed and game was to easy).
+
+Bug fixes:
+
+* Redone achievements screen, to fix clicking issues on some older devices.
+* Separate layout for main menu in landscape mode, to make it look better.
+* Wrong numbers displayed in Scores, for phones with smaller screen.
+* Game is paused, when not active.
+
 **v0.8 - 15.06.2015**
 
 Enhancements:
