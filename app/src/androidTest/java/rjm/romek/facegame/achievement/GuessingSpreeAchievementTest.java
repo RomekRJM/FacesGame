@@ -13,14 +13,17 @@ import static rjm.romek.facegame.utils.TestUtils.*;
 public class GuessingSpreeAchievementTest extends AchievementTest {
 
     public void testUnlockedFirst() {
-        Set<Question> set = createQuestionSet(new boolean[] {false, true, true, true, true, true});
+        Set<Question> set = createQuestionSet(new boolean[] {
+                false, true, true, true, true, true, true, true, true});
         List<String> unlockedAchievementsNames = checkAchievementsForUpdates(set, getContext());
         containsAllAchievement(unlockedAchievementsNames, achievements[0]);
     }
 
     public void testLocked() {
-        Set<Question> set = createQuestionSet(new boolean[] {true, true, false, true, true, true});
-        List<String> unlockedAchievementsNames = checkAchievementsForUpdates(set, getContext());
+        Set<Question> set = createQuestionSet(new boolean[]{
+                false, true, true, true, true, true, true, true, false});
+
+    List<String> unlockedAchievementsNames = checkAchievementsForUpdates(set, getContext());
         doesNotContainGivenAchievements(unlockedAchievementsNames, achievements[0]);
     }
 

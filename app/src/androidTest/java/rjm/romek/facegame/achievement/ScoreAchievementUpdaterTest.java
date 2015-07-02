@@ -14,19 +14,19 @@ public class ScoreAchievementUpdaterTest extends AchievementTest {
                     Long.valueOf(i), getContext());
 
             switch (i) {
-                case 500:
+                case 1000:
                     containsAllAchievement(unlockedAchievementsNames, achievements[14]);
                     break;
-                case 1000:
+                case 1500:
                     containsAllAchievement(unlockedAchievementsNames, achievements[15]);
                     break;
-                case 1500:
+                case 2000:
                     containsAllAchievement(unlockedAchievementsNames, achievements[16]);
                     break;
-                case 2000:
+                case 3000:
                     containsAllAchievement(unlockedAchievementsNames, achievements[17]);
                     break;
-                case 3000:
+                case 4000:
                     containsAllAchievement(unlockedAchievementsNames, achievements[18]);
                     break;
                 case 5000:

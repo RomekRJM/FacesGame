@@ -15,10 +15,10 @@ public class TotalCorrectAnswerAchievementTest extends AchievementTest {
     }
 
     public void testUnlockedFirstThenSecond() {
-        List<String> unlockedAchievementsNames = checkIfUnlockedManyTimes(30, 1);
+        List<String> unlockedAchievementsNames = checkIfUnlockedManyTimes(50, 1);
         containsAllAchievement(unlockedAchievementsNames, achievements[5]);
 
-        unlockedAchievementsNames = checkIfUnlockedManyTimes(70, 7);
+        unlockedAchievementsNames = checkIfUnlockedManyTimes(10, 10);
         containsAllAchievement(unlockedAchievementsNames, achievements[6]);
     }
 

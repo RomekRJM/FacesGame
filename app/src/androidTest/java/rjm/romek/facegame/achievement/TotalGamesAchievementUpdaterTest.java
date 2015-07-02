@@ -11,11 +11,6 @@ import static rjm.romek.facegame.utils.TestUtils.createCorrectQuestions;
 import static rjm.romek.facegame.utils.TestUtils.createQuestionSet;
 
 public class TotalGamesAchievementUpdaterTest extends AchievementTest {
-    public void testUnlockedFirstOnWrongAnswer() {
-        List<String> unlockedAchievementsNames = checkAchievementsForUpdates(
-                createQuestionSet(new boolean[]{false}), getContext());
-        containsAllAchievement(unlockedAchievementsNames, achievements[10]);
-    }
 
     public void testUnlockedAllInRightOrder() {
         Set<Question> game = createCorrectQuestions(1);
@@ -26,13 +21,13 @@ public class TotalGamesAchievementUpdaterTest extends AchievementTest {
                     game, getContext());
 
             switch(i) {
-                case 1:
+                case 10:
                     containsAllAchievement(unlockedAchievementsNames, achievements[10]);
                     break;
-                case 10:
+                case 25:
                     containsAllAchievement(unlockedAchievementsNames, achievements[11]);
                     break;
-                case 30:
+                case 50:
                     containsAllAchievement(unlockedAchievementsNames, achievements[12]);
                     break;
                 case 75:

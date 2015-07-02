@@ -17,11 +17,11 @@ public class TotalScoreAchievementUpdaterTest extends AchievementTest {
             unlockedAchievementsNames.addAll(checkAchievementsForUpdates(
                     Long.valueOf(step), getContext()));
 
-            if(sum >= 2500 && sum < 5000) {
+            if(sum >= 3000 && sum < 7000) {
                 containsAllAchievement(unlockedAchievementsNames, achievements[23]);
-            } else if (sum >= 5000 && sum < 10000) {
+            } else if (sum >= 7000 && sum < 12000) {
                 containsAllAchievement(unlockedAchievementsNames, achievements[24]);
-            } else if (sum >= 10000 && sum < 20000) {
+            } else if (sum >= 12000 && sum < 20000) {
                 containsAllAchievement(unlockedAchievementsNames, achievements[25]);
             } else if (sum >= 20000 && sum < 50000) {
                 containsAllAchievement(unlockedAchievementsNames, achievements[26]);
