@@ -74,12 +74,14 @@ def get_license(url):
         return "Free Art License"
     elif "//creativecommons.org/licenses/by/2.5/deed.en" in contents:
         return "Creative Commons Attribution 2.5 Generic"
+    elif "NotCommons-emblem-copyrighted.svg" in contents:
+        return "!!! Not free !!!"
 
     return "unknown license"
 
 
 def get_license_and_populate_links(image_on_wiki, filepath, links):
-    license_base_url = "https://commons.wikimedia.org/wiki/File:"
+    license_base_url = "https://en.wikipedia.org/wiki/File:"
 
     url = encode_url_idna(license_base_url, image_on_wiki)
     license = get_license(url)
@@ -105,8 +107,8 @@ def encode_url_idna(base, file):
 
 
 def check_person_page_on_wiki(file_name_decoded):
-    # if "Bassong" in file_name_decoded:
-    #     pass
+    # if "Gabriela" in file_name_decoded:
+    #      pass
     prefix = "https://en.wikipedia.org/wiki/"
     person = file_name_decoded.replace(".jpg", "").replace(".JPG", "")
     person = urllib.quote(person.encode('utf8'))
@@ -131,6 +133,8 @@ links = {}
 missing = 0
 
 for filepath in filepaths:
+    # if "Gabriela" not in filepath:
+    #     continue
     link = urllib.unquote_plus(filepath).decode('utf8')
     file_path_splitted = link.split("/")
     file_name_decoded = file_path_splitted[len(file_path_splitted) - 1]
