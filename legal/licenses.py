@@ -2,6 +2,7 @@ __author__ = 'roman'
 
 import os
 import urllib
+import re
 
 def list_urls():
     map = {}
@@ -34,9 +35,14 @@ def get_filepaths(directory):
 
 
 def get_license(url):
-    contents = urllib.urlopen(url).read()
+    try:
+        contents = urllib.urlopen(url).read()
+    except:
+        contents = "No file by this name exists."
 
-    if "//en.wikipedia.org/wiki/en:GNU_Free_Documentation_License" in contents:
+    if "No file by this name exists." in contents:
+        return None
+    elif "//en.wikipedia.org/wiki/en:GNU_Free_Documentation_License" in contents:
         return "GNU Free Documentation License"
     elif "//creativecommons.org/licenses/by/2.0/deed.en" in contents:
         return "Creative Commons Attribution 2.0 Generic"
@@ -58,8 +64,6 @@ def get_license(url):
         return "Creative Commons Attribution-Share Alike 2.5 Generic"
     elif "//creativecommons.org/licenses/by-sa/2.0/deed.en" in contents:
         return "Creative Commons Attribution-Share Alike 2.0 Generic"
-    elif "No file by this name exists." in contents:
-        return None
     elif "Green_copyright.svg" in contents:
         return "The copyright holder of this file allows anyone to use it for any purpose, " \
                "provided that the copyright holder is properly attributed. Redistribution, " \
@@ -75,7 +79,9 @@ def get_license(url):
 
 
 def get_license_and_populate_links(image_on_wiki, filepath, links):
-    url = "https://commons.wikimedia.org/wiki/File:" + image_on_wiki.encode('idna')
+    license_base_url = "https://commons.wikimedia.org/wiki/File:"
+
+    url = encode_url_idna(license_base_url, image_on_wiki)
     license = get_license(url)
 
     if license == None:
@@ -87,6 +93,37 @@ def get_license_and_populate_links(image_on_wiki, filepath, links):
     }
 
     return license
+
+
+def encode_url_idna(base, file):
+    try:
+        url = base + file.encode('idna')
+    except Exception as e:
+        url = base + file
+
+    return url
+
+
+def check_person_page_on_wiki(file_name_decoded):
+    # if "Bassong" in file_name_decoded:
+    #     pass
+    prefix = "https://en.wikipedia.org/wiki/"
+    person = file_name_decoded.replace(".jpg", "").replace(".JPG", "")
+    person = urllib.quote(person.encode('utf8'))
+    article_url = encode_url_idna(prefix, person)
+
+    content = urllib.urlopen(article_url).read()
+    content_lines = content.split('\n')
+
+    for line in content_lines:
+        if "wgGatherPageImageThumbnail" in line:
+            thumbnail_url = re.search('wgGatherPageImageThumbnail":"([^"]*)"', line).group(1)
+            thumbnail_url_splitted = thumbnail_url.split("/")
+            image_name = thumbnail_url_splitted[len(thumbnail_url_splitted)-2]
+            return image_name
+
+    return None
+
 
 urls = list_urls()
 filepaths = get_filepaths('../app/src/main/assets/photos')
@@ -110,14 +147,23 @@ for filepath in filepaths:
         file_name_decoded = file_name_decoded.replace(" ", "_")
         license = get_license_and_populate_links(file_name_decoded, filepath, links)
     except Exception as e:
+        license = None
+
+    try:
+        image_name = check_person_page_on_wiki(file_name_decoded)
+        if image_name == None:
+            raise Exception('No such page')
+
+        license = get_license_and_populate_links(image_name, filepath, links)
+    except Exception as e:
+        license = None
+
+    if license == None:
         missing += 1
         links[filepath] = {
             "url": str(missing),
             "license": str(missing)
         }
-
-    if license == None:
-        missing += 1
 
     pass
 
