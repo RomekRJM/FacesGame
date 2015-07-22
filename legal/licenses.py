@@ -192,15 +192,15 @@ end = """
 
 no = 1
 
-with open("image_links.html", "w") as f:
-    f.write(begining)
-    for link in links:
-        link_val = links[link]
-        f.write("\n    <tr>")
-        f.write("\n      <td>{0}</td>".format(no))
-        f.write("\n      <td><img src='{0}'/></td>".format(link))
-        f.write("\n      <td><a href='{0}'>{1}</a></td>".format(link_val['url'], link_val['license']))
-        f.write("\n    </tr>")
-        no = no + 1
-    f.write(end)
-pass
+# with open("image_links.html", "w") as f:
+#     f.write(begining)
+#     for link in links:
+#         link_val = links[link]
+#         f.write("\n    <tr>")
+#         f.write("\n      <td>{0}</td>".format(no))
+#         f.write("\n      <td><img src='{0}'/></td>".format(link))
+#         f.write("\n      <td><a href='{0}'>{1}</a></td>".format(link_val['url'], link_val['license']))
+#         f.write("\n    </tr>")
+#         no = no + 1
+#     f.write(end)
+# pass
