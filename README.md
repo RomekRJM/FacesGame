@@ -1,10 +1,22 @@
 # FacesGame
 Android game, where you have to match photo of a person with nationality.
 
-
 ## I want to play!
 
-For best game experience, always checkout most recent tag. Master will compile, but is not guaranteed to be stable.
+Check it at Google Play!
+
+
+## Special thanks to:
+
+1. Wikimedia Commons, for beeing great source of free images. All photos in game are CC / public domain licensed and downloaded from wikipedia.org:
+    http://romekrjm.github.io/FacesGame/
+2. http://artdesigncat.com/ - for creating great blue faces icons and free 64x64 set, that I used for achievements.
+3. http://sekkyumu.deviantart.com/ - for additional icons.
+4. https://www.iconfinder.com/konekierto - for check mark/cross mark icons.
+5. http://www.icojam.com/ - for main game icon.
+6. Creator and all contributors of https://github.com/daimajia/AndroidViewAnimations library, for their awesome work.
+Game uses it to animate scores.
+7. My wife Sabina, for understanding and support :D
 
 
 ## Changes history
@@ -13,6 +25,7 @@ For best game experience, always checkout most recent tag. Master will compile, 
 
 * First version officially published on Google Play Store!!!
 * Removed or replaced some pictures and prepared licensing document for Google.
+* Added back link to license file in app about.
 
 
 **v1.0 - 02.07.2015**
@@ -114,15 +127,3 @@ Enhancements:
 **v0.1 - 16.03.2015**
 
 * Initial, somehow playable version.
-
-
-## Special thanks to:
-
-1. Wikimedia Commons, for beeing great source of free images. All photos in game are CC / public domain licensed and downloaded from wikipedia.org.
-2. http://artdesigncat.com/ - for creating great blue faces icons and free 64x64 set, that I used for achievements.
-3. http://sekkyumu.deviantart.com/ - for additional icons.
-4. https://www.iconfinder.com/konekierto - for check mark/cross mark icons.
-5. http://www.icojam.com/ - for main game icon.
-6. Creator and all contributors of https://github.com/daimajia/AndroidViewAnimations library, for their awesome work.
-Game uses it to animate scores.
-7. My wife Sabina, for understanding and support :D
