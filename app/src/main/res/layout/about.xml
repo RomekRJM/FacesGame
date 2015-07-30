@@ -76,6 +76,26 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/about_legal"
+                style="@android:style/TextAppearance.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/about_legal"
+                android:textColor="@color/gold" />
+
+            <TextView
+                android:id="@+id/legal_actor"
+                style="@android:style/TextAppearance.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:text="@string/about_legal_actor"
+                android:textColor="@color/apptheme_color"
+                android:textStyle="bold" />
+
+            <TextView
                 android:id="@+id/about_additional_scripting"
                 style="@android:style/TextAppearance.Medium"
                 android:layout_width="match_parent"
@@ -196,6 +216,27 @@
                 android:autoLink="web"
                 android:gravity="center"
                 android:text="@string/about_library_actor"
+                android:textColor="@color/apptheme_color"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/about_wiki"
+                style="@android:style/TextAppearance.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/about_wiki"
+                android:textColor="@color/gold" />
+
+            <TextView
+                android:id="@+id/about_wiki_actor"
+                style="@android:style/TextAppearance.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:autoLink="web"
+                android:gravity="center"
+                android:text="@string/about_wiki_actor"
                 android:textColor="@color/apptheme_color"
                 android:textStyle="bold" />
 

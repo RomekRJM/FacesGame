@@ -41,6 +41,8 @@
     <string name="about_programming_actor">Roman Subik</string>
     <string name="about_testing">Testing</string>
     <string name="about_testing_actor">Sabina Subik, Tomasz Subik</string>
+    <string name="about_legal">Legal matters</string>
+    <string name="about_legal_actor">Sabina Subik, Roman Subik</string>
     <string name="about_additional_scripting">Gathering resources</string>
     <string name="about_additional_scripting_actor">Roman Subik</string>
     <string name="about_faces">Achievement gfx</string>
@@ -48,11 +50,13 @@
     <string name="about_photos">Photos</string>
     <string name="about_photos_actor">Wikimedia Commons</string>
     <string name="about_additional_gfx">Additional gfx</string>
-    <string name="about_additional_gfx_actor">http://sekkyumu.deviantart.com/</string>
+    <string name="about_additional_gfx_actor">http://sekkyumu.deviantart.com/ , https://www.iconfinder.com/konekierto , http://www.icojam.com/</string>
     <string name="about_play_store_gfx">Play store gfx</string>
     <string name="about_play_store_gfx_actor">https://icons8.com/</string>
     <string name="about_library">Game uses library</string>
     <string name="about_library_actor">https://github.com/daimajia/AndroidViewAnimations</string>
+    <string name="about_wiki">Legal notice</string>
+    <string name="about_wiki_actor">Author of this app used only pictures available on copyleft licenses: Creative Commons, Public Domain, GNU GPL. See: https://github.com/RomekRJM/FacesGame#special-thanks-to for more details.</string>
     <string name="about_special_thx">Special thanks</string>
     <string name="about_special_thx_actor">.. goes to my wife Sabina and son Eryk, for their understanding and support.</string>
 
