@@ -9,11 +9,16 @@ For best game experience, always checkout most recent tag. Master will compile, 
 
 ## Changes history
 
+**v1.05 - 30.07.2015**
+
+* First version officially published on Google Play Store!!!
+* Removed or replaced some pictures and prepared licensing document for Google.
+
+
 **v1.0 - 02.07.2015**
 
 Enhancements:
 
-* First version officially published on Google Play Store!!!
 * 3x more pictures.
 * Rebalanced achievements (yet again, as logic has changed and game was to easy).
 
@@ -116,7 +121,8 @@ Enhancements:
 1. Wikimedia Commons, for beeing great source of free images. All photos in game are CC / public domain licensed and downloaded from wikipedia.org.
 2. http://artdesigncat.com/ - for creating great blue faces icons and free 64x64 set, that I used for achievements.
 3. http://sekkyumu.deviantart.com/ - for additional icons.
-4. http://www.icojam.com/ - for main game icon.
-5. Creator and all contributors of https://github.com/daimajia/AndroidViewAnimations library, for their awesome work.
+4. https://www.iconfinder.com/konekierto - for check mark/cross mark icons.
+5. http://www.icojam.com/ - for main game icon.
+6. Creator and all contributors of https://github.com/daimajia/AndroidViewAnimations library, for their awesome work.
 Game uses it to animate scores.
-6. My wife Sabina, for understanding and support :D
+7. My wife Sabina, for understanding and support :D
