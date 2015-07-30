@@ -9,7 +9,7 @@ Check it at Google Play!
 ## Special thanks to:
 
 1. Wikimedia Commons, for beeing great source of free images. All photos in game are CC / public domain licensed and downloaded from wikipedia.org:
-    http://romekrjm.github.io/FacesGame/
+    http://romekrjm.github.io/FacesGame/ (warning for mobile users: LARGE page)
 2. http://artdesigncat.com/ - for creating great blue faces icons and free 64x64 set, that I used for achievements.
 3. http://sekkyumu.deviantart.com/ - for additional icons.
 4. https://www.iconfinder.com/konekierto - for check mark/cross mark icons.
