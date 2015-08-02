@@ -3,7 +3,8 @@ Android game, where you have to match photo of a person with nationality.
 
 ## I want to play!
 
-Check it at Google Play!
+Download it from your phone, here: https://github.com/RomekRJM/FacesGame/blob/master/app-release.apk?raw=true
+Unfortunately due to lack of agreement with Google, game was rejected from Play Store. Google thinks, that even publicly available pictures with public domain license are not free to use, when depicts well known actor/singer :(
 
 
 ## Special thanks to:
@@ -23,7 +24,6 @@ Game uses it to animate scores.
 
 **v1.05 - 30.07.2015**
 
-* First version officially published on Google Play Store!!!
 * Removed or replaced some pictures and prepared licensing document for Google.
 * Added back link to license file in app about.
 
